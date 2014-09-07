@@ -1,0 +1,17 @@
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\SimpleLocationAlarm.Droid.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\SimpleLocationAlarm.Droid.pdb
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\simplelocationalarm.droid.apk
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\simplelocationalarm.droid-Signed.apk
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\GooglePlayServicesLib.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\Xamarin.Android.Support.v4.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\Xamarin.Android.Support.v7.AppCompat.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Release\Xamarin.Android.Support.v7.MediaRouter.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\SimpleLocationAlarm.Droid.csprojResolveAssemblyReference.cache
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\SimpleLocationAlarm.Droid.dll
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\SimpleLocationAlarm.Droid.pdb
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\android\bin\simplelocationalarm.droid.apk
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\res\layout\main.xml
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\res\values\strings.xml
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\res\drawable\icon.png
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\R.cs.flag
+E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\obj\Release\uploadflags.txt
