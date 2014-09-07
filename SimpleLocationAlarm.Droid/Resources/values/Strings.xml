@@ -6,4 +6,6 @@
 	<string name="alarm_name">Alarm name</string>
 	<string name="done">Done</string>
 	<string name="cancel">Cancel</string>
+	<string name="enter_alarm_name">Enter alarm name</string>
+	<string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
 </resources>

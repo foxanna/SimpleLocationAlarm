@@ -1627,6 +1627,9 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f050034
 			public const int cancel = 2131034164;
 			
+			// aapt resource value: 0x7f050036
+			public const int click_on_map_to_set_alarm = 2131034166;
+			
 			// aapt resource value: 0x7f05001e
 			public const int common_google_play_services_enable_button = 2131034142;
 			
@@ -1707,6 +1710,9 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f050033
 			public const int done = 2131034163;
+			
+			// aapt resource value: 0x7f050035
+			public const int enter_alarm_name = 2131034165;
 			
 			// aapt resource value: 0x7f050002
 			public const int mr_media_route_button_content_description = 2131034114;

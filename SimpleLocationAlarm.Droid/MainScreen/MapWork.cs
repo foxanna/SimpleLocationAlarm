@@ -11,7 +11,7 @@ using Android.Util;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
-	public partial class HomeActivity : GoogleMap.IOnMapLoadedCallback
+	public partial class HomeActivity
 	{
 		GoogleMap _map;
 
@@ -32,26 +32,10 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 				_map.UiSettings.TiltGesturesEnabled = false;
 				_map.UiSettings.RotateGesturesEnabled = false;
 
-				RefreshData ();
-				if (Mode == Mode.None) {
-					RedrawMapData ();
-				}
+				_map.MyLocationChange += HandleMyLocationChange;
 
-				ZoomToMyLocationAndAlarms ();
-
-				_map.SetOnMapLoadedCallback (this);
-
-				_map.MyLocationChange += HandleMyLocationChange;				
-				_map.MapClick += OnMapClick;
+				AskToRefreshData ();
 			}
-		}
-
-		public void OnMapLoaded ()
-		{
-			Log.Debug (TAG, "OnMapLoaded");
-			_map.SetOnMapLoadedCallback (null);
-
-			ZoomToMyLocationAndAlarms ();
 		}
 
 		Location GetLastKnownLocation ()
@@ -62,45 +46,60 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			locationManager.GetLastKnownLocation (LocationManager.NetworkProvider);
 		}
 
+		Location _myCurrentLocation;
+
+		Location MyCurrentLocation {
+			get {
+				return _myCurrentLocation ?? GetLastKnownLocation ();
+			}
+		}
+
+		bool _wasZoomedToCurrentLocation;
+
 		void HandleMyLocationChange (object sender, GoogleMap.MyLocationChangeEventArgs e)
 		{
 			Log.Debug (TAG, "New location detected");
-			_map.MyLocationChange -= HandleMyLocationChange;
 
-			ZoomToMyLocationAndAlarms ();
+			_myCurrentLocation = e.Location;
+
+			if (!_wasZoomedToCurrentLocation) {
+				ZoomToMyLocationAndAlarms ();
+			}
+
+			_wasZoomedToCurrentLocation = true;
 		}
 
 		void LooseMap ()
 		{
 			if (_map != null) {
 				_map.MapClick -= OnMapClick;
+				_map.MyLocationChange -= HandleMyLocationChange;
+
 				_map.Clear ();
 
 				_map = null;
 			}
 		}
 
-		void OnMapClick (object sender, GoogleMap.MapClickEventArgs e)
-		{
-			//Toast.MakeText (this, string.Format ("{0} ; {1}", e.Point.Latitude, e.Point.Longitude), 
-			//	ToastLength.Short).Show ();
-
-			SendBroadcast (new Intent (Constants.DataBaseUpdatesBroadcastReceiverAction));
-		}
-
 		List<AlarmData> _mapData = new List<AlarmData> ();
 		List<Marker> _currentMarkers = new List<Marker> ();
 		List<Circle> _currentCircles = new List<Circle> ();
 
-		void RefreshData ()
+		void OnDataUpdated (object sender, AlarmsEventArgs e)
 		{
-			try {
-				_mapData = GetAlarms ();					
-			} catch {
-				_mapData = new List<AlarmData> ();
-			}
+			Log.Debug (TAG, "OnDataUpdated, count = " + e.Data.Count);
 
-			Log.Debug (TAG, "data refreshed");
+			_mapData = e.Data;
+
+			if (Mode == Mode.None) {
+				RedrawMapData ();
+				ZoomToMyLocationAndAlarms ();
+			}
+		}
+
+		void AskToRefreshData ()
+		{
+			StartService (new Intent (Constants.DatabaseService_SendDatabaseState_Action));
 		}
 
 		void RedrawMapData ()
@@ -121,7 +120,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 					//	.InvokeStrokeColor (Resources.GetColor (Android.Resource.Color.HoloBlueLight))
 				));
 				_currentMarkers.Add (_map.AddMarker (new MarkerOptions ()
-					.SetPosition (new LatLng (alarm.Latitude, alarm.Longitude))));
+					.SetPosition (new LatLng (alarm.Latitude, alarm.Longitude))
+					.SetTitle (alarm.Name)));
 			}
 
 			Log.Debug (TAG, "data redrawn");
@@ -129,7 +129,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
 		void ZoomToMyLocationAndAlarms ()
 		{
-			var location = GetLastKnownLocation ();
+			var location = MyCurrentLocation;
 
 			if (_mapData.Count > 0 || location != null) {
 				var boundsBuilder = new LatLngBounds.Builder ();

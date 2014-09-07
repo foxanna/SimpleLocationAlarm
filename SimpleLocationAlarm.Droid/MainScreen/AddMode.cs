@@ -1,6 +1,10 @@
 ﻿using Android.Views;
 using Android.Widget;
 using Android.Support.V4.View;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
+using Android.Content;
+using Newtonsoft.Json;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
@@ -60,6 +64,13 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			case Resource.Id.cancel:
 				Mode = Mode.None;
 				return true;
+			case Resource.Id.accept:
+				if (Mode == Mode.Add) {
+					if (AcceptAdd ()) {
+						Mode = Mode.None;
+					}
+				}
+				return true;
 			default:
 				return base.OnOptionsItemSelected (item);
 			}
@@ -89,16 +100,38 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
 				_alarmNameMenuItem.ExpandActionView ();
 				_alarmNameMenuItem.SetOnActionExpandListener (this);
+
 				break;
 			}
 		}
+
+		void OnMapClick (object sender, GoogleMap.MapClickEventArgs e)
+		{
+			if (_alarmToAdd == null) {
+				_alarmToAdd = _map.AddMarker (new MarkerOptions ().SetPosition (e.Point));
+				_alarmToAdd.Draggable = true;
+			} else {
+				_alarmToAdd.Position = e.Point;
+			}
+		}
+
+		Marker _alarmToAdd;
 
 		void CancelAnything ()
 		{
 			ManageMenuItemsVisibilityForMode ();
 
+			_map.MapClick -= OnMapClick;
+
+			if (_alarmToAdd != null) {
+				_alarmToAdd.Remove ();
+				_alarmToAdd = null;
+			}
+
 			_map.Clear ();
+
 			RedrawMapData ();
+			ZoomToMyLocationAndAlarms ();
 		}
 
 		void PrepareToAdd ()
@@ -106,6 +139,30 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			ManageMenuItemsVisibilityForMode ();
 
 			_map.Clear ();
+			_map.MapClick += OnMapClick;
+		}
+
+		bool AcceptAdd ()
+		{
+			if (_alarmToAdd == null) {
+				Toast.MakeText (this, Resource.String.click_on_map_to_set_alarm, ToastLength.Short).Show ();
+				return false;
+			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
+				_alarmNameEditText.RequestFocus ();
+				_alarmNameEditText.SetError (
+					new Java.Lang.String (Resources.GetString (Resource.String.enter_alarm_name)), null);
+				return false;
+			} else {
+				StartService (new Intent (Constants.DatabaseService_AddAlarm_Action)
+					.PutExtra (Constants.AlarmsData_Extra, JsonConvert.SerializeObject (
+					new AlarmData () {
+						Latitude = _alarmToAdd.Position.Latitude,
+						Longitude = _alarmToAdd.Position.Longitude,
+						Radius = 200,
+						Name = _alarmNameEditText.Text,
+					})));
+				return true;
+			}
 		}
 
 		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
@@ -120,6 +177,5 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		{
 			return true;
 		}
-
 	}
 }

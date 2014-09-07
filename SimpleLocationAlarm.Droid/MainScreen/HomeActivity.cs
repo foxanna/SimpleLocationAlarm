@@ -46,13 +46,6 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			base.OnStop ();
 		}
 
-		void OnDataUpdated (object sender, EventArgs e)
-		{
-			Toast.MakeText (this, "OnDataUpdated", ToastLength.Short).Show ();
-
-			RedrawMapData ();
-		}
-
 		protected override void OnResume ()
 		{
 			base.OnResume ();
