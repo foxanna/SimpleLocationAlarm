@@ -1,6 +1,0 @@
-E:\Projects\foxanna\SimpleLocationAlarm\SimpleLocationAlarm.Droid\bin\Debug\SimpleLocationAlarm.Droid.dll
-E:\Projects\foxanna\SimpleLocationAlarm\Components\googleplayserviceskitkat-19.0.0\lib\android\GooglePlayServicesLib.dll
-E:\Projects\foxanna\SimpleLocationAlarm\Components\sqlite-net-1.0.8\lib\android\SQLite.dll
-E:\Projects\foxanna\SimpleLocationAlarm\Components\googleplayserviceskitkat-19.0.0\lib\android\Xamarin.Android.Support.v4.dll
-E:\Projects\foxanna\SimpleLocationAlarm\Components\googleplayserviceskitkat-19.0.0\lib\android\Xamarin.Android.Support.v7.AppCompat.dll
-E:\Projects\foxanna\SimpleLocationAlarm\Components\googleplayserviceskitkat-19.0.0\lib\android\Xamarin.Android.Support.v7.MediaRouter.dll
