@@ -141,12 +141,17 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _alarmToAdd = null;
             }
 
+            if (_selectedMarker != null)
+            {
+                _selectedMarker.Remove();
+                _selectedMarker = null;
+            }
+
             _map.Clear();
 
             RedrawMapData();
             ZoomToMyLocationAndAlarms();
         }
-
 
         void PrepareToAdd()
         {
@@ -192,6 +197,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                        Longitude = _selectedMarker.Position.Longitude,
                    })));
 
+            _selectedMarker.Remove();
             _selectedMarker = null;
         }
 
