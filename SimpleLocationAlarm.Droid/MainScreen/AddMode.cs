@@ -105,13 +105,16 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			}
 		}
 
+        BitmapDescriptor _alarm_marker_normal, _alarm_normal_selected;
+
 		void OnMapClick (object sender, GoogleMap.MapClickEventArgs e)
 		{
 			if (_alarmToAdd == null) {
 				_alarmToAdd = _map.AddMarker (new MarkerOptions ().SetPosition (e.Point));
+                _alarmToAdd.SetIcon(_alarm_marker_normal);
 				_alarmToAdd.Draggable = true;
 			} else {
-				_alarmToAdd.Position = e.Point;
+				_alarmToAdd.Position = e.Point;                
 			}
 		}
 

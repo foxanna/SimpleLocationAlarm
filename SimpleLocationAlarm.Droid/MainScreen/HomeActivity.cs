@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Android.Gms.Maps.Model;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
@@ -28,6 +29,9 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		{
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.Main);
+
+            _alarm_marker_normal = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_normal);
+            _alarm_normal_selected = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_selected);
 		}
 
 		protected override void OnStart ()

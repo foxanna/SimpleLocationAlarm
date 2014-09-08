@@ -121,7 +121,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 				));
 				_currentMarkers.Add (_map.AddMarker (new MarkerOptions ()
 					.SetPosition (new LatLng (alarm.Latitude, alarm.Longitude))
-					.SetTitle (alarm.Name)));
+					.SetTitle (alarm.Name)
+                    .InvokeIcon(_alarm_marker_normal)));
 			}
 
 			Log.Debug (TAG, "data redrawn");
@@ -131,24 +132,33 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		{
 			var location = MyCurrentLocation;
 
-			if (_mapData.Count > 0 || location != null) {
-				var boundsBuilder = new LatLngBounds.Builder ();
+            if (_mapData.Count > 0)
+            {
+                var boundsBuilder = new LatLngBounds.Builder();
 
-				foreach (var alarm in _mapData) {
-					boundsBuilder.Include (new LatLng (alarm.Latitude, alarm.Longitude));
-				}
+                foreach (var alarm in _mapData)
+                {
+                    boundsBuilder.Include(new LatLng(alarm.Latitude, alarm.Longitude));
+                }
 
-				if (location != null) {
-					boundsBuilder.Include (new LatLng (location.Latitude, location.Longitude));
-				}
+                if (location != null)
+                {
+                    boundsBuilder.Include(new LatLng(location.Latitude, location.Longitude));
+                }
 
-				try {
-					_map.AnimateCamera (CameraUpdateFactory.NewLatLngBounds (boundsBuilder.Build (), 100));
-					Log.Debug (TAG, "map zoomed with NewLatLngBounds");
-				} catch {
-					Log.Debug (TAG, "exception while zooming with NewLatLngBounds");
-				}
-			}
+                try
+                {
+                    _map.AnimateCamera(CameraUpdateFactory.NewLatLngBounds(boundsBuilder.Build(), 200));
+                    Log.Debug(TAG, "map zoomed with NewLatLngBounds");
+                }
+                catch
+                {
+                    Log.Debug(TAG, "exception while zooming with NewLatLngBounds");
+                }
+            }
+            else {
+                AnimateTo(location);
+            }
 		}
 	}
 }

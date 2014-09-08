@@ -84,7 +84,6 @@
     <Compile Include="MainScreen\HomeActivity.cs" />
     <Compile Include="MainScreen\MapWork.cs" />
     <Compile Include="MainScreen\GoogleServicesStaff.cs" />
-    <Compile Include="MainScreen\DBWork.cs" />
     <Compile Include="MainScreen\AddMode.cs" />
     <Compile Include="DBService.cs" />
   </ItemGroup>
@@ -129,11 +128,27 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="MainScreen\" />
-    <Folder Include="Resources\menu\" />
-    <Folder Include="Resources\drawable-hdpi\" />
-    <Folder Include="Resources\drawable-mdpi\" />
-    <Folder Include="Resources\drawable-xhdpi\" />
-    <Folder Include="Resources\drawable-xxhdpi\" />
+    <AndroidResource Include="Resources\drawable-hdpi\alarm_marker_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\alarm_marker_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\alarm_marker_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\alarm_marker_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\alarm_marker_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\alarm_marker_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\alarm_marker_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\alarm_marker_selected.png" />
   </ItemGroup>
 </Project>
