@@ -33,15 +33,16 @@ namespace SimpleLocationAlarm.Droid
 				_dataBaseUpdated = value;
 
 				if (_dataBaseUpdated != null) {
-					Android.App.Application.Context.RegisterReceiver (this, 
-						new IntentFilter (Constants.DatabaseUpdatesBroadcastReceiverAction)); 
+					Android.App.Application.Context.RegisterReceiver (this,
+                        new IntentFilter(Constants.DatabaseUpdated_Action)); 
 				}
 			}
 		}
 
 		public override void OnReceive (Context context, Intent intent)
 		{
-			if (Constants.DatabaseUpdatesBroadcastReceiverAction.Equals (intent.Action)) {	
+            if (Constants.DatabaseUpdated_Action.Equals(intent.Action))
+            {	
 				var alarms = JsonConvert.DeserializeObject<List<AlarmData>> (
 					             intent.GetStringExtra (Constants.AlarmsData_Extra));
 				var handler = DataBaseUpdated;

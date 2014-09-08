@@ -40,7 +40,7 @@ namespace SimpleLocationAlarm.Droid
 
 		protected override void OnHandleIntent (Intent intent)
 		{
-			Log.Debug (TAG, "OnHandleIntent start");
+			Log.Debug (TAG, "OnHandleIntent start because of " + intent.Action);
 
 			switch (intent.Action) {
 			case Constants.DatabaseService_SendDatabaseState_Action:
@@ -60,8 +60,10 @@ namespace SimpleLocationAlarm.Droid
 		void BroadcastAlarmsData ()
 		{
 			var alarms = ReadAlarmsFromDatabase ();
-			SendBroadcast (new Intent (Constants.DatabaseUpdatesBroadcastReceiverAction)
+            SendBroadcast(new Intent(Constants.DatabaseUpdated_Action)
 				.PutExtra (Constants.AlarmsData_Extra, JsonConvert.SerializeObject (alarms)));
+
+            Log.Debug(TAG, "New alarms broadcasted");
 		}
 
 		List<AlarmData> ReadAlarmsFromDatabase ()
