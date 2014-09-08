@@ -10,6 +10,11 @@
 		android:id="@+id/alarm_name"
 		my:showAsAction="ifRoom|collapseActionView"
 		my:actionViewClass="android.widget.EditText"/>
+    <item
+		android:id="@+id/delete"
+        my:showAsAction="always"
+        android:icon="@drawable/ic_action_discard"
+        android:title="@string/delete"/>
     <item 
 		android:id="@+id/accept"       
         my:showAsAction="always"

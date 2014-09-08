@@ -14,7 +14,8 @@ namespace SimpleLocationAlarm.Droid
 	[Service]
 	[IntentFilter (new String[] { 
 		Constants.DatabaseService_SendDatabaseState_Action,
-		Constants.DatabaseService_AddAlarm_Action
+		Constants.DatabaseService_AddAlarm_Action,
+        Constants.DatabaseService_DeleteAlarm_Action
 	})]
 	public class DBService : IntentService
 	{
@@ -48,6 +49,9 @@ namespace SimpleLocationAlarm.Droid
 			case Constants.DatabaseService_AddAlarm_Action:
 				AddAlarm (JsonConvert.DeserializeObject<AlarmData> (intent.GetStringExtra (Constants.AlarmsData_Extra)));
 				break;
+            case Constants.DatabaseService_DeleteAlarm_Action:
+                DeleteAlarm(JsonConvert.DeserializeObject<AlarmData>(intent.GetStringExtra(Constants.AlarmsData_Extra)));
+                break;
 			}
 		
 			Log.Debug (TAG, "OnHandleIntent end");
@@ -62,13 +66,9 @@ namespace SimpleLocationAlarm.Droid
 
 		List<AlarmData> ReadAlarmsFromDatabase ()
 		{
-			List<AlarmData> alarms = null;
+            var alarms = new List<AlarmData>();
 
 			using (var connection = CreateConnection ()) {
-				//alarms = new List<AlarmData> () {
-				//	new AlarmData () { Latitude = 48, Longitude = 35, Radius = new Random ().Next (50, 100) * 200 },
-				//};
-
 				alarms = connection.Table<AlarmData> ().ToList ();
 			}
 
@@ -83,5 +83,16 @@ namespace SimpleLocationAlarm.Droid
 
 			BroadcastAlarmsData ();
 		}
-	}
+    
+        void DeleteAlarm(AlarmData alarmData)
+        {
+            using (var connection = CreateConnection())
+            {
+                var alarm = connection.Table<AlarmData>().FirstOrDefault(a => a.Latitude == alarmData.Latitude && a.Longitude == alarmData.Longitude);
+                connection.Delete(alarm);
+            }
+
+            BroadcastAlarmsData();
+        }
+    }
 }

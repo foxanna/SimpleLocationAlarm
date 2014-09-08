@@ -11,126 +11,143 @@ using Android.Util;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
-	public partial class HomeActivity
-	{
-		GoogleMap _map;
+    public partial class HomeActivity
+    {
+        GoogleMap _map;
 
-		void AnimateTo (Location location)
-		{
-			if (location != null) {
-				_map.AnimateCamera (CameraUpdateFactory.NewLatLngZoom (
-					new LatLng (location.Latitude, location.Longitude), _map.MaxZoomLevel - 6));
-			}
-		}
+        BitmapDescriptor _alarm_marker_normal, _alarm_normal_selected;
 
-		void FindMap ()
-		{
-			_map = (SupportFragmentManager.FindFragmentById (Resource.Id.map) as SupportMapFragment).Map;
-			if (_map != null) {
-				_map.MyLocationEnabled = true;
+        Marker _alarmToAdd;
 
-				_map.UiSettings.TiltGesturesEnabled = false;
-				_map.UiSettings.RotateGesturesEnabled = false;
+        List<AlarmData> _mapData = new List<AlarmData>();
+        List<Marker> _currentMarkers = new List<Marker>();
+        List<Circle> _currentCircles = new List<Circle>();
 
-				_map.MyLocationChange += HandleMyLocationChange;
+        void AnimateTo(Location location)
+        {
+            if (location != null)
+            {
+                _map.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(
+                    new LatLng(location.Latitude, location.Longitude), _map.MaxZoomLevel - 6));
+            }
+        }
 
-				AskToRefreshData ();
-			}
-		}
+        void FindMap()
+        {
+            _map = (SupportFragmentManager.FindFragmentById(Resource.Id.map) as SupportMapFragment).Map;
+            if (_map != null)
+            {
+                _map.MyLocationEnabled = true;
 
-		Location GetLastKnownLocation ()
-		{
-			var locationManager = LocationManager.FromContext (this);
+                _map.UiSettings.TiltGesturesEnabled = false;
+                _map.UiSettings.RotateGesturesEnabled = false;
 
-			return locationManager.GetLastKnownLocation (LocationManager.GpsProvider) ??
-			locationManager.GetLastKnownLocation (LocationManager.NetworkProvider);
-		}
+                _map.MapClick += OnMapClick;
+                _map.MyLocationChange += HandleMyLocationChange;
+                _map.MarkerClick += OnMarkerClick;
 
-		Location _myCurrentLocation;
+                AskToRefreshData();
+            }
+        }
 
-		Location MyCurrentLocation {
-			get {
-				return _myCurrentLocation ?? GetLastKnownLocation ();
-			}
-		}
+        Location GetLastKnownLocation()
+        {
+            var locationManager = LocationManager.FromContext(this);
 
-		bool _wasZoomedToCurrentLocation;
+            return locationManager.GetLastKnownLocation(LocationManager.GpsProvider) ??
+            locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
+        }
 
-		void HandleMyLocationChange (object sender, GoogleMap.MyLocationChangeEventArgs e)
-		{
-			Log.Debug (TAG, "New location detected");
+        Location _myCurrentLocation;
 
-			_myCurrentLocation = e.Location;
+        Location MyCurrentLocation
+        {
+            get
+            {
+                return _myCurrentLocation ?? GetLastKnownLocation();
+            }
+        }
 
-			if (!_wasZoomedToCurrentLocation) {
-				ZoomToMyLocationAndAlarms ();
-			}
+        bool _wasZoomedToCurrentLocation;
 
-			_wasZoomedToCurrentLocation = true;
-		}
+        void HandleMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
+        {
+            Log.Debug(TAG, "New location detected");
 
-		void LooseMap ()
-		{
-			if (_map != null) {
-				_map.MapClick -= OnMapClick;
-				_map.MyLocationChange -= HandleMyLocationChange;
+            _myCurrentLocation = e.Location;
 
-				_map.Clear ();
+            if (!_wasZoomedToCurrentLocation)
+            {
+                ZoomToMyLocationAndAlarms();
+            }
 
-				_map = null;
-			}
-		}
+            _wasZoomedToCurrentLocation = true;
+        }
 
-		List<AlarmData> _mapData = new List<AlarmData> ();
-		List<Marker> _currentMarkers = new List<Marker> ();
-		List<Circle> _currentCircles = new List<Circle> ();
+        void LooseMap()
+        {
+            if (_map != null)
+            {
+                _map.MapClick -= OnMapClick;
+                _map.MyLocationChange -= HandleMyLocationChange;
+                _map.MarkerClick -= OnMarkerClick;
 
-		void OnDataUpdated (object sender, AlarmsEventArgs e)
-		{
-			Log.Debug (TAG, "OnDataUpdated, count = " + e.Data.Count);
+                _map.Clear();
 
-			_mapData = e.Data;
+                _map = null;
+            }
+        }
 
-			if (Mode == Mode.None) {
-				RedrawMapData ();
-				ZoomToMyLocationAndAlarms ();
-			}
-		}
+        void OnDataUpdated(object sender, AlarmsEventArgs e)
+        {
+            Log.Debug(TAG, "OnDataUpdated, count = " + e.Data.Count);
 
-		void AskToRefreshData ()
-		{
-			StartService (new Intent (Constants.DatabaseService_SendDatabaseState_Action));
-		}
+            _mapData = e.Data;
 
-		void RedrawMapData ()
-		{
-			_currentCircles.Clear ();
-			_currentMarkers.Clear ();
+            if (Mode == Mode.None)
+            {
+                RedrawMapData();
+                ZoomToMyLocationAndAlarms();
+            }
+        }
 
-			if (_map == null) {
-				return;
-			}
+        void AskToRefreshData()
+        {
+            StartService(new Intent(Constants.DatabaseService_SendDatabaseState_Action));
+        }
 
-			_map.Clear ();
+        void RedrawMapData()
+        {
+            _currentCircles.Clear();
+            _currentMarkers.Clear();
 
-			foreach (var alarm in _mapData) {
-				_currentCircles.Add (_map.AddCircle (new CircleOptions ()
-					.InvokeCenter (new LatLng (alarm.Latitude, alarm.Longitude))
-					.InvokeRadius (alarm.Radius)
-					//	.InvokeStrokeColor (Resources.GetColor (Android.Resource.Color.HoloBlueLight))
-				));
-				_currentMarkers.Add (_map.AddMarker (new MarkerOptions ()
-					.SetPosition (new LatLng (alarm.Latitude, alarm.Longitude))
-					.SetTitle (alarm.Name)
+            if (_map == null)
+            {
+                return;
+            }
+
+            _map.Clear();
+
+            foreach (var alarm in _mapData)
+            {
+                _currentCircles.Add(_map.AddCircle(new CircleOptions()
+                    .InvokeCenter(new LatLng(alarm.Latitude, alarm.Longitude))
+                    .InvokeRadius(alarm.Radius)
+                    //	.InvokeStrokeColor (Resources.GetColor (Android.Resource.Color.HoloBlueLight))
+                ));
+
+                _currentMarkers.Add( _map.AddMarker(new MarkerOptions()
+                    .SetPosition(new LatLng(alarm.Latitude, alarm.Longitude))
+                    .SetTitle(alarm.Name)
                     .InvokeIcon(_alarm_marker_normal)));
-			}
+            }
 
-			Log.Debug (TAG, "data redrawn");
-		}
+            Log.Debug(TAG, "data redrawn");
+        }
 
-		void ZoomToMyLocationAndAlarms ()
-		{
-			var location = MyCurrentLocation;
+        void ZoomToMyLocationAndAlarms()
+        {
+            var location = MyCurrentLocation;
 
             if (_mapData.Count > 0)
             {
@@ -156,9 +173,61 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     Log.Debug(TAG, "exception while zooming with NewLatLngBounds");
                 }
             }
-            else {
+            else
+            {
                 AnimateTo(location);
             }
-		}
-	}
+        }
+
+        void OnMapClick(object sender, GoogleMap.MapClickEventArgs e)
+        {
+            switch (Mode)
+            {
+                case Mode.Add:
+                    if (_alarmToAdd == null)
+                    {
+                        _alarmToAdd = _map.AddMarker(new MarkerOptions().SetPosition(e.Point));
+                        _alarmToAdd.SetIcon(_alarm_marker_normal);
+                        _alarmToAdd.Draggable = true;
+                    }
+                    else
+                    {
+                        _alarmToAdd.Position = e.Point;
+                    }
+
+                    break;
+
+                case Mode.MarkerSelected:
+                    if (_selectedMarker != null)
+                    {
+                        _selectedMarker.SetIcon(_alarm_marker_normal);
+                        _selectedMarker = null;
+                    }
+                    Mode = Mode.None;
+
+                    break;
+            }
+        }
+
+        Marker _selectedMarker;
+
+        void OnMarkerClick(object sender, GoogleMap.MarkerClickEventArgs e)
+        {
+            switch (Mode)
+            {
+                case Mode.None:
+                case Mode.MarkerSelected:
+                    if (_selectedMarker != null)
+                    {
+                        _selectedMarker.SetIcon(_alarm_marker_normal);
+                    }
+                    _selectedMarker = e.Marker;
+                    _selectedMarker.SetIcon(_alarm_normal_selected);
+                    Mode = Mode.MarkerSelected;
+                break;
+            }
+
+            e.Handled = false;
+        }
+    }
 }
