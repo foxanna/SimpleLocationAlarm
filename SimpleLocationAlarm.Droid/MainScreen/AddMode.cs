@@ -69,6 +69,9 @@ namespace SimpleLocationAlarm.Droid.MainScreen
         {
             switch (item.ItemId)
             {
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    return true;
                 case Resource.Id.add_alarm:
                     Mode = Mode.Add;
                     return true;
@@ -109,6 +112,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     
                     _alarmNameMenuItem.SetVisible(false);
                     _deleteAlarmMenuItem.SetVisible(false);
+
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(false);
                     
                     break;
                 case Mode.Add:
@@ -128,6 +133,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     _addAlarmMenuButton.SetVisible(false);
 
                     _deleteAlarmMenuItem.SetVisible(true);
+
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
                     break;
             }
