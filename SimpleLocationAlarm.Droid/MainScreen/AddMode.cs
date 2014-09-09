@@ -46,7 +46,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             }
         }
 
-        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem;
+        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem;
         EditText _alarmNameEditText;
 
         public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
@@ -58,6 +58,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             _acceptMenuButton = menu.FindItem(Resource.Id.cancel);
             _alarmNameMenuItem = menu.FindItem(Resource.Id.alarm_name);
             _deleteAlarmMenuItem = menu.FindItem(Resource.Id.delete);
+            _disableAlarmMenuItem = menu.FindItem(Resource.Id.disable_alarm);
+            _enableAlarmMenuItem = menu.FindItem(Resource.Id.enable_alarm);
 
             _alarmNameEditText = MenuItemCompat.GetActionView(_alarmNameMenuItem) as EditText;
             _alarmNameEditText.Hint = Resources.GetString(Resource.String.alarm_name);
@@ -93,6 +95,14 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     DeleteSelectedMarker();
                     Mode = Mode.None;
                     return true;
+                case Resource.Id.enable_alarm:
+                    EnableSelectedAlarm(true);
+                    Mode = Mode.MarkerSelected;
+                    return true;
+                case Resource.Id.disable_alarm:
+                    EnableSelectedAlarm(false);
+                    Mode = Mode.MarkerSelected;
+                    return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }
@@ -103,23 +113,15 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             switch (Mode)
             {
                 case Mode.None:
-                    _addAlarmMenuButton.SetVisible(true);
+                    HideAllActionbarButtons();
 
-                    _cancelMenuButton.SetVisible(false);
-                    _acceptMenuButton.SetVisible(false);
-                    _alarmNameMenuItem.CollapseActionView();
-                    _alarmNameMenuItem.SetOnActionExpandListener(null);
-
-                    (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(_alarmNameEditText.WindowToken, 0);
+                    _addAlarmMenuButton.SetVisible(true);  
                     
-                    _alarmNameMenuItem.SetVisible(false);
-                    _deleteAlarmMenuItem.SetVisible(false);
-
                     SupportActionBar.SetDisplayHomeAsUpEnabled(false);
                     
                     break;
                 case Mode.Add:
-                    _addAlarmMenuButton.SetVisible(false);
+                    HideAllActionbarButtons();
 
                     _cancelMenuButton.SetVisible(true);
                     _acceptMenuButton.SetVisible(true);
@@ -127,19 +129,38 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
                     _alarmNameMenuItem.ExpandActionView();
                     _alarmNameMenuItem.SetOnActionExpandListener(this);
-
-                    _alarmNameEditText.Text = string.Empty;
-
+                    
                     break;
                 case Mode.MarkerSelected:
-                    _addAlarmMenuButton.SetVisible(false);
+                    HideAllActionbarButtons();
 
                     _deleteAlarmMenuItem.SetVisible(true);
 
+                    _enableAlarmMenuItem.SetVisible(!_selectedAlarm.Enabled);
+                    _disableAlarmMenuItem.SetVisible(_selectedAlarm.Enabled);
+                    
                     SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
                     break;
             }
+        }
+
+        void HideAllActionbarButtons()
+        {
+            _addAlarmMenuButton.SetVisible(false);
+
+            _cancelMenuButton.SetVisible(false);
+            _acceptMenuButton.SetVisible(false);
+            _alarmNameMenuItem.CollapseActionView();
+            _alarmNameMenuItem.SetOnActionExpandListener(null);
+            _alarmNameMenuItem.SetVisible(false);
+            _deleteAlarmMenuItem.SetVisible(false);
+            _enableAlarmMenuItem.SetVisible(false);
+            _disableAlarmMenuItem.SetVisible(false);
+
+            _alarmNameEditText.Text = string.Empty;
+
+            (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(_alarmNameEditText.WindowToken, 0);
         }
 
         void CancelAnything()
@@ -193,9 +214,23 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             }
         }
 
-        private void DeleteSelectedMarker()
+        void EnableSelectedAlarm(bool enabled)
         {
-            RemoveGeofence(_mapData.FirstOrDefault(m => m.Latitude == _selectedMarker.Position.Latitude && m.Longitude == _selectedMarker.Position.Longitude));
+            _selectedAlarm.Enabled = enabled;
+
+            if (enabled)
+            {
+                AddGeofence(_selectedAlarm);
+            }
+            else
+            {
+                RemoveGeofence(_selectedAlarm, ActionOnAlarm.Disable);
+            }
+        }
+
+        void DeleteSelectedMarker()
+        {
+            RemoveGeofence(_selectedAlarm, ActionOnAlarm.Delete);
             
             _selectedMarker.Remove();
             _selectedMarker = null;

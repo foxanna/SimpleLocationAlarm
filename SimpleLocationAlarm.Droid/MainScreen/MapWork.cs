@@ -190,6 +190,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 {
                     _selectedMarker = _currentMarkers[_currentMarkers.Count - 1];
                     _selectedMarker.ShowInfoWindow();
+                    _selectedAlarm = alarm;
                 }
             }
 

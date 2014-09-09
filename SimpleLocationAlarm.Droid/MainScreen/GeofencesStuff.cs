@@ -15,9 +15,14 @@ namespace SimpleLocationAlarm.Droid.MainScreen
         IGooglePlayServicesClientConnectionCallbacks, IGooglePlayServicesClientOnConnectionFailedListener,
         LocationClient.IOnRemoveGeofencesResultListener, LocationClient.IOnAddGeofencesResultListener
     {
+        enum ActionOnAlarm
+        {
+            Add, Disable, Delete
+        }
+
         LocationClient _locationClient;
 
-        List<Tuple<Mode, AlarmData>> _changesToProceed = new List<Tuple<Mode, AlarmData>>();
+        List<Tuple<ActionOnAlarm, AlarmData>> _changesToProceed = new List<Tuple<ActionOnAlarm, AlarmData>>();
 
         void AddGeofence(AlarmData alarm)
         {
@@ -25,27 +30,27 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
             lock (_changesToProceed)
             {
-                _changesToProceed.Add(Tuple.Create(Mode.Add, alarm));
+                _changesToProceed.Add(Tuple.Create(ActionOnAlarm.Add, alarm));
             }
 
             ProcessNextChange();
         }
 
-        void RemoveGeofence(AlarmData alarm)
+        void RemoveGeofence(AlarmData alarm, ActionOnAlarm action)
         {
             Log.Debug(TAG, "RemoveGeofence");
 
             lock (_changesToProceed)
             {
                 // if alarm in queue to be added should be removed
-                var alarmFromQueueToAdd = _changesToProceed.FirstOrDefault(a => a.Item1 == Mode.Add && a.Item2.Latitude == alarm.Latitude && a.Item2.Longitude == alarm.Longitude);
+                var alarmFromQueueToAdd = _changesToProceed.FirstOrDefault(a => a.Item1 == ActionOnAlarm.Add && a.Item2.Latitude == alarm.Latitude && a.Item2.Longitude == alarm.Longitude);
                 if (alarmFromQueueToAdd != null && (!_isProcessing || _changesToProceed.IndexOf(alarmFromQueueToAdd) > 0))
                 {
                     _changesToProceed.Remove(alarmFromQueueToAdd);
                     return;
                 }
 
-                _changesToProceed.Add(Tuple.Create(Mode.MarkerSelected, alarm));
+                _changesToProceed.Add(Tuple.Create(action, alarm));
             }
 
             ProcessNextChange();
@@ -72,7 +77,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
         {
             Log.Debug(TAG, "OnConnected");
 
-            Tuple<Mode, AlarmData> change = null;
+            Tuple<ActionOnAlarm, AlarmData> change = null;
             
             lock (_changesToProceed)
             {
@@ -91,11 +96,12 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
             switch (change.Item1)
             {
-                case Mode.Add:
+                case ActionOnAlarm.Add:
                     _dbManager.AddAlarm(_changesToProceed[0].Item2);
                     _locationClient.AddGeofences(new List<IGeofence>() { AlarmToGeofence(change.Item2) }, transitionIntent, this);
                     break;
-                case Mode.MarkerSelected:
+                case ActionOnAlarm.Delete:
+                case ActionOnAlarm.Disable:
                     _locationClient.RemoveGeofences(new List<string>() { _changesToProceed[0].Item2.RequestId }, this);
                     break;
             }           
@@ -159,7 +165,14 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             {
                 Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult Success");
 
-                _dbManager.DeleteAlarm(_changesToProceed[0].Item2);
+                if (_changesToProceed[0].Item1 == ActionOnAlarm.Disable)
+                {
+                    _dbManager.DisableAlarm(_changesToProceed[0].Item2.RequestId);
+                }
+                else
+                {
+                    _dbManager.DeleteAlarm(_changesToProceed[0].Item2);
+                }
             }
             else
             {
