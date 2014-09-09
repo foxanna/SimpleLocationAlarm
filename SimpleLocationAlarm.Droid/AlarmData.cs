@@ -20,5 +20,7 @@ namespace SimpleLocationAlarm.Droid
 		public string Name { get; set; }
 
         public string RequestId { get; set; }
+
+        public bool Enabled { get; set; }
 	}
 }

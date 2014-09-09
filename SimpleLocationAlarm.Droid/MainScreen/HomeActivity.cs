@@ -24,7 +24,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 	{
 		const string TAG = "HomeActivity";
 
-		DataBaseUpdatesBroadcastReceiver DataBaseUpdatesListener = new DataBaseUpdatesBroadcastReceiver ();
+        DBManager _dbManager = new DBManager();
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -37,7 +37,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		protected override void OnStart ()
 		{
 			base.OnStart ();
-			DataBaseUpdatesListener.DataBaseUpdated = OnDataUpdated;
+            _dbManager.DataUpdated += OnDataUpdated;
 
 			FindMap ();
 		}
@@ -46,7 +46,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		{
 			LooseMap ();
 
-			DataBaseUpdatesListener.DataBaseUpdated = null;
+            _dbManager.DataUpdated -= OnDataUpdated;
 			base.OnStop ();
 		}
 

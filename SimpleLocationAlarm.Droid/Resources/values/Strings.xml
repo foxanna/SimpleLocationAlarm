@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">app name</string>
-	<string name="device_not_supported">This device is not supported</string>
+    <string name="device_not_supported">This device is not supported</string>
 	<string name="add_alarm">Add alarm</string>
 	<string name="alarm_name">Alarm name</string>
 	<string name="done">Done</string>
@@ -9,7 +9,7 @@
 	<string name="cancel">Cancel</string>
 	<string name="enter_alarm_name">Enter alarm name</string>
 	<string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
-    <string name="failed_to_add">Failed to add alarm</string>
+    <string name="failed_to_add">Your alarm is created disabled</string>
     <string name="failed_to_remove">Failed to remove alarm</string>
     <string name="failed_to_connect">Failed to connect to location services</string>
     <string name="probably_location_services_are_off">Probably, location services are disabled</string>

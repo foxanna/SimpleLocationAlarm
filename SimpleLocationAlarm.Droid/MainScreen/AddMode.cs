@@ -144,19 +144,11 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
         void CancelAnything()
         {
-            if (_alarmToAdd != null)
-            {
-                _alarmToAdd.Remove();
-                _alarmToAdd = null;
-            }
+            ClearMap();
+         
+            _alarmToAdd = null;
 
-            if (_selectedMarker != null)
-            {
-                _selectedMarker.Remove();
-                _selectedMarker = null;
-            }
-
-            _map.Clear();
+            _selectedMarker = null;
 
             RedrawMapData();
             ZoomToMyLocationAndAlarms();
@@ -164,9 +156,11 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
         void PrepareToAdd()
         {
-            _map.Clear();
+            ClearMap();
         }
-        
+
+        Random random = new Random();
+
         bool AcceptAdd()
         {
             if (_alarmToAdd == null)
@@ -189,6 +183,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                         Longitude = _alarmToAdd.Position.Longitude,
                         Radius = 200,
                         Name = _alarmNameEditText.Text,
+                        Enabled = true,
+                        RequestId = string.Format("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble())
                     };
                 
                 AddGeofence(newAlarm);

@@ -92,6 +92,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             switch (change.Item1)
             {
                 case Mode.Add:
+                    _dbManager.AddAlarm(_changesToProceed[0].Item2);
                     _locationClient.AddGeofences(new List<IGeofence>() { AlarmToGeofence(change.Item2) }, transitionIntent, this);
                     break;
                 case Mode.MarkerSelected:
@@ -101,13 +102,9 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
         }
 
-        Random random = new Random();
-
         IGeofence AlarmToGeofence(AlarmData alarm)
         {
-            alarm.RequestId = string.Format("{0};{1}_{2}", alarm.Latitude, alarm.Longitude, random.NextDouble());
-
-            return new GeofenceBuilder()
+             return new GeofenceBuilder()
                 .SetRequestId(alarm.RequestId)
                 .SetTransitionTypes(Geofence.GeofenceTransitionEnter | Geofence.GeofenceTransitionExit)
                 .SetCircularRegion(alarm.Latitude, alarm.Longitude, (float)alarm.Radius)
@@ -124,17 +121,19 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             ProcessNextChange();
         }
 
+
         public void OnAddGeofencesResult(int statusCode, string[] geofenceRequestIds)
         {
             if (LocationStatusCodes.Success == statusCode)
             {
                 Log.Debug(TAG, "OnAddGeofencesResult Success");
-                StartService(new Intent(this, typeof(DBService)).SetAction(Constants.DatabaseService_AddAlarm_Action)
-                    .PutExtra(Constants.AlarmsData_Extra, JsonConvert.SerializeObject(_changesToProceed[0].Item2)));
             }
             else
             {
                 Log.Debug(TAG, "OnAddGeofencesResult Failure");
+
+                _dbManager.DisableAlarm(_changesToProceed[0].Item2.RequestId);
+
                 Toast.MakeText(this, Resource.String.failed_to_add, ToastLength.Short).Show();
                 Toast.MakeText(this, Resource.String.probably_location_services_are_off, ToastLength.Short).Show();
             }
@@ -159,12 +158,13 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             if (LocationStatusCodes.Success == statusCode)
             {
                 Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult Success");
-                StartService(new Intent(this, typeof(DBService)).SetAction(Constants.DatabaseService_DeleteAlarm_Action)
-                    .PutExtra(Constants.AlarmsData_Extra, JsonConvert.SerializeObject(_changesToProceed[0].Item2)));
+
+                _dbManager.DeleteAlarm(_changesToProceed[0].Item2);
             }
             else
             {
                 Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult Failure");
+
                 Toast.MakeText(this, Resource.String.failed_to_remove, ToastLength.Short).Show();
                 Toast.MakeText(this, Resource.String.probably_location_services_are_off, ToastLength.Short).Show();
             }
@@ -188,6 +188,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             if (result.HasResolution)
             {
                 Log.Debug(TAG, "OnConnectionFailed with resolution");
+
                 try
                 {
                     result.StartResolutionForResult(this, _locationManagerFailedRequestCode);
@@ -195,12 +196,14 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 catch (Android.Content.IntentSender.SendIntentException e)
                 {
                     Log.Debug(TAG, e.Message);
+
                     Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
                 }
             }
             else
             {
                 Log.Debug(TAG, "OnConnectionFailed without resolution");
+
                 Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
             }
         }
@@ -214,6 +217,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             else
             {
                 Log.Debug(TAG, "OnActivityResultForLM canceled");
+
                 Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
             }
         }

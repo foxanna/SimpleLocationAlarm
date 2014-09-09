@@ -16,7 +16,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
     {
         GoogleMap _map;
 
-        BitmapDescriptor _alarm_marker_normal, _alarm_marker_selected;
+        BitmapDescriptor _alarm_marker_normal, _alarm_marker_selected, _alarm_marker_disabled;
 
         Marker _alarmToAdd;
 
@@ -51,8 +51,11 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 // http://developer.android.com/reference/com/google/android/gms/maps/model/BitmapDescriptorFactory.html
                 _alarm_marker_normal = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_normal);
                 _alarm_marker_selected = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_selected);
+                _alarm_marker_disabled = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_disabled);
                 
-                AskToRefreshData();
+                RefreshData();
+
+            // ADD onmaploaded
 
                 if (Mode == Mode.Add)
                 {
@@ -62,6 +65,11 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     }
                 }
             }
+        }
+
+        void RefreshData()
+        {
+            _dbManager.InvokeDataUpdate();
         }
 
         Location GetLastKnownLocation()
@@ -106,10 +114,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _map.MyLocationChange -= HandleMyLocationChange;
                 _map.MarkerClick -= OnMarkerClick;
 
-                _currentCircles.Clear();
-                _currentMarkers.Clear();
-
-                _map.Clear();
+                ClearMap();
 
                 _map = null;
             }
@@ -128,22 +133,41 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             }
         }
 
-        void AskToRefreshData()
+        void ClearMap()
         {
-            StartService(new Intent(Constants.DatabaseService_SendDatabaseState_Action));
+            foreach (var marker in _currentMarkers)
+            {
+                marker.Remove();
+            }
+
+            _currentMarkers.Clear();
+
+            foreach (var circle in _currentCircles)
+            {
+                circle.Remove();
+            }
+
+            _currentCircles.Clear();
+
+            if (_alarmToAdd != null)
+            {
+                _alarmToAdd.Remove();
+            }
+
+            if (_selectedMarker != null)
+            {
+                _selectedMarker.Remove();
+            }
         }
 
         void RedrawMapData()
         {
-            _currentCircles.Clear();
-            _currentMarkers.Clear();
-
             if (_map == null)
             {
                 return;
             }
 
-            _map.Clear();
+            ClearMap();
 
             foreach (var alarm in _mapData)
             {
@@ -160,11 +184,12 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _currentMarkers.Add(_map.AddMarker(new MarkerOptions()
                     .SetPosition(position)
                     .SetTitle(alarm.Name)
-                    .InvokeIcon(selected ? _alarm_marker_selected : _alarm_marker_normal)));
+                    .InvokeIcon(selected ? _alarm_marker_selected : (alarm.Enabled ? _alarm_marker_normal : _alarm_marker_disabled))));
 
                 if (selected)
                 {
-                    _currentMarkers[_currentMarkers.Count - 1].ShowInfoWindow();
+                    _selectedMarker = _currentMarkers[_currentMarkers.Count - 1];
+                    _selectedMarker.ShowInfoWindow();
                 }
             }
 
@@ -226,9 +251,10 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 case Mode.MarkerSelected:
                     if (_selectedMarker != null)
                     {
-                        _selectedMarker.SetIcon(_alarm_marker_normal);
+                        _selectedMarker.SetIcon(_selectedAlarm.Enabled ? _alarm_marker_normal : _alarm_marker_disabled);
                         _selectedMarker = null;
                     }
+
                     Mode = Mode.None;
 
                     break;
@@ -236,6 +262,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
         }
 
         Marker _selectedMarker;
+        AlarmData _selectedAlarm;
 
         void OnMarkerClick(object sender, GoogleMap.MarkerClickEventArgs e)
         {
@@ -245,10 +272,13 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 case Mode.MarkerSelected:
                     if (_selectedMarker != null)
                     {
-                        _selectedMarker.SetIcon(_alarm_marker_normal);
+                        _selectedMarker.SetIcon(_selectedAlarm.Enabled ? _alarm_marker_normal : _alarm_marker_disabled);
                     }
+
                     _selectedMarker = e.Marker;
                     _selectedMarker.SetIcon(_alarm_marker_selected);
+                    _selectedAlarm = _mapData.FirstOrDefault(a => a.Latitude == _selectedMarker.Position.Latitude && a.Longitude == _selectedMarker.Position.Longitude);
+
                     Mode = Mode.MarkerSelected;
                 break;
             }
