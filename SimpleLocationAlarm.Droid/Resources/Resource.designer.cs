@@ -1539,19 +1539,22 @@ namespace SimpleLocationAlarm.Droid
 			public const int abc_simple_decor = 2130903063;
 			
 			// aapt resource value: 0x7f030018
-			public const int Main = 2130903064;
+			public const int AlarmError = 2130903064;
 			
 			// aapt resource value: 0x7f030019
-			public const int mr_media_route_chooser_dialog = 2130903065;
+			public const int Main = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int mr_media_route_controller_dialog = 2130903066;
+			public const int mr_media_route_chooser_dialog = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int mr_media_route_list_item = 2130903067;
+			public const int mr_media_route_controller_dialog = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int support_simple_spinner_dropdown_item = 2130903068;
+			public const int mr_media_route_list_item = 2130903068;
+			
+			// aapt resource value: 0x7f03001d
+			public const int support_simple_spinner_dropdown_item = 2130903069;
 			
 			static Layout()
 			{
@@ -1729,6 +1732,18 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f050036
 			public const int enter_alarm_name = 2131034166;
 			
+			// aapt resource value: 0x7f05003c
+			public const int error_with_alarm = 2131034172;
+			
+			// aapt resource value: 0x7f050038
+			public const int failed_to_add = 2131034168;
+			
+			// aapt resource value: 0x7f05003a
+			public const int failed_to_connect = 2131034170;
+			
+			// aapt resource value: 0x7f050039
+			public const int failed_to_remove = 2131034169;
+			
 			// aapt resource value: 0x7f050002
 			public const int mr_media_route_button_content_description = 2131034114;
 			
@@ -1746,6 +1761,9 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f050001
 			public const int mr_user_route_category_name = 2131034113;
+			
+			// aapt resource value: 0x7f05003b
+			public const int probably_location_services_are_off = 2131034171;
 			
 			// aapt resource value: 0x7f05002c
 			public const int wallet_buy_button_place_holder = 2131034156;

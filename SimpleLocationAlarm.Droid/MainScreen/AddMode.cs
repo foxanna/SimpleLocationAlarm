@@ -1,4 +1,6 @@
-﻿using Android.Views;
+﻿using System;
+using System.Linq;
+using Android.Views;
 using Android.Widget;
 using Android.Support.V4.View;
 using Android.Gms.Maps;
@@ -181,29 +183,24 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             }
             else
             {
-                StartService(new Intent(Constants.DatabaseService_AddAlarm_Action)
-                    .PutExtra(Constants.AlarmsData_Extra, JsonConvert.SerializeObject(
-                    new AlarmData()
+                var newAlarm = new AlarmData()
                     {
                         Latitude = _alarmToAdd.Position.Latitude,
                         Longitude = _alarmToAdd.Position.Longitude,
                         Radius = 200,
                         Name = _alarmNameEditText.Text,
-                    })));
+                    };
+                
+                AddGeofence(newAlarm);
+
                 return true;
             }
         }
 
         private void DeleteSelectedMarker()
         {
-            StartService(new Intent(Constants.DatabaseService_DeleteAlarm_Action)
-                   .PutExtra(Constants.AlarmsData_Extra, JsonConvert.SerializeObject(
-                   new AlarmData()
-                   {
-                       Latitude = _selectedMarker.Position.Latitude,
-                       Longitude = _selectedMarker.Position.Longitude,
-                   })));
-
+            RemoveGeofence(_mapData.FirstOrDefault(m => m.Latitude == _selectedMarker.Position.Latitude && m.Longitude == _selectedMarker.Position.Longitude));
+            
             _selectedMarker.Remove();
             _selectedMarker = null;
         }

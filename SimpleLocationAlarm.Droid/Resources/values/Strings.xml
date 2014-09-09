@@ -9,4 +9,9 @@
 	<string name="cancel">Cancel</string>
 	<string name="enter_alarm_name">Enter alarm name</string>
 	<string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
+    <string name="failed_to_add">Failed to add alarm</string>
+    <string name="failed_to_remove">Failed to remove alarm</string>
+    <string name="failed_to_connect">Failed to connect to location services</string>
+    <string name="probably_location_services_are_off">Probably, location services are disabled</string>
+    <string name="error_with_alarm">Probably, location services were disabled\n\nAll your alarms were removed</string>
 </resources>

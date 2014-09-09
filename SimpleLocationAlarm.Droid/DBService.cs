@@ -52,11 +52,14 @@ namespace SimpleLocationAlarm.Droid
             case Constants.DatabaseService_DeleteAlarm_Action:
                 DeleteAlarm(JsonConvert.DeserializeObject<AlarmData>(intent.GetStringExtra(Constants.AlarmsData_Extra)));
                 break;
+            case Constants.DatabaseService_DeleteAll_Action:
+                DeleteAll();
+                break;
 			}
 		
 			Log.Debug (TAG, "OnHandleIntent end");
 		}
-
+        
 		void BroadcastAlarmsData ()
 		{
 			var alarms = ReadAlarmsFromDatabase ();
@@ -92,6 +95,16 @@ namespace SimpleLocationAlarm.Droid
             {
                 var alarm = connection.Table<AlarmData>().FirstOrDefault(a => a.Latitude == alarmData.Latitude && a.Longitude == alarmData.Longitude);
                 connection.Delete(alarm);
+            }
+
+            BroadcastAlarmsData();
+        }
+
+        void DeleteAll()
+        {
+            using (var connection = CreateConnection())
+            {
+                connection.DeleteAll<AlarmData>();
             }
 
             BroadcastAlarmsData();
