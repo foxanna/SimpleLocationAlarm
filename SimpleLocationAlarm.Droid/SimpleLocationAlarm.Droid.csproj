@@ -210,4 +210,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_volume_on.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\long_timer.mp3" />
+  </ItemGroup>
 </Project>

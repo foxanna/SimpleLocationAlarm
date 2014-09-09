@@ -24,6 +24,8 @@ namespace SimpleLocationAlarm.Droid
     {
         const string TAG = "AlarmScreen";
 
+        Android.Media.MediaPlayer _mediaPlayerLong;
+
         bool _success;
         AlarmData _alarm;
 
@@ -32,6 +34,17 @@ namespace SimpleLocationAlarm.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            var assetsFileDescriptor = Assets.OpenFd("long_timer.mp3");
+            if (assetsFileDescriptor != null)
+            {
+                _mediaPlayerLong = new Android.Media.MediaPlayer();
+                _mediaPlayerLong.SetDataSource(assetsFileDescriptor.FileDescriptor, assetsFileDescriptor.StartOffset,
+                    assetsFileDescriptor.Length);
+            }
+
+            _mediaPlayerLong.Prepare();
+            _mediaPlayerLong.Start();
 
             if (LocationClient.HasError(Intent))
             {
