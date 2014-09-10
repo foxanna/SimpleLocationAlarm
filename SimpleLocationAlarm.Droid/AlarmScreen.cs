@@ -48,7 +48,7 @@ namespace SimpleLocationAlarm.Droid
             }
 
             _mediaPlayerLong.Prepare();
-            //_mediaPlayerLong.Start();
+            _mediaPlayerLong.Start();
 
             if (LocationClient.HasError(Intent))
             {
