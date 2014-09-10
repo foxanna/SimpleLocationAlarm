@@ -175,12 +175,17 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             {
                 var position = new LatLng(alarm.Latitude, alarm.Longitude);
 
-                _currentCircles.Add(_map.AddCircle(new CircleOptions()
+                var circle = _map.AddCircle(new CircleOptions()
                     .InvokeCenter(position)
                     .InvokeRadius(alarm.Radius)
-                    //	.InvokeStrokeColor (Resources.GetColor (Android.Resource.Color.HoloBlueLight))
-                ));
+                    .InvokeFillColor(Resources.GetColor(Resource.Color.light))
+                );
 
+                circle.StrokeColor = Resources.GetColor(Resource.Color.dark);
+                circle.StrokeWidth = 1.0f;
+
+                _currentCircles.Add(circle);
+                
                 var selected = _selectedMarker != null && _selectedMarker.Position.Latitude == position.Latitude && _selectedMarker.Position.Longitude == position.Longitude;
                 
                 _currentMarkers.Add(_map.AddMarker(new MarkerOptions()

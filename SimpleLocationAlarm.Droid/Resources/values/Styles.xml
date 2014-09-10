@@ -12,5 +12,6 @@
     
 
     <color name="dark">#9933cc</color>
-    <color name="light">#aa66cc</color>
+    <color name="dark_light">#aa66cc</color>
+    <color name="light">#66e5caf2</color>
 </resources>

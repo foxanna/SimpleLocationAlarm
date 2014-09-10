@@ -549,8 +549,8 @@ namespace SimpleLocationAlarm.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f09001c
-			public const int abc_search_url_text_holo = 2131296284;
+			// aapt resource value: 0x7f09001d
+			public const int abc_search_url_text_holo = 2131296285;
 			
 			// aapt resource value: 0x7f090000
 			public const int abc_search_url_text_normal = 2131296256;
@@ -591,17 +591,20 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f090008
 			public const int common_signin_btn_light_text_pressed = 2131296264;
 			
-			// aapt resource value: 0x7f09001d
-			public const int common_signin_btn_text_dark = 2131296285;
-			
 			// aapt resource value: 0x7f09001e
-			public const int common_signin_btn_text_light = 2131296286;
+			public const int common_signin_btn_text_dark = 2131296286;
+			
+			// aapt resource value: 0x7f09001f
+			public const int common_signin_btn_text_light = 2131296287;
 			
 			// aapt resource value: 0x7f09001a
 			public const int dark = 2131296282;
 			
 			// aapt resource value: 0x7f09001b
-			public const int light = 2131296283;
+			public const int dark_light = 2131296283;
+			
+			// aapt resource value: 0x7f09001c
+			public const int light = 2131296284;
 			
 			// aapt resource value: 0x7f090012
 			public const int wallet_bright_foreground_disabled_holo_light = 2131296274;
@@ -642,11 +645,11 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f090019
 			public const int wallet_link_text_light = 2131296281;
 			
-			// aapt resource value: 0x7f09001f
-			public const int wallet_primary_text_holo_light = 2131296287;
-			
 			// aapt resource value: 0x7f090020
-			public const int wallet_secondary_text_holo_dark = 2131296288;
+			public const int wallet_primary_text_holo_light = 2131296288;
+			
+			// aapt resource value: 0x7f090021
+			public const int wallet_secondary_text_holo_dark = 2131296289;
 			
 			static Color()
 			{
