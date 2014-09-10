@@ -5,23 +5,21 @@
     android:layout_height="fill_parent"
     android:gravity="center"
     android:background="@color/light">
-    
     <TextView
-        android:padding="20dp"
+        android:padding="@dimen/default_padding"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:text="@string/error_with_alarm"/>
-
-    <Button 
+        android:text="@string/error_with_alarm" />
+    <Button
         android:id="@+id/go_to_settings"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/go_to_settings"/>
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:text="@string/go_to_settings" />
 </LinearLayout>

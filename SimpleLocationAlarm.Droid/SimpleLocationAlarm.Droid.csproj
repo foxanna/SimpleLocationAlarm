@@ -88,6 +88,7 @@
     <Compile Include="MainScreen\MapWork.cs" />
     <Compile Include="MainScreen\GoogleServicesStuff.cs" />
     <Compile Include="MainScreen\AddMode.cs" />
+    <Compile Include="UndoBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -106,6 +107,15 @@
     <AndroidResource Include="Resources\drawable-hdpi\alarm_grey.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\alarm_grey.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\alarm_grey.png" />
+    <AndroidResource Include="Resources\anim\popup_hide.xml" />
+    <AndroidResource Include="Resources\anim\popup_show.xml" />
+    <AndroidResource Include="Resources\layout\undo_bar.axml" />
+    <AndroidResource Include="Resources\values\Dimen.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_content_undo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_content_undo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_content_undo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_content_undo.png" />
+    <AndroidResource Include="Resources\drawable\undo_bar_bg.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -330,5 +340,8 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\alarm_textfield_activated_holo_dark.9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\anim\" />
   </ItemGroup>
 </Project>

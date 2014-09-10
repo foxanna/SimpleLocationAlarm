@@ -19,7 +19,8 @@
 
     <style name="EditTextAlarm" parent="android:Widget.EditText">
         <item name="android:background">@drawable/edit_text</item>
-        <!--<item name="android:textColor">#ffffff</item>-->
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColorHint">#e5caf2</item>
     </style>
 
     <style name="ButtonAlarm" parent="android:Widget.Button">
@@ -28,6 +29,11 @@
         <item name="android:minWidth">64dip</item>
         <item name="android:textColor">@color/light</item>
     </style>    
+
+    <style name="popup_fade_animation">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+    </style>
 
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>

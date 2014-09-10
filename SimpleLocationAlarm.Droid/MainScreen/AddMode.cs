@@ -11,243 +11,238 @@ using Android.Views.InputMethods;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
-    public enum Mode
-    {
-        MarkerSelected,
-        Add,
-        None
-    }
+	public enum Mode
+	{
+		MarkerSelected,
+		Add,
+		None
+	}
 
-    public partial class HomeActivity : IMenuItemOnActionExpandListener
-    {
-        Mode _mode = Mode.None;
+	public partial class HomeActivity : IMenuItemOnActionExpandListener
+	{
+		Mode _mode = Mode.None;
 
-        Mode Mode
-        {
-            get
-            {
-                return _mode;
-            }
-            set
-            {
-                _mode = value;
+		Mode Mode {
+			get {
+				return _mode;
+			}
+			set {
+				_mode = value;
                 
-                ManageMenuItemsVisibilityForMode();
+				ManageMenuItemsVisibilityForMode ();
 
-                switch (_mode)
-                {
-                    case Mode.Add:
-                        PrepareToAdd();
-                        break;
-                    case Mode.None:
-                        CancelAnything();
-                        break;
-                }
-            }
-        }
+				switch (_mode) {
+				case Mode.Add:
+					PrepareToAdd ();
+					break;
+				case Mode.None:
+					CancelAnything ();
+					break;
+				}
+			}
+		}
 
-        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem;
-        EditText _alarmNameEditText;
+		IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem;
+		EditText _alarmNameEditText;
 
-        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.main_screen, menu);
+		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
+		{
+			MenuInflater.Inflate (Resource.Menu.main_screen, menu);
 
-            _addAlarmMenuButton = menu.FindItem(Resource.Id.add_alarm);
-            _cancelMenuButton = menu.FindItem(Resource.Id.accept);
-            _acceptMenuButton = menu.FindItem(Resource.Id.cancel);
-            _alarmNameMenuItem = menu.FindItem(Resource.Id.alarm_name);
-            _deleteAlarmMenuItem = menu.FindItem(Resource.Id.delete);
-            _disableAlarmMenuItem = menu.FindItem(Resource.Id.disable_alarm);
-            _enableAlarmMenuItem = menu.FindItem(Resource.Id.enable_alarm);
+			_addAlarmMenuButton = menu.FindItem (Resource.Id.add_alarm);
+			_cancelMenuButton = menu.FindItem (Resource.Id.accept);
+			_acceptMenuButton = menu.FindItem (Resource.Id.cancel);
+			_alarmNameMenuItem = menu.FindItem (Resource.Id.alarm_name);
+			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
+			_disableAlarmMenuItem = menu.FindItem (Resource.Id.disable_alarm);
+			_enableAlarmMenuItem = menu.FindItem (Resource.Id.enable_alarm);
 
-            _alarmNameEditText = MenuItemCompat.GetActionView(_alarmNameMenuItem) as EditText;
-            _alarmNameEditText.Hint = Resources.GetString(Resource.String.alarm_name);
+			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
+			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
 
-            ManageMenuItemsVisibilityForMode();
+			ManageMenuItemsVisibilityForMode ();
 
-            return base.OnCreateOptionsMenu(menu);
-        }
+			return base.OnCreateOptionsMenu (menu);
+		}
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Android.Resource.Id.Home:
-                    OnBackPressed();
-                    return true;
-                case Resource.Id.add_alarm:
-                    Mode = Mode.Add;
-                    return true;
-                case Resource.Id.cancel:
-                    Mode = Mode.None;
-                    return true;
-                case Resource.Id.accept:
-                    if (Mode == Mode.Add)
-                    {
-                        if (AcceptAdd())
-                        {
-                            Mode = Mode.None;
-                        }
-                    }
-                    return true;
-                case Resource.Id.delete:
-                    DeleteSelectedMarker();
-                    Mode = Mode.None;
-                    return true;
-                case Resource.Id.enable_alarm:
-                    EnableSelectedAlarm(true);
-                    Mode = Mode.MarkerSelected;
-                    return true;
-                case Resource.Id.disable_alarm:
-                    EnableSelectedAlarm(false);
-                    Mode = Mode.MarkerSelected;
-                    return true;
-                default:
-                    return base.OnOptionsItemSelected(item);
-            }
-        }
+		public override bool OnOptionsItemSelected (IMenuItem item)
+		{
+			switch (item.ItemId) {
+			case Android.Resource.Id.Home:
+				OnBackPressed ();
+				return true;
+			case Resource.Id.add_alarm:
+				Mode = Mode.Add;
+				return true;
+			case Resource.Id.cancel:
+				Mode = Mode.None;
+				return true;
+			case Resource.Id.accept:
+				if (Mode == Mode.Add) {
+					if (AcceptAdd ()) {
+						Mode = Mode.None;
+					}
+				}
+				return true;
+			case Resource.Id.delete:
+				DeleteSelectedMarker ();
+				Mode = Mode.None;
+				return true;
+			case Resource.Id.enable_alarm:
+				EnableSelectedAlarm (true);
+				Mode = Mode.MarkerSelected;
+				return true;
+			case Resource.Id.disable_alarm:
+				EnableSelectedAlarm (false);
+				Mode = Mode.MarkerSelected;
+				return true;
+			default:
+				return base.OnOptionsItemSelected (item);
+			}
+		}
 
-        void ManageMenuItemsVisibilityForMode()
-        {
-            switch (Mode)
-            {
-                case Mode.None:
-                    HideAllActionbarButtons();
+		void ManageMenuItemsVisibilityForMode ()
+		{
+			switch (Mode) {
+			case Mode.None:
+				HideAllActionbarButtons ();
 
-                    _addAlarmMenuButton.SetVisible(true);  
+				_addAlarmMenuButton.SetVisible (true);  
                     
-                    SupportActionBar.SetDisplayHomeAsUpEnabled(false);
+				SupportActionBar.SetDisplayHomeAsUpEnabled (false);
                     
-                    break;
-                case Mode.Add:
-                    HideAllActionbarButtons();
+				break;
+			case Mode.Add:
+				HideAllActionbarButtons ();
 
-                    _cancelMenuButton.SetVisible(true);
-                    _acceptMenuButton.SetVisible(true);
-                    _alarmNameMenuItem.SetVisible(true);
+				_cancelMenuButton.SetVisible (true);
+				_acceptMenuButton.SetVisible (true);
+				_alarmNameMenuItem.SetVisible (true);
 
-                    _alarmNameMenuItem.ExpandActionView();
-                    _alarmNameMenuItem.SetOnActionExpandListener(this);
+				_alarmNameMenuItem.ExpandActionView ();
+				_alarmNameMenuItem.SetOnActionExpandListener (this);
                     
-                    break;
-                case Mode.MarkerSelected:
-                    HideAllActionbarButtons();
+				break;
+			case Mode.MarkerSelected:
+				HideAllActionbarButtons ();
 
-                    _deleteAlarmMenuItem.SetVisible(true);
+				_deleteAlarmMenuItem.SetVisible (true);
 
-                    _enableAlarmMenuItem.SetVisible(!_selectedAlarm.Enabled);
-                    _disableAlarmMenuItem.SetVisible(_selectedAlarm.Enabled);
+				_enableAlarmMenuItem.SetVisible (!_selectedAlarm.Enabled);
+				_disableAlarmMenuItem.SetVisible (_selectedAlarm.Enabled);
                     
-                    SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+				SupportActionBar.SetDisplayHomeAsUpEnabled (true);
 
-                    break;
-            }
-        }
+				break;
+			}
+		}
 
-        void HideAllActionbarButtons()
-        {
-            _addAlarmMenuButton.SetVisible(false);
+		void HideAllActionbarButtons ()
+		{
+			_addAlarmMenuButton.SetVisible (false);
 
-            _cancelMenuButton.SetVisible(false);
-            _acceptMenuButton.SetVisible(false);
-            _alarmNameMenuItem.CollapseActionView();
-            _alarmNameMenuItem.SetOnActionExpandListener(null);
-            _alarmNameMenuItem.SetVisible(false);
-            _deleteAlarmMenuItem.SetVisible(false);
-            _enableAlarmMenuItem.SetVisible(false);
-            _disableAlarmMenuItem.SetVisible(false);
+			_cancelMenuButton.SetVisible (false);
+			_acceptMenuButton.SetVisible (false);
+			_alarmNameMenuItem.CollapseActionView ();
+			_alarmNameMenuItem.SetOnActionExpandListener (null);
+			_alarmNameMenuItem.SetVisible (false);
+			_deleteAlarmMenuItem.SetVisible (false);
+			_enableAlarmMenuItem.SetVisible (false);
+			_disableAlarmMenuItem.SetVisible (false);
 
-            _alarmNameEditText.Text = string.Empty;
+			_alarmNameEditText.Text = string.Empty;
 
-            (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(_alarmNameEditText.WindowToken, 0);
-        }
+			(this.GetSystemService (Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow (_alarmNameEditText.WindowToken, 0);
+		}
 
-        void CancelAnything()
-        {
-            ClearMap();
+		void CancelAnything ()
+		{
+			ClearMap ();
          
-            _alarmToAdd = null;
+			_alarmToAdd = null;
 
-            _selectedMarker = null;
+			_selectedMarker = null;
 
-            RedrawMapData();
-            ZoomToMyLocationAndAlarms();
-        }
+			RedrawMapData ();
+			ZoomToMyLocationAndAlarms ();
+		}
 
-        void PrepareToAdd()
-        {
-            ClearMap();
-        }
+		void PrepareToAdd ()
+		{
+			ClearMap ();
+		}
 
-        Random random = new Random();
+		Random random = new Random ();
 
-        bool AcceptAdd()
-        {
-            if (_alarmToAdd == null)
-            {
-                Toast.MakeText(this, Resource.String.click_on_map_to_set_alarm, ToastLength.Short).Show();
-                return false;
-            }
-            else if (string.IsNullOrEmpty(_alarmNameEditText.Text))
-            {
-                _alarmNameEditText.RequestFocus();
-                _alarmNameEditText.SetError(
-                    new Java.Lang.String(Resources.GetString(Resource.String.enter_alarm_name)), null);
-                return false;
-            }
-            else
-            {
-                var newAlarm = new AlarmData()
-                    {
-                        Latitude = _alarmToAdd.Position.Latitude,
-                        Longitude = _alarmToAdd.Position.Longitude,
-                        Radius = 200,
-                        Name = _alarmNameEditText.Text,
-                        Enabled = true,
-                        RequestId = string.Format("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble())
-                    };
+		bool AcceptAdd ()
+		{
+			if (_alarmToAdd == null) {
+				Toast.MakeText (this, Resource.String.click_on_map_to_set_alarm, ToastLength.Short).Show ();
+				return false;
+			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
+				_alarmNameEditText.RequestFocus ();
+				_alarmNameEditText.SetError (
+					new Java.Lang.String (Resources.GetString (Resource.String.enter_alarm_name)), null);
+				return false;
+			} else {
+				var newAlarm = new AlarmData () {
+					Latitude = _alarmToAdd.Position.Latitude,
+					Longitude = _alarmToAdd.Position.Longitude,
+					Radius = 200,
+					Name = _alarmNameEditText.Text,
+					Enabled = true,
+					RequestId = string.Format ("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble ())
+				};
                 
-                AddGeofence(newAlarm);
+				AddGeofence (newAlarm);
 
-                return true;
-            }
-        }
+				return true;
+			}
+		}
 
-        void EnableSelectedAlarm(bool enabled)
-        {
-            _selectedAlarm.Enabled = enabled;
+		void EnableSelectedAlarm (bool enabled)
+		{
+			_selectedAlarm.Enabled = enabled;
 
-            if (enabled)
-            {
-                AddGeofence(_selectedAlarm);
-            }
-            else
-            {
-                RemoveGeofence(_selectedAlarm, ActionOnAlarm.Disable);
-            }
-        }
+			if (enabled) {
+				AddGeofence (_selectedAlarm);
+			} else {
+				RemoveGeofence (_selectedAlarm, ActionOnAlarm.Disable);
+			}
+		}
 
-        void DeleteSelectedMarker()
-        {
-            RemoveGeofence(_selectedAlarm, ActionOnAlarm.Delete);
+		UndoBar UndoBar;
+
+		void DeleteSelectedMarker ()
+		{
+			RemoveGeofence (_selectedAlarm, ActionOnAlarm.Delete);
             
-            _selectedMarker.Remove();
-            _selectedMarker = null;
-        }
+			_selectedMarker.Remove ();
+			_selectedMarker = null;
 
-        public bool OnMenuItemActionCollapse(Android.Views.IMenuItem item)
-        {
-            if (Mode != Mode.None)
-            {
-                OnBackPressed();
-            }
-            return true;
-        }
+			if (UndoBar != null) {
+				UndoBar.Hide ();
+			}
 
-        public bool OnMenuItemActionExpand(Android.Views.IMenuItem item)
-        {
-            return true;
-        }
-    }
+			var alarm = _selectedAlarm;
+
+			UndoBar = new UndoBar (this, Resources.GetString (Resource.String.alarm_deleted), FindViewById (Android.Resource.Id.Content));
+			UndoBar.Undo += (sender, e) => AddGeofence (alarm);
+
+			UndoBar.Show ();
+		}
+
+		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
+		{
+			if (Mode != Mode.None) {
+				OnBackPressed ();
+			}
+			return true;
+		}
+
+		public bool OnMenuItemActionExpand (Android.Views.IMenuItem item)
+		{
+			return true;
+		}
+	}
 }

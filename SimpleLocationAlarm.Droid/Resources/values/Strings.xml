@@ -5,10 +5,12 @@
 	<string name="add_alarm">Add alarm</string>
 	<string name="alarm_name">Alarm name</string>
 	<string name="done">Done</string>
+	<string name="undo">Undo</string>
     <string name="delete">Delete alarm</string>
     <string name="disable">Disable alarm</string>
     <string name="enable">Enable alarm</string>
 	<string name="cancel">Cancel</string>
+    <string name="alarm_deleted">Alarm deleted</string>
 	<string name="enter_alarm_name">Enter alarm name</string>
 	<string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
     <string name="failed_to_add">Your alarm is created disabled</string>
