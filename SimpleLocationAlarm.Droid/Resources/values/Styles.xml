@@ -3,13 +3,31 @@
 	<style name="AlarmTheme" parent="@style/Theme.AppCompat">
         <item name="android:actionBarStyle">@style/AlarmActionBar</item>
         <item name="actionBarStyle">@style/AlarmActionBar</item>
+
+        <item name="android:editTextStyle">@style/EditTextAlarm</item>       
+        <item name="android:textColorHighlight">#999933cc</item>
+        <item name="android:buttonStyle">@style/ButtonAlarm</item>
+        <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
+        <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
+        <item name="android:textSelectHandle">@drawable/alarm_text_select_handle_middle</item>
 	</style>
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@drawable/actionbar_background</item>
         <item name="background">@drawable/actionbar_background</item>
     </style>
-    
+
+    <style name="EditTextAlarm" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edit_text</item>
+        <!--<item name="android:textColor">#ffffff</item>-->
+    </style>
+
+    <style name="ButtonAlarm" parent="android:Widget.Button">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">@color/light</item>
+    </style>    
 
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>

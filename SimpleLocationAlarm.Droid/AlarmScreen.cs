@@ -33,6 +33,8 @@ namespace SimpleLocationAlarm.Droid
         DBManager _dbManager = new DBManager();
         GeofenceManager _geofenceManager = new GeofenceManager();
 
+        Button _goToSettingsButton;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -46,14 +48,17 @@ namespace SimpleLocationAlarm.Droid
             }
 
             _mediaPlayerLong.Prepare();
-            _mediaPlayerLong.Start();
+            //_mediaPlayerLong.Start();
 
             if (LocationClient.HasError(Intent))
             {
                 Log.Debug(TAG, "OnCreate : LocationClient HasError");
                 _dbManager.DisableAll();                   
 
-                SetContentView(Resource.Layout.AlarmError);                
+                SetContentView(Resource.Layout.AlarmError);          
+      
+                _goToSettingsButton = FindViewById<Button>(Resource.Id.go_to_settings);
+                _goToSettingsButton.Click += GoToSettingsButton_Click;
             }
             else
             {
@@ -73,6 +78,12 @@ namespace SimpleLocationAlarm.Droid
                     SupportActionBar.Title = _alarm.Name;
                 }
             }
+        }
+
+        void GoToSettingsButton_Click(object sender, EventArgs e)
+        {
+            var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+            StartActivity(intent);
         }
 
         GoogleMap _map;
@@ -95,13 +106,18 @@ namespace SimpleLocationAlarm.Droid
                     {
                         var position = new LatLng(_alarm.Latitude, _alarm.Longitude);
 
-                        _map.AddCircle(new CircleOptions()
+                        var circle = _map.AddCircle(new CircleOptions()
                             .InvokeCenter(position)
-                            .InvokeRadius(_alarm.Radius));
+                            .InvokeRadius(_alarm.Radius)
+                            .InvokeFillColor(Resources.GetColor(Resource.Color.light))
+                        );
+
+                        circle.StrokeColor = Resources.GetColor(Resource.Color.dark);
+                        circle.StrokeWidth = 1.0f;
 
                         _map.AddMarker(new MarkerOptions()
                             .SetPosition(position)
-                            .InvokeIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_red)));
+                            .InvokeIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_violet)));
 
                         _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, _map.MaxZoomLevel - 6));
                     }

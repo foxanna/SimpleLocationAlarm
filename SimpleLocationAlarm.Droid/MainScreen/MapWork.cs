@@ -44,7 +44,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _map.UiSettings.RotateGesturesEnabled = false;
 
                 _map.MapClick += OnMapClick;
-               // _map.MyLocationChange += HandleMyLocationChange;
+                _map.MyLocationChange += HandleMyLocationChange;
                 _map.MarkerClick += OnMarkerClick;
 
                 // here because map should be already initialized

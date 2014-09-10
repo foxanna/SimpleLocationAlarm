@@ -1011,169 +1011,199 @@ namespace SimpleLocationAlarm.Droid
 			public const int alarm_red = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int alarm_violet = 2130837594;
+			public const int alarm_text_select_handle_left = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int alarm_white = 2130837595;
+			public const int alarm_text_select_handle_middle = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int common_signin_btn_icon_dark = 2130837596;
+			public const int alarm_text_select_handle_right = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int common_signin_btn_icon_disabled_dark = 2130837597;
+			public const int alarm_textfield_activated_holo_dark = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int common_signin_btn_icon_disabled_focus_dark = 2130837598;
+			public const int alarm_violet = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int common_signin_btn_icon_disabled_focus_light = 2130837599;
+			public const int alarm_white = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int common_signin_btn_icon_disabled_light = 2130837600;
+			public const int button = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int common_signin_btn_icon_focus_dark = 2130837601;
+			public const int button_normal = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int common_signin_btn_icon_focus_light = 2130837602;
+			public const int button_pressed = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int common_signin_btn_icon_light = 2130837603;
+			public const int common_signin_btn_icon_dark = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int common_signin_btn_icon_normal_dark = 2130837604;
+			public const int common_signin_btn_icon_disabled_dark = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int common_signin_btn_icon_normal_light = 2130837605;
+			public const int common_signin_btn_icon_disabled_focus_dark = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int common_signin_btn_icon_pressed_dark = 2130837606;
+			public const int common_signin_btn_icon_disabled_focus_light = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int common_signin_btn_icon_pressed_light = 2130837607;
+			public const int common_signin_btn_icon_disabled_light = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int common_signin_btn_text_dark = 2130837608;
+			public const int common_signin_btn_icon_focus_dark = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int common_signin_btn_text_disabled_dark = 2130837609;
+			public const int common_signin_btn_icon_focus_light = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int common_signin_btn_text_disabled_focus_dark = 2130837610;
+			public const int common_signin_btn_icon_light = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int common_signin_btn_text_disabled_focus_light = 2130837611;
+			public const int common_signin_btn_icon_normal_dark = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int common_signin_btn_text_disabled_light = 2130837612;
+			public const int common_signin_btn_icon_normal_light = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int common_signin_btn_text_focus_dark = 2130837613;
+			public const int common_signin_btn_icon_pressed_dark = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int common_signin_btn_text_focus_light = 2130837614;
+			public const int common_signin_btn_icon_pressed_light = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int common_signin_btn_text_light = 2130837615;
+			public const int common_signin_btn_text_dark = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int common_signin_btn_text_normal_dark = 2130837616;
+			public const int common_signin_btn_text_disabled_dark = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int common_signin_btn_text_normal_light = 2130837617;
+			public const int common_signin_btn_text_disabled_focus_dark = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int common_signin_btn_text_pressed_dark = 2130837618;
+			public const int common_signin_btn_text_disabled_focus_light = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int common_signin_btn_text_pressed_light = 2130837619;
+			public const int common_signin_btn_text_disabled_light = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int ic_action_accept = 2130837620;
+			public const int common_signin_btn_text_focus_dark = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int ic_action_add_alarm = 2130837621;
+			public const int common_signin_btn_text_focus_light = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int ic_action_cancel = 2130837622;
+			public const int common_signin_btn_text_light = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int ic_action_discard = 2130837623;
+			public const int common_signin_btn_text_normal_dark = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int ic_action_volume_muted = 2130837624;
+			public const int common_signin_btn_text_normal_light = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int ic_action_volume_on = 2130837625;
+			public const int common_signin_btn_text_pressed_dark = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int ic_plusone_medium_off_client = 2130837626;
+			public const int common_signin_btn_text_pressed_light = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int ic_plusone_small_off_client = 2130837627;
+			public const int edit_text = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int ic_plusone_standard_off_client = 2130837628;
+			public const int edit_text_focused = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int ic_plusone_tall_off_client = 2130837629;
+			public const int edit_text_normal = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int mr_ic_audio_vol = 2130837630;
+			public const int ic_action_accept = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int mr_ic_media_route_connecting_holo_dark = 2130837631;
+			public const int ic_action_add_alarm = 2130837631;
 			
 			// aapt resource value: 0x7f020080
-			public const int mr_ic_media_route_connecting_holo_light = 2130837632;
+			public const int ic_action_cancel = 2130837632;
 			
 			// aapt resource value: 0x7f020081
-			public const int mr_ic_media_route_disabled_holo_dark = 2130837633;
+			public const int ic_action_discard = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int mr_ic_media_route_disabled_holo_light = 2130837634;
+			public const int ic_action_volume_muted = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int mr_ic_media_route_holo_dark = 2130837635;
+			public const int ic_action_volume_on = 2130837635;
 			
 			// aapt resource value: 0x7f020084
-			public const int mr_ic_media_route_holo_light = 2130837636;
+			public const int ic_plusone_medium_off_client = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int mr_ic_media_route_off_holo_dark = 2130837637;
+			public const int ic_plusone_small_off_client = 2130837637;
 			
 			// aapt resource value: 0x7f020086
-			public const int mr_ic_media_route_off_holo_light = 2130837638;
+			public const int ic_plusone_standard_off_client = 2130837638;
 			
 			// aapt resource value: 0x7f020087
-			public const int mr_ic_media_route_on_0_holo_dark = 2130837639;
+			public const int ic_plusone_tall_off_client = 2130837639;
 			
 			// aapt resource value: 0x7f020088
-			public const int mr_ic_media_route_on_0_holo_light = 2130837640;
+			public const int mr_ic_audio_vol = 2130837640;
 			
 			// aapt resource value: 0x7f020089
-			public const int mr_ic_media_route_on_1_holo_dark = 2130837641;
+			public const int mr_ic_media_route_connecting_holo_dark = 2130837641;
 			
 			// aapt resource value: 0x7f02008a
-			public const int mr_ic_media_route_on_1_holo_light = 2130837642;
+			public const int mr_ic_media_route_connecting_holo_light = 2130837642;
 			
 			// aapt resource value: 0x7f02008b
-			public const int mr_ic_media_route_on_2_holo_dark = 2130837643;
+			public const int mr_ic_media_route_disabled_holo_dark = 2130837643;
 			
 			// aapt resource value: 0x7f02008c
-			public const int mr_ic_media_route_on_2_holo_light = 2130837644;
+			public const int mr_ic_media_route_disabled_holo_light = 2130837644;
 			
 			// aapt resource value: 0x7f02008d
-			public const int mr_ic_media_route_on_holo_dark = 2130837645;
+			public const int mr_ic_media_route_holo_dark = 2130837645;
 			
 			// aapt resource value: 0x7f02008e
-			public const int mr_ic_media_route_on_holo_light = 2130837646;
+			public const int mr_ic_media_route_holo_light = 2130837646;
 			
 			// aapt resource value: 0x7f02008f
-			public const int powered_by_google_dark = 2130837647;
+			public const int mr_ic_media_route_off_holo_dark = 2130837647;
 			
 			// aapt resource value: 0x7f020090
-			public const int powered_by_google_light = 2130837648;
+			public const int mr_ic_media_route_off_holo_light = 2130837648;
+			
+			// aapt resource value: 0x7f020091
+			public const int mr_ic_media_route_on_0_holo_dark = 2130837649;
+			
+			// aapt resource value: 0x7f020092
+			public const int mr_ic_media_route_on_0_holo_light = 2130837650;
+			
+			// aapt resource value: 0x7f020093
+			public const int mr_ic_media_route_on_1_holo_dark = 2130837651;
+			
+			// aapt resource value: 0x7f020094
+			public const int mr_ic_media_route_on_1_holo_light = 2130837652;
+			
+			// aapt resource value: 0x7f020095
+			public const int mr_ic_media_route_on_2_holo_dark = 2130837653;
+			
+			// aapt resource value: 0x7f020096
+			public const int mr_ic_media_route_on_2_holo_light = 2130837654;
+			
+			// aapt resource value: 0x7f020097
+			public const int mr_ic_media_route_on_holo_dark = 2130837655;
+			
+			// aapt resource value: 0x7f020098
+			public const int mr_ic_media_route_on_holo_light = 2130837656;
+			
+			// aapt resource value: 0x7f020099
+			public const int powered_by_google_dark = 2130837657;
+			
+			// aapt resource value: 0x7f02009a
+			public const int powered_by_google_light = 2130837658;
 			
 			static Drawable()
 			{
@@ -1188,8 +1218,8 @@ namespace SimpleLocationAlarm.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070059
-			public const int accept = 2131165273;
+			// aapt resource value: 0x7f07005a
+			public const int accept = 2131165274;
 			
 			// aapt resource value: 0x7f07002e
 			public const int action_bar = 2131165230;
@@ -1227,11 +1257,11 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070037
 			public const int activity_chooser_view_content = 2131165239;
 			
-			// aapt resource value: 0x7f070054
-			public const int add_alarm = 2131165268;
-			
 			// aapt resource value: 0x7f070055
-			public const int alarm_name = 2131165269;
+			public const int add_alarm = 2131165269;
+			
+			// aapt resource value: 0x7f070056
+			public const int alarm_name = 2131165270;
 			
 			// aapt resource value: 0x7f07000b
 			public const int always = 2131165195;
@@ -1251,8 +1281,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070026
 			public const int buy_with_google = 2131165222;
 			
-			// aapt resource value: 0x7f07005a
-			public const int cancel = 2131165274;
+			// aapt resource value: 0x7f07005b
+			public const int cancel = 2131165275;
 			
 			// aapt resource value: 0x7f07003f
 			public const int checkbox = 2131165247;
@@ -1266,8 +1296,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f07003a
 			public const int default_activity_button = 2131165242;
 			
-			// aapt resource value: 0x7f070058
-			public const int delete = 2131165272;
+			// aapt resource value: 0x7f070059
+			public const int delete = 2131165273;
 			
 			// aapt resource value: 0x7f07000e
 			public const int dialog = 2131165198;
@@ -1275,8 +1305,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070008
 			public const int disableHome = 2131165192;
 			
-			// aapt resource value: 0x7f070057
-			public const int disable_alarm = 2131165271;
+			// aapt resource value: 0x7f070058
+			public const int disable_alarm = 2131165272;
 			
 			// aapt resource value: 0x7f07000f
 			public const int dropdown = 2131165199;
@@ -1284,8 +1314,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070042
 			public const int edit_query = 2131165250;
 			
-			// aapt resource value: 0x7f070056
-			public const int enable_alarm = 2131165270;
+			// aapt resource value: 0x7f070057
+			public const int enable_alarm = 2131165271;
 			
 			// aapt resource value: 0x7f070013
 			public const int end = 2131165203;
@@ -1295,6 +1325,9 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f07003e
 			public const int expanded_menu = 2131165246;
+			
+			// aapt resource value: 0x7f07004e
+			public const int go_to_settings = 2131165262;
 			
 			// aapt resource value: 0x7f07002a
 			public const int grayscale = 2131165226;
@@ -1329,26 +1362,26 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f07003b
 			public const int list_item = 2131165243;
 			
-			// aapt resource value: 0x7f07004e
-			public const int map = 2131165262;
+			// aapt resource value: 0x7f07004f
+			public const int map = 2131165263;
 			
 			// aapt resource value: 0x7f070024
 			public const int match_parent = 2131165220;
 			
-			// aapt resource value: 0x7f070052
-			public const int media_route_control_frame = 2131165266;
-			
 			// aapt resource value: 0x7f070053
-			public const int media_route_disconnect_button = 2131165267;
+			public const int media_route_control_frame = 2131165267;
 			
-			// aapt resource value: 0x7f07004f
-			public const int media_route_list = 2131165263;
+			// aapt resource value: 0x7f070054
+			public const int media_route_disconnect_button = 2131165268;
 			
 			// aapt resource value: 0x7f070050
-			public const int media_route_volume_layout = 2131165264;
+			public const int media_route_list = 2131165264;
 			
 			// aapt resource value: 0x7f070051
-			public const int media_route_volume_slider = 2131165265;
+			public const int media_route_volume_layout = 2131165265;
+			
+			// aapt resource value: 0x7f070052
+			public const int media_route_volume_slider = 2131165266;
 			
 			// aapt resource value: 0x7f070012
 			public const int middle = 2131165202;
@@ -1768,17 +1801,20 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f050038
 			public const int enter_alarm_name = 2131034168;
 			
-			// aapt resource value: 0x7f05003e
-			public const int error_with_alarm = 2131034174;
+			// aapt resource value: 0x7f05003f
+			public const int error_with_alarm = 2131034175;
 			
 			// aapt resource value: 0x7f05003a
 			public const int failed_to_add = 2131034170;
 			
-			// aapt resource value: 0x7f05003c
-			public const int failed_to_connect = 2131034172;
+			// aapt resource value: 0x7f05003d
+			public const int failed_to_connect = 2131034173;
 			
 			// aapt resource value: 0x7f05003b
 			public const int failed_to_remove = 2131034171;
+			
+			// aapt resource value: 0x7f05003c
+			public const int go_to_settings = 2131034172;
 			
 			// aapt resource value: 0x7f050002
 			public const int mr_media_route_button_content_description = 2131034114;
@@ -1798,8 +1834,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f050001
 			public const int mr_user_route_category_name = 2131034113;
 			
-			// aapt resource value: 0x7f05003d
-			public const int probably_location_services_are_off = 2131034173;
+			// aapt resource value: 0x7f05003e
+			public const int probably_location_services_are_off = 2131034174;
 			
 			// aapt resource value: 0x7f05002c
 			public const int wallet_buy_button_place_holder = 2131034156;
@@ -1822,6 +1858,12 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f060094
 			public const int AlarmTheme = 2131099796;
+			
+			// aapt resource value: 0x7f060097
+			public const int ButtonAlarm = 2131099799;
+			
+			// aapt resource value: 0x7f060096
+			public const int EditTextAlarm = 2131099798;
 			
 			// aapt resource value: 0x7f060067
 			public const int TextAppearance_AppCompat_Base_CompactMenu_Dialog = 2131099751;
