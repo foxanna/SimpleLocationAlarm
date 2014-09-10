@@ -32,4 +32,6 @@
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>
     <color name="light">#66e5caf2</color>
+    <color name="dark_grey">#adadad</color>
+    <color name="light_grey">#66cfcfcf</color>
 </resources>

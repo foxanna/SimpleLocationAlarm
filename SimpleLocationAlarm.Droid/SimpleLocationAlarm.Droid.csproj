@@ -102,6 +102,10 @@
     <AndroidResource Include="Resources\layout\AlarmGeofenceTriggered.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\alarm_grey.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\alarm_grey.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\alarm_grey.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\alarm_grey.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -149,18 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_discard.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\alarm_marker_disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\alarm_marker_disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\alarm_marker_disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\alarm_marker_disabled.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_action_volume_muted.png" />
