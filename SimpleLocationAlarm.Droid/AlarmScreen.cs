@@ -18,132 +18,131 @@ using Android.Gms.Maps.Model;
 
 namespace SimpleLocationAlarm.Droid
 {
-    [Activity(
-        Icon = "@drawable/alarm_white",
-        ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
-    public class AlarmScreen : ActionBarActivity
-    {
-        const string TAG = "AlarmScreen";
+	[Activity (
+		Icon = "@drawable/alarm_white",
+		NoHistory = true,
+		ExcludeFromRecents = true,
+		LaunchMode = Android.Content.PM.LaunchMode.SingleTask,
+		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
+	public class AlarmScreen : ActionBarActivity
+	{
+		const string TAG = "AlarmScreen";
 
-        Android.Media.MediaPlayer _mediaPlayerLong;
+		Android.Media.MediaPlayer _mediaPlayerLong;
 
-        bool _success;
-        AlarmData _alarm;
+		bool _success;
+		AlarmData _alarm;
 
-        DBManager _dbManager = new DBManager();
-        GeofenceManager _geofenceManager = new GeofenceManager();
+		DBManager _dbManager = new DBManager ();
+		GeofenceManager _geofenceManager = new GeofenceManager ();
 
-        Button _goToSettingsButton;
+		Button _goToSettingsButton;
 
-        protected override void OnCreate(Bundle bundle)
-        {
-            base.OnCreate(bundle);
+		protected override void OnCreate (Bundle bundle)
+		{
+			base.OnCreate (bundle);
 
-            var assetsFileDescriptor = Assets.OpenFd("long_timer.mp3");
-            if (assetsFileDescriptor != null)
-            {
-                _mediaPlayerLong = new Android.Media.MediaPlayer();
-                _mediaPlayerLong.SetDataSource(assetsFileDescriptor.FileDescriptor, assetsFileDescriptor.StartOffset,
-                    assetsFileDescriptor.Length);
-            }
+			if (LocationClient.HasError (Intent)) {
+				Log.Debug (TAG, "OnCreate : LocationClient HasError");
+				_dbManager.DisableAll ();                   
 
-            _mediaPlayerLong.Prepare();
-            _mediaPlayerLong.Start();
-
-            if (LocationClient.HasError(Intent))
-            {
-                Log.Debug(TAG, "OnCreate : LocationClient HasError");
-                _dbManager.DisableAll();                   
-
-                SetContentView(Resource.Layout.AlarmError);          
+				SetContentView (Resource.Layout.AlarmError);          
       
-                _goToSettingsButton = FindViewById<Button>(Resource.Id.go_to_settings);
-                _goToSettingsButton.Click += GoToSettingsButton_Click;
-            }
-            else
-            {
-                Log.Debug(TAG, "OnCreate trigered by geofences");
+				_goToSettingsButton = FindViewById<Button> (Resource.Id.go_to_settings);
+				_goToSettingsButton.Click += GoToSettingsButton_Click;
+			} else {
+				Log.Debug (TAG, "OnCreate trigered by geofences");
                 
-                _success = true;                
+				_success = true;                
 
-                var geofences = LocationClient.GetTriggeringGeofences(Intent);
-                if (geofences != null && geofences.Count > 0) {
-                    _alarm = _dbManager.GetAlarmByGeofenceRequestId(geofences[0].RequestId);                    
-                }
+				var geofences = LocationClient.GetTriggeringGeofences (Intent);
+				if (geofences != null && geofences.Count > 0) {
+					_alarm = _dbManager.GetAlarmByGeofenceRequestId (geofences [0].RequestId);                    
+				}
 
-                SetContentView(Resource.Layout.AlarmGeofenceTriggered);
+				SetContentView (Resource.Layout.AlarmGeofenceTriggered);
 
-                if (_alarm != null)
-                {
-                    SupportActionBar.Title = _alarm.Name;
-                }
-            }
-        }
+				if (_alarm != null) {
+					SupportActionBar.Title = _alarm.Name;
+				}
 
-        void GoToSettingsButton_Click(object sender, EventArgs e)
-        {
-            var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
-            StartActivity(intent);
-        }
+				PlaySound ();
+			}
+		}
 
-        GoogleMap _map;
+		void PlaySound ()
+		{
+			var assetsFileDescriptor = Assets.OpenFd ("long_timer.mp3");
+			if (assetsFileDescriptor != null) {
+				_mediaPlayerLong = new Android.Media.MediaPlayer ();
+				_mediaPlayerLong.SetDataSource (assetsFileDescriptor.FileDescriptor, assetsFileDescriptor.StartOffset,
+					assetsFileDescriptor.Length);
+			}
 
-        protected override void OnStart()
-        {
-            base.OnStart();
+			_mediaPlayerLong.Prepare ();
+			_mediaPlayerLong.Start ();
+		}
 
-            _geofenceManager.Error += OnGeofenceManagerError;
+		void GoToSettingsButton_Click (object sender, EventArgs e)
+		{
+			var intent = new Intent (Android.Provider.Settings.ActionLocationSourceSettings);
+			StartActivity (intent);
+		}
 
-            if (_success)
-            {
-                _map = (SupportFragmentManager.FindFragmentById(Resource.Id.map) as SupportMapFragment).Map;
+		GoogleMap _map;
 
-                if (_map != null) 
-                {
-                    _map.MyLocationEnabled = true;
+		protected override void OnStart ()
+		{
+			base.OnStart ();
 
-                    if (_alarm != null)
-                    {
-                        var position = new LatLng(_alarm.Latitude, _alarm.Longitude);
+			_geofenceManager.Error += OnGeofenceManagerError;
 
-                        var circle = _map.AddCircle(new CircleOptions()
-                            .InvokeCenter(position)
-                            .InvokeRadius(_alarm.Radius)
-                            .InvokeFillColor(Resources.GetColor(Resource.Color.light))
-                        );
+			if (_success) {
+				_map = (SupportFragmentManager.FindFragmentById (Resource.Id.map) as SupportMapFragment).Map;
 
-                        circle.StrokeColor = Resources.GetColor(Resource.Color.dark);
-                        circle.StrokeWidth = 1.0f;
+				if (_map != null) {
+					_map.MyLocationEnabled = true;
 
-                        _map.AddMarker(new MarkerOptions()
-                            .SetPosition(position)
-                            .InvokeIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_violet)));
+					if (_alarm != null) {
+						var position = new LatLng (_alarm.Latitude, _alarm.Longitude);
 
-                        _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, _map.MaxZoomLevel - 6));
-                    }
-                }
-            }
-        }
+						var circle = _map.AddCircle (new CircleOptions ()
+                            .InvokeCenter (position)
+                            .InvokeRadius (_alarm.Radius)
+                            .InvokeFillColor (Resources.GetColor (Resource.Color.light))
+						             );
 
-        protected override void OnStop()
-        {
-            if (_success)
-            {
-                if (_map != null) {
-                    _map.Clear();
-                }
+						circle.StrokeColor = Resources.GetColor (Resource.Color.dark);
+						circle.StrokeWidth = 1.0f;
 
-                _map = null;
-            }
+						_map.AddMarker (new MarkerOptions ()
+                            .SetPosition (position)
+                            .InvokeIcon (BitmapDescriptorFactory.FromResource (Resource.Drawable.alarm_violet)));
 
-            _geofenceManager.Error -= OnGeofenceManagerError;
+						_map.MoveCamera (CameraUpdateFactory.NewLatLngZoom (position, _map.MaxZoomLevel - 6));
+					}
+				}
+			}
+		}
 
-            base.OnStop();
-        }
+		protected override void OnStop ()
+		{
+			if (_success) {
+				if (_map != null) {
+					_map.Clear ();
+				}
 
-        void OnGeofenceManagerError(object sender, StringEventArgs e)
-        {
-            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
-        }
-    }
+				_map = null;
+			}
+
+			_geofenceManager.Error -= OnGeofenceManagerError;
+
+			base.OnStop ();
+		}
+
+		void OnGeofenceManagerError (object sender, StringEventArgs e)
+		{
+			Toast.MakeText (this, e.Data, ToastLength.Short).Show ();
+		}
+	}
 }
