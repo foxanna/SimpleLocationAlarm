@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Linq;
-using Android.Gms.Common;
 using Android.Widget;
 using Android.App;
 using Android.Gms.Location;
 using System.Collections.Generic;
-using Android.Content;
-using Newtonsoft.Json;
 using Android.Util;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
-    public partial class HomeActivity :
-        IGooglePlayServicesClientConnectionCallbacks, IGooglePlayServicesClientOnConnectionFailedListener,
-        LocationClient.IOnRemoveGeofencesResultListener, LocationClient.IOnAddGeofencesResultListener
+    public partial class HomeActivity         
     {
         enum ActionOnAlarm
         {
             Add, Disable, Delete
         }
-
-        LocationClient _locationClient;
 
         List<Tuple<ActionOnAlarm, AlarmData>> _changesToProceed = new List<Tuple<ActionOnAlarm, AlarmData>>();
 
@@ -70,20 +63,25 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
             _isProcessing = true;
 
-            _locationClient.Connect();
+            _geofenceManager.Start();
+        }
+        
+        void OnGeofenceManagerStoped(object sender, EventArgs e)
+        {
+            _isProcessing = false;
+
+            ProcessNextChange();
         }
 
-        public void OnConnected(Android.OS.Bundle connectionHint)
+        void OnGeofenceManagerStarted(object sender, EventArgs e)
         {
-            Log.Debug(TAG, "OnConnected");
-
             Tuple<ActionOnAlarm, AlarmData> change = null;
-            
+
             lock (_changesToProceed)
             {
                 if (_changesToProceed.Count == 0)
                 {
-                    _locationClient.Disconnect();
+                    _geofenceManager.Stop();
                     return;
                 }
                 else
@@ -92,56 +90,51 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 }
             }
 
-            var transitionIntent = PendingIntent.GetActivity(this, 0, new Intent(this, typeof(AlarmScreen)), PendingIntentFlags.UpdateCurrent);
-
             switch (change.Item1)
             {
                 case ActionOnAlarm.Add:
-                    _dbManager.AddAlarm(_changesToProceed[0].Item2);
-                    _locationClient.AddGeofences(new List<IGeofence>() { AlarmToGeofence(change.Item2) }, transitionIntent, this);
+                    var alarm = _changesToProceed[0].Item2;
+                    _dbManager.AddAlarm(alarm);
+                    _geofenceManager.AddGeofence(alarm.RequestId, alarm.Latitude, alarm.Longitude, alarm.Radius, typeof(AlarmScreen));
                     break;
                 case ActionOnAlarm.Delete:
                 case ActionOnAlarm.Disable:
-                    _locationClient.RemoveGeofences(new List<string>() { _changesToProceed[0].Item2.RequestId }, this);
+                    _geofenceManager.RemoveGeofence(_changesToProceed[0].Item2.RequestId);
                     break;
             }           
-
         }
 
-        IGeofence AlarmToGeofence(AlarmData alarm)
+        void OnGeofenceManagerFailedToStartWithResolution(object sender, ConnectionResultEventArgs e)
         {
-             return new GeofenceBuilder()
-                .SetRequestId(alarm.RequestId)
-                .SetTransitionTypes(Geofence.GeofenceTransitionEnter | Geofence.GeofenceTransitionExit)
-                .SetCircularRegion(alarm.Latitude, alarm.Longitude, (float)alarm.Radius)
-                .SetExpirationDuration(Geofence.NeverExpire)
-                .Build();
-        }
-
-        public void OnDisconnected()
-        {
-            Log.Debug(TAG, "OnDisconnected");
-
             _isProcessing = false;
 
-            ProcessNextChange();
+            try
+            {
+                e.ConnectionResult.StartResolutionForResult(this, GeofenceManager.ConnectionFailedRequestCode);
+            }
+            catch (Android.Content.IntentSender.SendIntentException ex)
+            {
+                Log.Debug(TAG, ex.Message);
+
+                Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
+            }
         }
 
-
-        public void OnAddGeofencesResult(int statusCode, string[] geofenceRequestIds)
+        void OnGeofenceManagerFailedToStart(object sender, ConnectionResultEventArgs e)
         {
-            if (LocationStatusCodes.Success == statusCode)
+            _isProcessing = false;
+        }
+        
+        void OnGeofenceManagerError(object sender, StringEventArgs e)
+        {
+            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
+        }
+        
+        void OnGeofenceManagerGeofenceAdded(object sender, GeofenceChangeEventArgs e)
+        {
+            if (LocationStatusCodes.Success != e.Status)
             {
-                Log.Debug(TAG, "OnAddGeofencesResult Success");
-            }
-            else
-            {
-                Log.Debug(TAG, "OnAddGeofencesResult Failure");
-
                 _dbManager.DisableAlarm(_changesToProceed[0].Item2.RequestId);
-
-                Toast.MakeText(this, Resource.String.failed_to_add, ToastLength.Short).Show();
-                Toast.MakeText(this, Resource.String.probably_location_services_are_off, ToastLength.Short).Show();
             }
 
             lock (_changesToProceed)
@@ -154,17 +147,10 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             ProcessNextChange();
         }
 
-        public void OnRemoveGeofencesByPendingIntentResult(int statusCode, PendingIntent pendingIntent)
+        void OnGeofenceManagerGeofenceRemoved(object sender, GeofenceChangeEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        public void OnRemoveGeofencesByRequestIdsResult(int statusCode, string[] geofenceRequestIds)
-        {
-            if (LocationStatusCodes.Success == statusCode)
+            if (LocationStatusCodes.Success == e.Status)
             {
-                Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult Success");
-
                 if (_changesToProceed[0].Item1 == ActionOnAlarm.Disable)
                 {
                     _dbManager.DisableAlarm(_changesToProceed[0].Item2.RequestId);
@@ -174,52 +160,16 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     _dbManager.DeleteAlarm(_changesToProceed[0].Item2);
                 }
             }
-            else
-            {
-                Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult Failure");
-
-                Toast.MakeText(this, Resource.String.failed_to_remove, ToastLength.Short).Show();
-                Toast.MakeText(this, Resource.String.probably_location_services_are_off, ToastLength.Short).Show();
-            }
 
             lock (_changesToProceed)
             {
                 _changesToProceed.RemoveAt(0);
             }
-            
+
             _isProcessing = false;
 
             ProcessNextChange();
-        }
-
-        const int _locationManagerFailedRequestCode = 42;
-
-        public void OnConnectionFailed(ConnectionResult result)
-        {
-            _isProcessing = false;
-
-            if (result.HasResolution)
-            {
-                Log.Debug(TAG, "OnConnectionFailed with resolution");
-
-                try
-                {
-                    result.StartResolutionForResult(this, _locationManagerFailedRequestCode);
-                }
-                catch (Android.Content.IntentSender.SendIntentException e)
-                {
-                    Log.Debug(TAG, e.Message);
-
-                    Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
-                }
-            }
-            else
-            {
-                Log.Debug(TAG, "OnConnectionFailed without resolution");
-
-                Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
-            }
-        }
+        }                   
 
         void OnActivityResultForLM(Result resultCode)
         {

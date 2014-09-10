@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AlarmScreen.cs" />
     <Compile Include="DBManager.cs" />
+    <Compile Include="GeofenceManager.cs" />
     <Compile Include="MainScreen\GeofencesStuff.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

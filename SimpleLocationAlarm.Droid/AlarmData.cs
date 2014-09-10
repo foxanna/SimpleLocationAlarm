@@ -15,7 +15,7 @@ namespace SimpleLocationAlarm.Droid
 
 		public double Longitude { get; set; }
 
-		public double Radius { get; set; }
+		public float Radius { get; set; }
 
 		public string Name { get; set; }
 

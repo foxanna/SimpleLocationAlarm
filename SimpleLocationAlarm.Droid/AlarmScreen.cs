@@ -30,6 +30,7 @@ namespace SimpleLocationAlarm.Droid
         AlarmData _alarm;
 
         DBManager _dbManager = new DBManager();
+        GeofenceManager _geofenceManager = new GeofenceManager();
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -79,6 +80,8 @@ namespace SimpleLocationAlarm.Droid
         {
             base.OnStart();
 
+            _geofenceManager.Error += OnGeofenceManagerError;
+
             if (_success)
             {
                 _map = (SupportFragmentManager.FindFragmentById(Resource.Id.map) as SupportMapFragment).Map;
@@ -116,7 +119,14 @@ namespace SimpleLocationAlarm.Droid
                 _map = null;
             }
 
+            _geofenceManager.Error -= OnGeofenceManagerError;
+
             base.OnStop();
+        }
+
+        void OnGeofenceManagerError(object sender, StringEventArgs e)
+        {
+            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
         }
     }
 }

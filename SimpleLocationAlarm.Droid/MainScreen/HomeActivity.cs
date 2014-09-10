@@ -25,13 +25,12 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		const string TAG = "HomeActivity";
 
         DBManager _dbManager = new DBManager();
+        GeofenceManager _geofenceManager = new GeofenceManager();
 
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.Main);
-
-            _locationClient = new LocationClient(this, this, this);
 		}
 
 		protected override void OnStart ()
@@ -39,13 +38,28 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			base.OnStart ();
             _dbManager.DataUpdated += OnDataUpdated;
 
+            _geofenceManager.Error += OnGeofenceManagerError;
+            _geofenceManager.Started += OnGeofenceManagerStarted;
+            _geofenceManager.FailedToStart += OnGeofenceManagerFailedToStart;
+            _geofenceManager.FailedToStartWithResolution += OnGeofenceManagerFailedToStartWithResolution;
+            _geofenceManager.Stoped += OnGeofenceManagerStoped;
+            _geofenceManager.GeofenceAdded += OnGeofenceManagerGeofenceAdded;
+            _geofenceManager.GeofenceRemoved += OnGeofenceManagerGeofenceRemoved;
+
 			FindMap ();
 		}
-
-		protected override void OnStop ()
+                
+        protected override void OnStop ()
 		{
 			LooseMap ();
 
+            _geofenceManager.GeofenceRemoved -= OnGeofenceManagerGeofenceRemoved;
+            _geofenceManager.GeofenceAdded -= OnGeofenceManagerGeofenceAdded;
+            _geofenceManager.Stoped -= OnGeofenceManagerStoped;
+            _geofenceManager.FailedToStart -= OnGeofenceManagerFailedToStart;
+            _geofenceManager.FailedToStartWithResolution -= OnGeofenceManagerFailedToStartWithResolution;
+            _geofenceManager.Started -= OnGeofenceManagerStarted;
+            _geofenceManager.Error -= OnGeofenceManagerError;
             _dbManager.DataUpdated -= OnDataUpdated;
 			base.OnStop ();
 		}
@@ -63,7 +77,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			case _googleServicesCheckRequestCode:
 				OnActivityResultForGS (resultCode);
 				break;
-            case _locationManagerFailedRequestCode:
+            case GeofenceManager.ConnectionFailedRequestCode:
                 OnActivityResultForLM(resultCode);
                 break;
 			default:
