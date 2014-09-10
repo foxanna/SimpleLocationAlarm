@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <resources>
 	<style name="AlarmTheme" parent="@style/Theme.AppCompat">
-	    
+        <item name="android:actionBarStyle">@style/AlarmActionBar</item>
+        <item name="actionBarStyle">@style/AlarmActionBar</item>
 	</style>
+    
+    <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="background">@drawable/actionbar_background</item>
+    </style>
+    
+
+    <color name="dark">#9933cc</color>
+    <color name="light">#aa66cc</color>
 </resources>

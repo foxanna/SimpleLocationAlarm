@@ -19,6 +19,7 @@ using Android.Gms.Maps.Model;
 namespace SimpleLocationAlarm.Droid
 {
     [Activity(
+        Icon = "@drawable/alarm_white",
         ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class AlarmScreen : ActionBarActivity
     {
@@ -100,7 +101,7 @@ namespace SimpleLocationAlarm.Droid
 
                         _map.AddMarker(new MarkerOptions()
                             .SetPosition(position)
-                            .InvokeIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_selected)));
+                            .InvokeIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_red)));
 
                         _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, _map.MaxZoomLevel - 6));
                     }

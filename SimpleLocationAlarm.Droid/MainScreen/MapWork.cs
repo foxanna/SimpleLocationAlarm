@@ -12,7 +12,7 @@ using Android.Util;
 
 namespace SimpleLocationAlarm.Droid.MainScreen
 {
-    public partial class HomeActivity
+    public partial class HomeActivity : GoogleMap.IOnMapLoadedCallback
     {
         GoogleMap _map;
 
@@ -44,18 +44,18 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _map.UiSettings.RotateGesturesEnabled = false;
 
                 _map.MapClick += OnMapClick;
-                _map.MyLocationChange += HandleMyLocationChange;
+               // _map.MyLocationChange += HandleMyLocationChange;
                 _map.MarkerClick += OnMarkerClick;
 
                 // here because map should be already initialized
                 // http://developer.android.com/reference/com/google/android/gms/maps/model/BitmapDescriptorFactory.html
-                _alarm_marker_normal = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_normal);
-                _alarm_marker_selected = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_selected);
+                _alarm_marker_normal = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_violet);
+                _alarm_marker_selected = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_red);
                 _alarm_marker_disabled = BitmapDescriptorFactory.FromResource(Resource.Drawable.alarm_marker_disabled);
                 
                 RefreshData();
 
-            // ADD onmaploaded
+                _map.SetOnMapLoadedCallback(this);
 
                 if (Mode == Mode.Add)
                 {
@@ -113,6 +113,8 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                 _map.MapClick -= OnMapClick;
                 _map.MyLocationChange -= HandleMyLocationChange;
                 _map.MarkerClick -= OnMarkerClick;
+
+                _map.SetOnMapLoadedCallback(null);
 
                 ClearMap();
 
@@ -246,7 +248,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     {
                         _alarmToAdd.Position = e.Point;
                     }
-
+                    
                     break;
 
                 case Mode.MarkerSelected:
@@ -279,12 +281,19 @@ namespace SimpleLocationAlarm.Droid.MainScreen
                     _selectedMarker = e.Marker;
                     _selectedMarker.SetIcon(_alarm_marker_selected);
                     _selectedAlarm = _mapData.FirstOrDefault(a => a.Latitude == _selectedMarker.Position.Latitude && a.Longitude == _selectedMarker.Position.Longitude);
-
+                    
                     Mode = Mode.MarkerSelected;
                 break;
             }
 
             e.Handled = false;
+        }
+
+        public void OnMapLoaded()
+        {
+            _map.SetOnMapLoadedCallback(null);
+
+            ZoomToMyLocationAndAlarms();
         }
     }
 }

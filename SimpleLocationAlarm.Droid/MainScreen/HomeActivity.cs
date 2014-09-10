@@ -17,6 +17,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 {
 	[Activity (
 		Label = "@string/app_name", 
+        Icon = "@drawable/alarm_white",
 		MainLauncher = true, 
 		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
 
