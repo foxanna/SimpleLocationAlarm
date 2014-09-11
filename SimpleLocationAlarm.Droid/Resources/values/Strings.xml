@@ -15,8 +15,18 @@
 	<string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
     <string name="failed_to_add">Your alarm is created disabled</string>
     <string name="failed_to_remove">Failed to remove alarm</string>
-    <string name="go_to_settings">Go to settings</string>
+    <string name="go_to_settings">Go to location settings</string>
+    
     <string name="failed_to_connect">Failed to connect to location services</string>
-    <string name="probably_location_services_are_off">Probably, location services are disabled</string>
-    <string name="error_with_alarm">Probably, location services were disabled\n\nAll your alarms were disabled</string>
+    <string name="probably_location_services_are_off">Probably location services are disabled</string>
+    <string name="error_with_alarm">Probably location services were disabled\n\nAll your alarms were disabled</string>
+    
+    <!--Settings strings-->
+    <string name="action_settings">Settings</string>
+    <string name="settings_vibrate">Vibrate</string>
+    <string name="settings_vibrate_summ">Vibrate when alarm goes off</string>
+    <string name="settings_play_sound">Play sound</string>
+    <string name="settings_play_sound_summ">Play sound when alarm goes off</string>
+    <string name="settings_sound">Alarm sound</string>
+    <string name="settings_sound_sum">Default alarm sound</string>
 </resources>

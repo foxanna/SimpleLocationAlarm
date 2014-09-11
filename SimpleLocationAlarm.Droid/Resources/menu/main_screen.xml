@@ -34,6 +34,9 @@
 		android:id="@+id/cancel"       
         my:showAsAction="always"
         android:icon="@drawable/ic_action_cancel"
-        android:title="@string/cancel"/> 
-    
+        android:title="@string/cancel"/>
+    <item android:id="@+id/action_settings"
+          android:title="@string/action_settings"
+          android:icon="@drawable/ic_action_settings"
+          my:showAsAction="always" />
 </menu>

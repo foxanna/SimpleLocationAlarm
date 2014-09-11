@@ -3,8 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
-    android:background="@color/light">
+    android:gravity="center">
     <TextView
         android:padding="@dimen/default_padding"
         android:layout_width="fill_parent"

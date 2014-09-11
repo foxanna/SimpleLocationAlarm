@@ -85,5 +85,11 @@ namespace SimpleLocationAlarm.Droid.Screens
 				base.OnBackPressed ();
 			}
 		}
+
+        void OpenSettings()
+        {
+            var intent = new Intent(this, typeof(SettingsScreen));
+            StartActivity(intent);
+        }
 	}
 }

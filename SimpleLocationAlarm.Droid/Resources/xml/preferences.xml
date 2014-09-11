@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_vibrate"
+        android:title="@string/settings_vibrate"
+        android:summary="@string/settings_vibrate_summ"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="pref_play_sound"
+        android:title="@string/settings_play_sound"
+        android:summary="@string/settings_play_sound_summ"
+        android:defaultValue="true" />
+    <Preference android:title="@string/settings_sound" 
+                android:key="pref_sound">
+        <intent  />
+        
+    </Preference>
+</PreferenceScreen>

@@ -15,6 +15,9 @@ using Android.Gms.Maps;
 using Android.Support.V7.App;
 using Android.Support.V4.App;
 using Android.Gms.Maps.Model;
+using System.Threading.Tasks;
+using Android.Preferences;
+using Android.Media;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -33,8 +36,6 @@ namespace SimpleLocationAlarm.Droid.Screens
                 return "AlarmScreen";
             }
         }
-
-		Android.Media.MediaPlayer _mediaPlayerLong;
 
 		bool _success;
         string _requestId;
@@ -70,22 +71,13 @@ namespace SimpleLocationAlarm.Droid.Screens
                     SupportActionBar.Title = _selectedAlarm.Name;
 				}
 
-				//PlaySound ();
+                InitPreferences();
+				PlaySound ();
+                StartVibrating();
 			}
 		}
 
-		void PlaySound ()
-		{
-			var assetsFileDescriptor = Assets.OpenFd ("long_timer.mp3");
-			if (assetsFileDescriptor != null) {
-				_mediaPlayerLong = new Android.Media.MediaPlayer ();
-				_mediaPlayerLong.SetDataSource (assetsFileDescriptor.FileDescriptor, assetsFileDescriptor.StartOffset,
-					assetsFileDescriptor.Length);
-			}
-
-			_mediaPlayerLong.Prepare ();
-			_mediaPlayerLong.Start ();
-		}
+		
 
 		void GoToSettingsButton_Click (object sender, EventArgs e)
 		{
@@ -127,10 +119,9 @@ namespace SimpleLocationAlarm.Droid.Screens
             {
                 _goToSettingsButton.Click -= GoToSettingsButton_Click;
             }
-            
-			if (_mediaPlayerLong != null) {
-				_mediaPlayerLong.Stop ();
-			}
+
+            StopPlaying();
+            StopVibrating();
 
 			base.OnStop ();
 		}
@@ -227,6 +218,71 @@ namespace SimpleLocationAlarm.Droid.Screens
             _deleteAlarmMenuItem.SetVisible(_selectedAlarm != null);
             _disableAlarmMenuItem.SetVisible(_selectedAlarm != null && _selectedAlarm.Enabled);
             _enableAlarmMenuItem.SetVisible(_selectedAlarm != null && !_selectedAlarm.Enabled);
+        }
+
+        Vibrator _vibrator;
+
+        void StartVibrating()
+        {
+            if (!_shouldVibrate)
+            {
+                return;
+            }
+
+            _vibrator = (Vibrator)GetSystemService(Context.VibratorService);
+            long[] pattern = { 0, 100, 1000 };
+            _vibrator.Vibrate(pattern, 0);
+        }
+
+        void StopVibrating()
+        {
+            if (_vibrator != null)
+            {
+                _vibrator.Cancel();
+            }
+        }
+
+        //Android.Media.MediaPlayer _mediaPlayer;
+        Ringtone _ringtone;
+
+        void PlaySound()
+        {
+            if (!_shouldPlaySound)
+            {
+                return;
+            }
+
+            var sound = string.IsNullOrEmpty(_customSound) ? (RingtoneManager.GetDefaultUri(RingtoneType.Alarm) != null ?
+                RingtoneManager.GetDefaultUri(RingtoneType.Alarm) : RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)) : Android.Net.Uri.Parse(_customSound);
+
+           _ringtone = RingtoneManager.GetRingtone(this, sound);
+           _ringtone.Play();
+            //_mediaPlayer = Android.Media.MediaPlayer.Create(this, sound);
+            //_mediaPlayer.Start();
+        }
+
+        void StopPlaying()
+        {
+            //if (_mediaPlayer != null)
+            //{
+            //    _mediaPlayer.Stop();
+            //    _mediaPlayer.Release();
+            //}
+            if (_ringtone != null)
+            {
+                _ringtone.Stop();
+            }
+        }
+
+        bool _shouldVibrate, _shouldPlaySound;
+        string _customSound;
+
+        void InitPreferences()
+        {
+            var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
+            _shouldVibrate = sharedPreferences.GetBoolean(SettingsScreen.VibrateSettingKey, SettingsScreen.VibrateSettingDefaultValue);
+            _shouldPlaySound = sharedPreferences.GetBoolean(SettingsScreen.PlaySoundSettingKey, SettingsScreen.PlaySoundSettingDefaultValue);
+            _customSound = sharedPreferences.GetString(SettingsScreen.SoundSettingKey, "");
         }
     }
 }

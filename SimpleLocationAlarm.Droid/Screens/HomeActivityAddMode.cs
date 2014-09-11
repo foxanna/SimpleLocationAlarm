@@ -42,7 +42,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-		IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem;
+		IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem, _settingsMenuItem;
 		EditText _alarmNameEditText;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
@@ -59,6 +59,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
+            _settingsMenuItem = menu.FindItem(Resource.Id.action_settings);
 
 			ManageMenuItemsVisibilityForMode ();
 
@@ -96,6 +97,9 @@ namespace SimpleLocationAlarm.Droid.Screens
                 EnableAlarm(_selectedAlarm, false);
 				Mode = Mode.MarkerSelected;
 				return true;
+            case Resource.Id.action_settings:
+                OpenSettings();
+                return true;
 			default:
 				return base.OnOptionsItemSelected (item);
 			}
@@ -107,7 +111,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 			case Mode.None:
 				HideAllActionbarButtons ();
 
-				_addAlarmMenuButton.SetVisible (true);  
+				_addAlarmMenuButton.SetVisible (true);
+                _settingsMenuItem.SetVisible(true);
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (false);
                     
@@ -149,6 +154,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_deleteAlarmMenuItem.SetVisible (false);
 			_enableAlarmMenuItem.SetVisible (false);
 			_disableAlarmMenuItem.SetVisible (false);
+            _settingsMenuItem.SetVisible(false);
 
 			_alarmNameEditText.Text = string.Empty;
 
