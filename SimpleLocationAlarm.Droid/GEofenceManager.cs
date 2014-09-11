@@ -76,7 +76,7 @@ namespace SimpleLocationAlarm.Droid
         {
             var geofence = new GeofenceBuilder()
                 .SetRequestId(requestId)
-                .SetTransitionTypes(Geofence.GeofenceTransitionEnter | Geofence.GeofenceTransitionExit)
+                .SetTransitionTypes(Geofence.GeofenceTransitionEnter)
                 .SetCircularRegion(latitude, longitude, radius)
                 .SetExpirationDuration(Geofence.NeverExpire)
                 .Build();
