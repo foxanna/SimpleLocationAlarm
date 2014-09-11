@@ -6,18 +6,18 @@ using Android.Gms.Location;
 using System.Collections.Generic;
 using Android.Util;
 
-namespace SimpleLocationAlarm.Droid.MainScreen
+namespace SimpleLocationAlarm.Droid.Screens
 {
-    public partial class HomeActivity         
+    public abstract partial class BaseAlarmActivity         
     {
-        enum ActionOnAlarm
+        public enum ActionOnAlarm
         {
             Add, Disable, Delete
         }
 
         List<Tuple<ActionOnAlarm, AlarmData>> _changesToProceed = new List<Tuple<ActionOnAlarm, AlarmData>>();
 
-        void AddGeofence(AlarmData alarm)
+        protected void AddGeofence(AlarmData alarm)
         {
             Log.Debug(TAG, "AddGeofence");
 
@@ -29,7 +29,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             ProcessNextChange();
         }
 
-        void RemoveGeofence(AlarmData alarm, ActionOnAlarm action)
+        protected void RemoveGeofence(AlarmData alarm, ActionOnAlarm action)
         {
             Log.Debug(TAG, "RemoveGeofence");
 
@@ -64,6 +64,11 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             _isProcessing = true;
 
             _geofenceManager.Start();
+        }
+
+        void OnGeofenceManagerError(object sender, StringEventArgs e)
+        {
+            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
         }
         
         void OnGeofenceManagerStoped(object sender, EventArgs e)
@@ -125,11 +130,6 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             _isProcessing = false;
         }
         
-        void OnGeofenceManagerError(object sender, StringEventArgs e)
-        {
-            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
-        }
-        
         void OnGeofenceManagerGeofenceAdded(object sender, GeofenceChangeEventArgs e)
         {
             if (LocationStatusCodes.Success != e.Status)
@@ -171,7 +171,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
             ProcessNextChange();
         }                   
 
-        void OnActivityResultForLM(Result resultCode)
+        protected void OnActivityResultForLM(Result resultCode)
         {
             if (resultCode == Result.Ok)
             {

@@ -9,7 +9,7 @@ using Android.Content;
 using Newtonsoft.Json;
 using Android.Views.InputMethods;
 
-namespace SimpleLocationAlarm.Droid.MainScreen
+namespace SimpleLocationAlarm.Droid.Screens
 {
 	public enum Mode
 	{
@@ -88,12 +88,12 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 				DeleteSelectedMarker ();
 				Mode = Mode.None;
 				return true;
-			case Resource.Id.enable_alarm:
-				EnableSelectedAlarm (true);
+			case Resource.Id.enable_alarm:				
+                EnableAlarm(_selectedAlarm, true);
 				Mode = Mode.MarkerSelected;
 				return true;
-			case Resource.Id.disable_alarm:
-				EnableSelectedAlarm (false);
+			case Resource.Id.disable_alarm:				
+                EnableAlarm(_selectedAlarm, false);
 				Mode = Mode.MarkerSelected;
 				return true;
 			default:
@@ -200,19 +200,6 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			}
 		}
 
-		void EnableSelectedAlarm (bool enabled)
-		{
-			_selectedAlarm.Enabled = enabled;
-
-			if (enabled) {
-				AddGeofence (_selectedAlarm);
-			} else {
-				RemoveGeofence (_selectedAlarm, ActionOnAlarm.Disable);
-			}
-		}
-
-		UndoBar UndoBar;
-
 		void DeleteSelectedMarker ()
 		{
 			RemoveGeofence (_selectedAlarm, ActionOnAlarm.Delete);
@@ -220,16 +207,9 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			_selectedMarker.Remove ();
 			_selectedMarker = null;
 
-			if (UndoBar != null) {
-				UndoBar.Hide ();
-			}
-
 			var alarm = _selectedAlarm;
 
-			UndoBar = new UndoBar (this, Resources.GetString (Resource.String.alarm_deleted), FindViewById (Android.Resource.Id.Content));
-			UndoBar.Undo += (sender, e) => AddGeofence (alarm);
-
-			UndoBar.Show ();
+            ShowUndoBar(() => AddGeofence(alarm));
 		}
 
 		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
@@ -237,6 +217,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			if (Mode != Mode.None) {
 				OnBackPressed ();
 			}
+
 			return true;
 		}
 

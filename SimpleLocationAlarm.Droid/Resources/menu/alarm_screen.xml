@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	  xmlns:my="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/enable_alarm"
+        my:showAsAction="always"
+        android:icon="@drawable/ic_action_volume_on"
+        android:title="@string/enable"/>
+    <item
+        android:id="@+id/disable_alarm"
+        my:showAsAction="always"
+        android:icon="@drawable/ic_action_volume_muted"
+        android:title="@string/disable"/>
+    <item
+		android:id="@+id/delete"
+        my:showAsAction="always"
+        android:icon="@drawable/ic_action_discard"
+        android:title="@string/delete"/>
+</menu>

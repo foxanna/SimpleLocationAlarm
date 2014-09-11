@@ -13,7 +13,7 @@ using Android.Widget;
 using Android.Gms.Maps.Model;
 using Android.Gms.Location;
 
-namespace SimpleLocationAlarm.Droid.MainScreen
+namespace SimpleLocationAlarm.Droid.Screens
 {
 	[Activity (
 		Label = "@string/app_name", 
@@ -21,12 +21,15 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		MainLauncher = true, 
 		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
 
-	public partial class HomeActivity : ActionBarActivity
+    public partial class HomeActivity : BaseAlarmActivity
 	{
-		const string TAG = "HomeActivity";
-
-		DBManager _dbManager = new DBManager ();
-		GeofenceManager _geofenceManager = new GeofenceManager ();
+        protected override string TAG
+        {
+            get
+            {
+                return "HomeActivity";
+            }
+        }
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -37,15 +40,6 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 		protected override void OnStart ()
 		{
 			base.OnStart ();
-			_dbManager.DataUpdated += OnDataUpdated;
-
-			_geofenceManager.Error += OnGeofenceManagerError;
-			_geofenceManager.Started += OnGeofenceManagerStarted;
-			_geofenceManager.FailedToStart += OnGeofenceManagerFailedToStart;
-			_geofenceManager.FailedToStartWithResolution += OnGeofenceManagerFailedToStartWithResolution;
-			_geofenceManager.Stoped += OnGeofenceManagerStoped;
-			_geofenceManager.GeofenceAdded += OnGeofenceManagerGeofenceAdded;
-			_geofenceManager.GeofenceRemoved += OnGeofenceManagerGeofenceRemoved;
 
 			FindMap ();
 		}
@@ -58,14 +52,6 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 				UndoBar.Hide ();
 			}
 
-			_geofenceManager.GeofenceRemoved -= OnGeofenceManagerGeofenceRemoved;
-			_geofenceManager.GeofenceAdded -= OnGeofenceManagerGeofenceAdded;
-			_geofenceManager.Stoped -= OnGeofenceManagerStoped;
-			_geofenceManager.FailedToStart -= OnGeofenceManagerFailedToStart;
-			_geofenceManager.FailedToStartWithResolution -= OnGeofenceManagerFailedToStartWithResolution;
-			_geofenceManager.Started -= OnGeofenceManagerStarted;
-			_geofenceManager.Error -= OnGeofenceManagerError;
-			_dbManager.DataUpdated -= OnDataUpdated;
 			base.OnStop ();
 		}
 

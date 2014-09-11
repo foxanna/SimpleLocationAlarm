@@ -3,7 +3,7 @@ using Android.Gms.Common;
 using Android.Widget;
 using Android.App;
 
-namespace SimpleLocationAlarm.Droid.MainScreen
+namespace SimpleLocationAlarm.Droid.Screens
 {
 	public partial class HomeActivity
 	{

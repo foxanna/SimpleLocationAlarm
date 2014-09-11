@@ -10,7 +10,7 @@ using Android.Gms.Location;
 using System.Threading.Tasks;
 using Android.Util;
 
-namespace SimpleLocationAlarm.Droid.MainScreen
+namespace SimpleLocationAlarm.Droid.Screens
 {
 	public partial class HomeActivity : GoogleMap.IOnMapLoadedCallback
 	{
@@ -114,7 +114,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 			}
 		}
 
-		void OnDataUpdated (object sender, AlarmsEventArgs e)
+		protected override void OnDataUpdated (object sender, AlarmsEventArgs e)
 		{
 			Log.Debug (TAG, "OnDataUpdated, count = " + e.Data.Count);
 
@@ -236,10 +236,7 @@ namespace SimpleLocationAlarm.Droid.MainScreen
 
 				break;
 			}
-		}
-
-		Marker _selectedMarker;
-		AlarmData _selectedAlarm;
+		}		
 
 		void OnMarkerClick (object sender, GoogleMap.MarkerClickEventArgs e)
 		{
