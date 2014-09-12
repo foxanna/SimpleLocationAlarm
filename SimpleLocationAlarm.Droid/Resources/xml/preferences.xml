@@ -12,7 +12,10 @@
         android:defaultValue="true" />
     <Preference android:title="@string/settings_sound" 
                 android:key="pref_sound">
-        <intent  />
-        
+        <intent  />        
     </Preference>
+    <simplelocationalarm.droid.screens.NumberPickerPreference
+        android:key="pref_radius"
+        android:title="@string/settings_default_radius"
+        android:defaultValue="200" />
 </PreferenceScreen>

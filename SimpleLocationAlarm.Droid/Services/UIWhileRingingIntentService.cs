@@ -13,11 +13,6 @@ namespace SimpleLocationAlarm.Droid.Services
     [Service]
     public class UIWhileRingingIntentService : IntentService
     {
-        //public UIWhileRingingIntentService() : base("UIWhileRingingIntentService")
-        //{
-
-        //}
-        
         public const string StartAlarmAction = "StartAlarmAction";
         public const string StopAlarmAction = "StopAlarmAction";
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Android.Views;
+using Android.App;
 using Android.Widget;
 using Android.Support.V4.View;
 using Android.Gms.Maps;
@@ -8,6 +9,7 @@ using Android.Gms.Maps.Model;
 using Android.Content;
 using Newtonsoft.Json;
 using Android.Views.InputMethods;
+using Android.Preferences;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -193,10 +195,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 					new Java.Lang.String (Resources.GetString (Resource.String.enter_alarm_name)), null);
 				return false;
 			} else {
+                var defaultRadius = PreferenceManager.GetDefaultSharedPreferences(Application.Context).GetInt(SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
+
 				var newAlarm = new AlarmData () {
 					Latitude = _alarmToAdd.Position.Latitude,
 					Longitude = _alarmToAdd.Position.Longitude,
-					Radius = 200,
+                    Radius = defaultRadius,
 					Name = _alarmNameEditText.Text,
 					Enabled = true,
 					RequestId = string.Format ("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble ())

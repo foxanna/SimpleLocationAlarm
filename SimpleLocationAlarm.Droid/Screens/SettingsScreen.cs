@@ -20,6 +20,8 @@ namespace SimpleLocationAlarm.Droid.Screens
         public const string PlaySoundSettingKey = "pref_play_sound";
         public const bool PlaySoundSettingDefaultValue = true;
         public const string SoundSettingKey = "pref_sound";
+        public const string DefaultRadiusKey = "pref_radius";
+        public const int DefaultRadiusValue = 200;
 
         Preference _soundPref;
 

@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Screens\NumberPickerPreference.cs" />
     <Compile Include="Services\ReceiveTransitionsIntentService.cs" />
     <Compile Include="Screens\AlarmScreen.cs" />
     <Compile Include="Services\DBManager.cs" />
@@ -122,6 +123,9 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_content_undo.png" />
     <AndroidResource Include="Resources\drawable\undo_bar_bg.xml" />
     <AndroidResource Include="Resources\menu\alarm_screen.xml" />
+    <AndroidResource Include="Resources\layout\NumberPickerDialog.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">

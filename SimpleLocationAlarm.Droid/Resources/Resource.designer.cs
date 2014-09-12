@@ -1674,10 +1674,13 @@ namespace SimpleLocationAlarm.Droid
 			public const int mr_media_route_list_item = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int support_simple_spinner_dropdown_item = 2130903070;
+			public const int NumberPickerDialog = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int undo_bar = 2130903071;
+			public const int support_simple_spinner_dropdown_item = 2130903071;
+			
+			// aapt resource value: 0x7f030020
+			public const int undo_bar = 2130903072;
 			
 			static Layout()
 			{
@@ -1905,6 +1908,12 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f060040
 			public const int probably_location_services_are_off = 2131099712;
+			
+			// aapt resource value: 0x7f060049
+			public const int settings_default_radius = 2131099721;
+			
+			// aapt resource value: 0x7f06004a
+			public const int settings_default_radius_sum = 2131099722;
 			
 			// aapt resource value: 0x7f060045
 			public const int settings_play_sound = 2131099717;

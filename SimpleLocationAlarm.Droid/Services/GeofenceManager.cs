@@ -7,6 +7,8 @@ using Android.OS;
 using Android.Gms.Common;
 using Android.Gms.Location;
 using Android.Util;
+using Android.Preferences;
+using SimpleLocationAlarm.Droid.Screens;
 
 namespace SimpleLocationAlarm.Droid.Services
 {

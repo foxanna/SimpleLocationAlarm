@@ -29,4 +29,6 @@
     <string name="settings_play_sound_summ">Play sound when enter the alarm zone</string>
     <string name="settings_sound">Alarm sound</string>
     <string name="settings_sound_sum">Default alarm sound</string>
+    <string name="settings_default_radius">Default zone radius</string>
+    <string name="settings_default_radius_sum">{0} meters</string>
 </resources>
