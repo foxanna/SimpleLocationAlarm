@@ -40,6 +40,15 @@
         <item name="android:windowExitAnimation">@anim/popup_hide</item>
     </style>
 
+    <style name="SettingsTheme" parent="@style/AlarmTheme">
+        <item name="android:actionBarStyle">@style/SettingsActionBar</item>
+        <item name="actionBarStyle">@style/SettingsActionBar</item>
+    </style>
+
+    <style name="SettingsActionBar" parent="@style/AlarmActionBar">
+        <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
+    </style>
+
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>
     <color name="light">#66e5caf2</color>

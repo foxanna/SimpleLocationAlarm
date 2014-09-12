@@ -9,8 +9,9 @@ using System.Text;
 namespace SimpleLocationAlarm.Droid.Screens
 {
     [Activity(
-        Label = "@string/app_name",
+        Label = "@string/action_settings",
         Icon = "@drawable/alarm_white",
+        Theme = "@style/SettingsTheme",
         ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class SettingsScreen : PreferenceActivity
     {
@@ -31,7 +32,7 @@ namespace SimpleLocationAlarm.Droid.Screens
             var soundPrefValue = PreferenceManager.GetDefaultSharedPreferences(this).GetString(SoundSettingKey, "");
             _soundPref.Summary = string.IsNullOrEmpty(soundPrefValue) ? GetString(Resource.String.settings_sound_sum) :
                 RingtoneManager.GetRingtone(this, Android.Net.Uri.Parse(soundPrefValue)).GetTitle(this);
-            _soundPref.PreferenceClick += SoundPreferenceClick;
+            _soundPref.PreferenceClick += SoundPreferenceClick;            
         }
 
         const int _pickSoundRequestId = 45;
@@ -58,6 +59,18 @@ namespace SimpleLocationAlarm.Droid.Screens
                 default:
                     base.OnActivityResult(requestCode, resultCode, data);
                     break;
+            }
+        }
+
+        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
             }
         }
     }

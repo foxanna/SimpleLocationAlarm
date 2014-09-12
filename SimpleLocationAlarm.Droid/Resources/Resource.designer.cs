@@ -1958,6 +1958,12 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070096
 			public const int EditTextAlarm = 2131165334;
 			
+			// aapt resource value: 0x7f07009b
+			public const int SettingsActionBar = 2131165339;
+			
+			// aapt resource value: 0x7f07009a
+			public const int SettingsTheme = 2131165338;
+			
 			// aapt resource value: 0x7f070067
 			public const int TextAppearance_AppCompat_Base_CompactMenu_Dialog = 2131165287;
 			
