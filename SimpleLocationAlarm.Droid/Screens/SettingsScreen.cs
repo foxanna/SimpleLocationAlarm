@@ -55,7 +55,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                         var ringtone = RingtoneManager.GetRingtone(this, Android.Net.Uri.Parse(uri.ToString()));
 
                         _soundPref.Summary = ringtone.GetTitle(this);
-                        PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString(SoundSettingKey, data.DataString).Commit();
+                        PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString(SoundSettingKey, uri.ToString()).Commit();
                     }
                     break;
                 default:
