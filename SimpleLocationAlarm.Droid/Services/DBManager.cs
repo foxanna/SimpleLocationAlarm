@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SimpleLocationAlarm.Droid
+namespace SimpleLocationAlarm.Droid.Services
 {
     public class AlarmsEventArgs : EventArgs
     {

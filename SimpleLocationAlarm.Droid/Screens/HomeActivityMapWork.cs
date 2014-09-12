@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Android.Gms.Maps;
-using Android.Widget;
 using Android.Gms.Maps.Model;
-using Android.Content;
 using System.Collections.Generic;
 using Android.Locations;
-using Android.Gms.Location;
-using System.Threading.Tasks;
 using Android.Util;
+using SimpleLocationAlarm.Droid.Services;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {

@@ -1,17 +1,7 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Gms.Common;
-using Android.Gms.Maps;
 using Android.OS;
-using Android.Renderscripts;
-using Android.Runtime;
-using Android.Support.V7.App;
-using Android.Views;
-using Android.Widget;
-using Android.Gms.Maps.Model;
-using Android.Gms.Location;
+using SimpleLocationAlarm.Droid.Services;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {

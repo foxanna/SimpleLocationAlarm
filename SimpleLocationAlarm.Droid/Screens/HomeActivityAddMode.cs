@@ -87,6 +87,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				return true;
 			case Resource.Id.delete:
 				DeleteSelectedMarker ();
+                StopRinging();
 				Mode = Mode.None;
 				return true;
 			case Resource.Id.enable_alarm:				
@@ -95,6 +96,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				return true;
 			case Resource.Id.disable_alarm:				
                 EnableAlarm(_selectedAlarm, false);
+                StopRinging();
 				Mode = Mode.MarkerSelected;
 				return true;
             case Resource.Id.action_settings:
@@ -209,7 +211,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		void DeleteSelectedMarker ()
 		{
 			RemoveGeofence (_selectedAlarm, ActionOnAlarm.Delete);
-            
+                        
 			_selectedMarker.Remove ();
 			_selectedMarker = null;
 

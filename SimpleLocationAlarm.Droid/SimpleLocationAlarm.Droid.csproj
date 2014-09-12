@@ -76,9 +76,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\ReceiveTransitionsIntentService.cs" />
     <Compile Include="Screens\AlarmScreen.cs" />
-    <Compile Include="DBManager.cs" />
-    <Compile Include="GeofenceManager.cs" />
+    <Compile Include="Services\DBManager.cs" />
+    <Compile Include="Services\GeofenceManager.cs" />
+    <Compile Include="Screens\AlarmErrorScreen.cs" />
     <Compile Include="Screens\BaseAlarmActivityGeofencesStuff.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Screens\HomeActivityGoogleServicesStuff.cs" />
     <Compile Include="Screens\HomeActivityAddMode.cs" />
     <Compile Include="Screens\SettingsScreen.cs" />
+    <Compile Include="Services\UIWhileRingingIntentService.cs" />
     <Compile Include="UndoBar.cs" />
     <Compile Include="Screens\BaseAlarmActivity.cs" />
   </ItemGroup>
@@ -103,7 +106,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\AlarmGeofenceTriggered.axml">
-      <SubType>AndroidResource</SubType>
+      <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable-mdpi\alarm_grey.png" />
     <AndroidResource Include="Resources\drawable-hdpi\alarm_grey.png" />
@@ -438,4 +441,5 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\alarm_btn_check_on_pressed_holo_dark.png" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

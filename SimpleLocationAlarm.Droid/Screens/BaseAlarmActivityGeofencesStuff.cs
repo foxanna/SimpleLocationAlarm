@@ -5,6 +5,7 @@ using Android.App;
 using Android.Gms.Location;
 using System.Collections.Generic;
 using Android.Util;
+using SimpleLocationAlarm.Droid.Services;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -100,7 +101,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                 case ActionOnAlarm.Add:
                     var alarm = _changesToProceed[0].Item2;
                     _dbManager.AddAlarm(alarm);
-                    _geofenceManager.AddGeofence(alarm.RequestId, alarm.Latitude, alarm.Longitude, alarm.Radius, typeof(AlarmScreen));
+                    _geofenceManager.AddGeofence(alarm.RequestId, alarm.Latitude, alarm.Longitude, alarm.Radius);
                     break;
                 case ActionOnAlarm.Delete:
                 case ActionOnAlarm.Disable:

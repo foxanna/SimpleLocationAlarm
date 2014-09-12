@@ -8,7 +8,7 @@ using Android.Gms.Common;
 using Android.Gms.Location;
 using Android.Util;
 
-namespace SimpleLocationAlarm.Droid
+namespace SimpleLocationAlarm.Droid.Services
 {
     public class StringEventArgs : EventArgs
     {
@@ -72,7 +72,7 @@ namespace SimpleLocationAlarm.Droid
 
         #region Add geofence
 
-        public void AddGeofence(string requestId, double latitude, double longitude, float radius, Type activityType)
+        public void AddGeofence(string requestId, double latitude, double longitude, float radius)
         {
             var geofence = new GeofenceBuilder()
                 .SetRequestId(requestId)
@@ -81,7 +81,7 @@ namespace SimpleLocationAlarm.Droid
                 .SetExpirationDuration(Geofence.NeverExpire)
                 .Build();
 
-            var transitionIntent = PendingIntent.GetActivity(Application.Context, 0, new Intent(Application.Context, activityType), PendingIntentFlags.UpdateCurrent);
+            var transitionIntent = PendingIntent.GetService(Application.Context, 0, new Intent(Application.Context, typeof (ReceiveTransitionsIntentService)), PendingIntentFlags.UpdateCurrent);
 
             _locationClient.AddGeofences(new List<IGeofence>() { geofence }, transitionIntent, this);
         }

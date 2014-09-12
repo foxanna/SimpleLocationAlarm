@@ -1,7 +1,8 @@
 ﻿using System;
 using Android.Support.V7.App;
-using Android.Widget;
 using Android.Gms.Maps.Model;
+using SimpleLocationAlarm.Droid.Services;
+using Android.Content;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -96,6 +97,11 @@ namespace SimpleLocationAlarm.Droid.Screens
             {
                 RemoveGeofence(alarm, ActionOnAlarm.Disable);
             }
+        }
+
+        protected void StopRinging()
+        {
+            StartService(new Intent(this, typeof(UIWhileRingingIntentService)).SetAction(UIWhileRingingIntentService.StopAlarmAction));
         }
 	}
 }
