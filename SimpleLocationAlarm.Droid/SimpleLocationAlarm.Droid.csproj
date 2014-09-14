@@ -126,6 +126,12 @@
     <AndroidResource Include="Resources\layout\NumberPickerDialog.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\toggle_button.xml" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\switch_bg.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\switch_bg.9.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\switch_bg.9.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\switch_bg.9.png" />
+    <AndroidResource Include="Resources\drawable\switch_on.9.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">

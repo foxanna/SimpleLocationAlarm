@@ -10,6 +10,7 @@ using Android.Content;
 using Newtonsoft.Json;
 using Android.Views.InputMethods;
 using Android.Preferences;
+using System.Security.Cryptography;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -46,6 +47,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem, _settingsMenuItem;
 		EditText _alarmNameEditText;
+		ToggleButton _switchButton;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
 		{
@@ -62,6 +64,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
 			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
+
+			_switchButton = MenuItemCompat.GetActionView (menu.FindItem (Resource.Id.some)) as ToggleButton;
+			_switchButton.SetBackgroundResource (Resource.Drawable.switch_bg);
 
 			ManageMenuItemsVisibilityForMode ();
 

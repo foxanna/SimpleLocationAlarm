@@ -100,6 +100,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 				EnableAlarm (_selectedAlarm, false);
 				StopRinging ();
 				return true;
+			case Resource.Id.stop_noise:
+				StopRinging ();
+				return true;
 			default:
 				return base.OnOptionsItemSelected (item);
 			}
