@@ -61,7 +61,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
-            _settingsMenuItem = menu.FindItem(Resource.Id.action_settings);
+			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
 
 			ManageMenuItemsVisibilityForMode ();
 
@@ -89,21 +89,21 @@ namespace SimpleLocationAlarm.Droid.Screens
 				return true;
 			case Resource.Id.delete:
 				DeleteSelectedMarker ();
-                StopRinging();
+				StopRinging ();
 				Mode = Mode.None;
 				return true;
 			case Resource.Id.enable_alarm:				
-                EnableAlarm(_selectedAlarm, true);
+				EnableAlarm (_selectedAlarm, true);
 				Mode = Mode.MarkerSelected;
 				return true;
 			case Resource.Id.disable_alarm:				
-                EnableAlarm(_selectedAlarm, false);
-                StopRinging();
+				EnableAlarm (_selectedAlarm, false);
+				StopRinging ();
 				Mode = Mode.MarkerSelected;
 				return true;
-            case Resource.Id.action_settings:
-                OpenSettings();
-                return true;
+			case Resource.Id.action_settings:
+				OpenSettings ();
+				return true;
 			default:
 				return base.OnOptionsItemSelected (item);
 			}
@@ -116,7 +116,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				HideAllActionbarButtons ();
 
 				_addAlarmMenuButton.SetVisible (true);
-                _settingsMenuItem.SetVisible(true);
+				_settingsMenuItem.SetVisible (true);
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (false);
                     
@@ -158,7 +158,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_deleteAlarmMenuItem.SetVisible (false);
 			_enableAlarmMenuItem.SetVisible (false);
 			_disableAlarmMenuItem.SetVisible (false);
-            _settingsMenuItem.SetVisible(false);
+			_settingsMenuItem.SetVisible (false);
 
 			_alarmNameEditText.Text = string.Empty;
 
@@ -195,12 +195,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 					new Java.Lang.String (Resources.GetString (Resource.String.enter_alarm_name)), null);
 				return false;
 			} else {
-                var defaultRadius = PreferenceManager.GetDefaultSharedPreferences(Application.Context).GetInt(SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
+				var defaultRadius = PreferenceManager.GetDefaultSharedPreferences (Application.Context).GetInt (SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
 
 				var newAlarm = new AlarmData () {
 					Latitude = _alarmToAdd.Position.Latitude,
 					Longitude = _alarmToAdd.Position.Longitude,
-                    Radius = defaultRadius,
+					Radius = defaultRadius,
 					Name = _alarmNameEditText.Text,
 					Enabled = true,
 					RequestId = string.Format ("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble ())
@@ -220,8 +220,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_selectedMarker = null;
 
 			var alarm = _selectedAlarm;
+			alarm.Enabled = true;
 
-            ShowUndoBar(() => AddGeofence(alarm));
+			ShowUndoBar (() => AddGeofence (alarm));
 		}
 
 		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
