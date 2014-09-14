@@ -10,124 +10,144 @@ using Newtonsoft.Json;
 
 namespace SimpleLocationAlarm.Droid.Services
 {
-    [Service]
-    public class UIWhileRingingIntentService : IntentService
-    {
-        public const string StartAlarmAction = "StartAlarmAction";
-        public const string StopAlarmAction = "StopAlarmAction";
+	[Service]
+	public class UIWhileRingingIntentService : Service
+	{
+		public const string StartAlarmAction = "StartAlarmAction";
+		//public const string StopAlarmAction = "StopAlarmAction";
         
-        const string TAG = "UIWhileRingingIntentService";
+		const string TAG = "UIWhileRingingIntentService";
 
-        protected override void OnHandleIntent(Intent intent)
-        {
-            Log.Debug(TAG, "OnHandleIntent" + intent.Action);
+		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)
+		{
+			Log.Debug (TAG, "OnStartCommand" + intent.Action);
 
-            switch (intent.Action)
-            {
-                case StartAlarmAction:
-                    StartAlarm(intent);
-                    break;
-                case StopAlarmAction:
-                    StopAlarm();
-                    break;
-            }
-        }
+			switch (intent.Action) {
+			case StartAlarmAction:
+				StartAlarm (intent);
+				break;
+//			case StopAlarmAction:
+//				StopSelf ();
+//				break;
+			}
 
-        void StartAlarm(Intent intent)
-        {
-            var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
-            var shouldVibrate = sharedPreferences.GetBoolean(SettingsScreen.VibrateSettingKey, SettingsScreen.VibrateSettingDefaultValue);
-            var shouldPlaySound = sharedPreferences.GetBoolean(SettingsScreen.PlaySoundSettingKey, SettingsScreen.PlaySoundSettingDefaultValue);
-            var customSound = sharedPreferences.GetString(SettingsScreen.SoundSettingKey, "");
+			return StartCommandResult.RedeliverIntent;
+		}
 
-            if (shouldPlaySound)
-            {
-                PlaySound(customSound);
-            }
-            if (shouldVibrate)
-            {
-                StartVibrating();
-            }
+		public override IBinder OnBind (Intent intent)
+		{
+			return null;
+		}
 
-            ShowNotification(JsonConvert.DeserializeObject<AlarmData>(intent.GetStringExtra(Constants.AlarmsData_Extra)));
-        }
-        void StopAlarm()
-        {
-            StopPlaying();
-            StopVibrating();
-            HideNotification();
-        }
+		//		protected override void OnHandleIntent (Intent intent)
+		//		{
+		//			Log.Debug (TAG, "OnHandleIntent" + intent.Action);
+		//
+		//			switch (intent.Action) {
+		//			case StartAlarmAction:
+		//				StartAlarm (intent);
+		//				break;
+		//			case StopAlarmAction:
+		//				StopSelf ();
+		//				break;
+		//			}
+		//		}
 
-        static Ringtone _ringtone;
+		void StartAlarm (Intent intent)
+		{
+			var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences (this);
+			var shouldVibrate = sharedPreferences.GetBoolean (SettingsScreen.VibrateSettingKey, SettingsScreen.VibrateSettingDefaultValue);
+			var shouldPlaySound = sharedPreferences.GetBoolean (SettingsScreen.PlaySoundSettingKey, SettingsScreen.PlaySoundSettingDefaultValue);
+			var customSound = sharedPreferences.GetString (SettingsScreen.SoundSettingKey, "");
 
-        void PlaySound(string customSound)
-        {
-            if (_ringtone != null)
-            {
-                return;
-            }
+			if (shouldPlaySound) {
+				PlaySound (customSound);
+			}
+			if (shouldVibrate) {
+				StartVibrating ();
+			}
 
-            var sound = string.IsNullOrEmpty(customSound) ? (RingtoneManager.GetDefaultUri(RingtoneType.Alarm) != null ?
-                RingtoneManager.GetDefaultUri(RingtoneType.Alarm) : RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)) : Android.Net.Uri.Parse(customSound);
+			ShowNotification (JsonConvert.DeserializeObject<AlarmData> (intent.GetStringExtra (Constants.AlarmsData_Extra)));
+		}
 
-            _ringtone = RingtoneManager.GetRingtone(Application.Context, sound);
-            _ringtone.Play();
-        }
+		void StopAlarm ()
+		{
+			StopPlaying ();
+			StopVibrating ();
+			HideNotification ();
+		}
 
-        void StopPlaying()
-        {
-            if (_ringtone != null)
-            {
-                _ringtone.Stop();
-                _ringtone = null;
-            }
-        }
+		Ringtone _ringtone;
 
-        static Vibrator _vibrator;
+		void PlaySound (string customSound)
+		{
+			if (_ringtone != null) {
+				return;
+			}
 
-        void StartVibrating()
-        {
-            if (_vibrator != null)
-            {
-                return;
-            }
+			var sound = string.IsNullOrEmpty (customSound) ? (RingtoneManager.GetDefaultUri (RingtoneType.Alarm) != null ?
+                RingtoneManager.GetDefaultUri (RingtoneType.Alarm) : RingtoneManager.GetDefaultUri (RingtoneType.Ringtone)) : Android.Net.Uri.Parse (customSound);
 
-            _vibrator = (Vibrator) GetSystemService(Context.VibratorService);
-            _vibrator.Vibrate(new long[] { 0, 1000, 1000 }, 0);
-        }
+			_ringtone = RingtoneManager.GetRingtone (Application.Context, sound);
+			_ringtone.Play ();
+		}
 
-        void StopVibrating()
-        {
-            if (_vibrator != null)
-            {
-                _vibrator.Cancel();
-                _vibrator = null;
-            }
-        }
+		void StopPlaying ()
+		{
+			if (_ringtone != null) {
+				_ringtone.Stop ();
+				_ringtone = null;
+			}
+		}
 
-        int _notificationId = 67;
+		Vibrator _vibrator;
 
-        void ShowNotification(AlarmData alarm)
-        {
-            var builder = new NotificationCompat.Builder(this);
-            builder.SetSmallIcon(Resource.Drawable.alarm_white)
-                .SetContentTitle(alarm.Name)
-                .SetContentText(GetString(Resource.String.app_name))
-                .SetAutoCancel(false);
+		void StartVibrating ()
+		{
+			if (_vibrator != null) {
+				return;
+			}
 
-            var intent = new Intent(this, typeof(AlarmScreen))
-                .SetFlags(ActivityFlags.NewTask)
-                .PutExtra(Constants.AlarmsData_Extra, JsonConvert.SerializeObject(alarm));
-            builder.SetContentIntent(PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.UpdateCurrent));
+			_vibrator = (Vibrator) GetSystemService (Context.VibratorService);
+			_vibrator.Vibrate (new long[] { 0, 1000, 1000 }, 0);
+		}
 
-            var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
-            notificationManager.Notify(_notificationId, builder.Build());
-        }
+		void StopVibrating ()
+		{
+			if (_vibrator != null) {
+				_vibrator.Cancel ();
+				_vibrator = null;
+			}
+		}
 
-        void HideNotification()
-        {
-            var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
-            notificationManager.Cancel(_notificationId);
-        }        
-    }
+		int _notificationId = 67;
+
+		void ShowNotification (AlarmData alarm)
+		{
+			var builder = new NotificationCompat.Builder (this);
+			builder.SetSmallIcon (Resource.Drawable.alarm_white)
+                .SetContentTitle (alarm.Name)
+                .SetContentText (GetString (Resource.String.app_name))
+                .SetAutoCancel (false);
+
+			var intent = new Intent (this, typeof(AlarmScreen))
+                .SetFlags (ActivityFlags.NewTask)
+                .PutExtra (Constants.AlarmsData_Extra, JsonConvert.SerializeObject (alarm));
+			builder.SetContentIntent (PendingIntent.GetActivity (this, 0, intent, PendingIntentFlags.UpdateCurrent));
+
+			StartForeground (_notificationId, builder.Build ());
+		}
+
+		void HideNotification ()
+		{
+			StopForeground (true);
+		}
+
+		public override void OnDestroy ()
+		{
+			Log.Debug (TAG, "OnDestroy");
+			StopAlarm ();
+			base.OnDestroy ();
+		}
+	}
 }
