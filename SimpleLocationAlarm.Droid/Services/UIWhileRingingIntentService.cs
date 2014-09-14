@@ -10,13 +10,23 @@ using Newtonsoft.Json;
 
 namespace SimpleLocationAlarm.Droid.Services
 {
+	[BroadcastReceiver]
+	public class ScreenOffBroadcastReceiver : BroadcastReceiver
+	{
+		public override void OnReceive (Context context, Intent intent)
+		{
+			Log.Debug ("ScreenOffBroadcastReceiver", "OnReceive" + intent.Action);
+			var serviceIntent = new Intent (context, typeof(UIWhileRingingIntentService)).SetAction (intent.Action);
+			context.StartService (serviceIntent);
+		}
+	}
+
 	[Service]
 	public class UIWhileRingingIntentService : Service
 	{
-		public const string StartAlarmAction = "StartAlarmAction";
-		//public const string StopAlarmAction = "StopAlarmAction";
-        
 		const string TAG = "UIWhileRingingIntentService";
+
+		public const string StartAlarmAction = "StartAlarmAction";
 
 		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)
 		{
@@ -26,9 +36,12 @@ namespace SimpleLocationAlarm.Droid.Services
 			case StartAlarmAction:
 				StartAlarm (intent);
 				break;
-//			case StopAlarmAction:
-//				StopSelf ();
-//				break;
+			case Intent.ActionScreenOff:	// vibration stops when devices is locked
+				if (_vibrator != null) {	// continue vibrating if already was
+					_vibrator = null;
+					StartVibrating ();
+				}
+				break;
 			}
 
 			return StartCommandResult.RedeliverIntent;
@@ -38,20 +51,6 @@ namespace SimpleLocationAlarm.Droid.Services
 		{
 			return null;
 		}
-
-		//		protected override void OnHandleIntent (Intent intent)
-		//		{
-		//			Log.Debug (TAG, "OnHandleIntent" + intent.Action);
-		//
-		//			switch (intent.Action) {
-		//			case StartAlarmAction:
-		//				StartAlarm (intent);
-		//				break;
-		//			case StopAlarmAction:
-		//				StopSelf ();
-		//				break;
-		//			}
-		//		}
 
 		void StartAlarm (Intent intent)
 		{
@@ -68,10 +67,17 @@ namespace SimpleLocationAlarm.Droid.Services
 			}
 
 			ShowNotification (JsonConvert.DeserializeObject<AlarmData> (intent.GetStringExtra (Constants.AlarmsData_Extra)));
+
+			// this action cannot be declared in manifest
+			RegisterReceiver (_screenOffBroadcastReceiver, new IntentFilter (Intent.ActionScreenOff));
 		}
+
+		ScreenOffBroadcastReceiver _screenOffBroadcastReceiver = new ScreenOffBroadcastReceiver ();
 
 		void StopAlarm ()
 		{
+			UnregisterReceiver (_screenOffBroadcastReceiver);
+
 			StopPlaying ();
 			StopVibrating ();
 			HideNotification ();

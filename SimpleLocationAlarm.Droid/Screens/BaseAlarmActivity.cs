@@ -96,9 +96,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		protected void StopRinging ()
 		{
-			//StartService (new Intent (this, typeof(UIWhileRingingIntentService)).SetAction (UIWhileRingingIntentService.StopAlarmAction));
 			StopService (new Intent (this, typeof(UIWhileRingingIntentService)));
 		}
 	}
 }
-
