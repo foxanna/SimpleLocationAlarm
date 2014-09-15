@@ -12,6 +12,8 @@
         <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
         <item name="android:textSelectHandle">@drawable/alarm_text_select_handle_middle</item>
         <item name="android:radioButtonStyle">@style/RadioButtonAlarm</item>
+        <item name="actionBarItemBackground">@drawable/ab_item_background</item>
+        <item name="android:actionBarItemBackground">@drawable/ab_item_background</item>
 	</style>
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">

@@ -529,4 +529,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\btn_radio_on_pressed.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ab_item_background.xml" />
+  </ItemGroup>
 </Project>
