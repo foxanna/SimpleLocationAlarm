@@ -8,6 +8,9 @@ using Android.Preferences;
 using Android.Util;
 using Android.Content.Res;
 using Android.OS;
+using Java.Lang.Reflect;
+using Android.Graphics;
+using Java.Lang;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -70,12 +73,56 @@ namespace SimpleLocationAlarm.Droid.Screens
             else
             {
                 _numberPicker = (NumberPicker)view;
+                SetNumberPickerTextColor(_numberPicker, Context.Resources.GetColor(Resource.Color.dark));
                 _numberPicker.DescendantFocusability = DescendantFocusability.BlockDescendants;
                 _numberPicker.SetDisplayedValues(_values.Select(v=> v.ToString()).ToArray());
                 _numberPicker.MinValue = 0;
                 _numberPicker.MaxValue = _values.Count() - 1;
                 _numberPicker.WrapSelectorWheel = false;
                 _numberPicker.Value = _values.IndexOf(currentValue);
+            }
+        }
+
+        static void SetNumberPickerTextColor(NumberPicker numberPicker, Color color)
+        {
+            try
+            {
+                int count = numberPicker.ChildCount;
+                for (int i = 0; i < count; i++)
+                {
+                    View child = numberPicker.GetChildAt(i);
+                    if (child is EditText)
+                    {
+                        try
+                        {
+                            ((EditText)child).SetTextColor(color);
+
+                            Field selectorWheelPaintField = numberPicker.Class
+                                .GetDeclaredField("mSelectorWheelPaint");
+                            selectorWheelPaintField.Accessible = true;
+                            ((Paint)selectorWheelPaintField.Get(numberPicker)).Color = color;
+                            var a = selectorWheelPaintField.Get(numberPicker);
+                        }
+                        catch (NoSuchFieldException e)
+                        {
+                            Log.Debug("setNumberPickerTextColor", e.Message);
+                        }
+                        catch (IllegalAccessException e)
+                        {
+                            Log.Debug("setNumberPickerTextColor", e.Message);
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            Log.Debug("setNumberPickerTextColor", e.Message);
+                        }
+                    }
+                }
+
+                numberPicker.Invalidate();
+            }
+            catch
+            {
+
             }
         }
     }

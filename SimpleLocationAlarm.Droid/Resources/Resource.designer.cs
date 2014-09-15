@@ -1266,25 +1266,28 @@ namespace SimpleLocationAlarm.Droid
 			public const int mr_ic_media_route_on_holo_light = 2130837672;
 			
 			// aapt resource value: 0x7f0200a9
-			public const int powered_by_google_dark = 2130837673;
+			public const int np_numberpicker_selection_divider = 2130837673;
 			
 			// aapt resource value: 0x7f0200aa
-			public const int powered_by_google_light = 2130837674;
+			public const int powered_by_google_dark = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int radio_button = 2130837675;
+			public const int powered_by_google_light = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int switch_bg = 2130837676;
+			public const int radio_button = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int switch_on = 2130837677;
+			public const int switch_bg = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int toggle_button = 2130837678;
+			public const int switch_on = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int undo_bar_bg = 2130837679;
+			public const int toggle_button = 2130837679;
+			
+			// aapt resource value: 0x7f0200b0
+			public const int undo_bar_bg = 2130837680;
 			
 			static Drawable()
 			{
@@ -1997,11 +2000,20 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070094
 			public const int AlarmTheme = 2131165332;
 			
+			// aapt resource value: 0x7f07009f
+			public const int BorderlessAlarmButton = 2131165343;
+			
 			// aapt resource value: 0x7f070097
 			public const int ButtonAlarm = 2131165335;
 			
 			// aapt resource value: 0x7f070098
 			public const int CheckBoxAlarm = 2131165336;
+			
+			// aapt resource value: 0x7f07009d
+			public const int DialogAlarm = 2131165341;
+			
+			// aapt resource value: 0x7f07009e
+			public const int DialogAlarmStyle = 2131165342;
 			
 			// aapt resource value: 0x7f070096
 			public const int EditTextAlarm = 2131165334;

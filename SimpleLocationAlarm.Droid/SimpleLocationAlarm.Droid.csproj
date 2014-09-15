@@ -532,4 +532,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ab_item_background.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\np_numberpicker_selection_divider.xml" />
+  </ItemGroup>
 </Project>

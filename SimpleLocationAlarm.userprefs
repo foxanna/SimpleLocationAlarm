@@ -1,5 +1,5 @@
 ﻿<Properties GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.AVD_for_Nexus_7_by_Google" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.MonoForAndroid_API_12" />
   <MonoDevelop.Ide.Workbench ActiveDocument="SimpleLocationAlarm.Droid\Screens\AlarmScreen.cs">
     <Files>
       <File FileName="SimpleLocationAlarm.Droid\Properties\AndroidManifest.xml" Line="1" Column="1" />

@@ -14,6 +14,9 @@
         <item name="android:radioButtonStyle">@style/RadioButtonAlarm</item>
         <item name="actionBarItemBackground">@drawable/ab_item_background</item>
         <item name="android:actionBarItemBackground">@drawable/ab_item_background</item>
+
+        <item name="android:alertDialogTheme">@style/DialogAlarm</item>
+        <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
 	</style>
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
@@ -54,6 +57,30 @@
 
     <style name="RadioButtonAlarm" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:button">@drawable/radio_button</item>
+    </style>
+
+    <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
+        <item name="android:buttonBarButtonStyle">@style/BorderlessAlarmButton</item>
+    </style>
+
+    <style name="DialogAlarmStyle">
+        <item name="android:fullDark">@color/dark_light</item>
+        <item name="android:fullBright">@color/dark_light</item>
+        
+        <item name="android:topDark">@color/dark</item>   // action bar of dialog window
+        <item name="android:topBright">@color/dark</item> 
+        
+        <item name="android:centerDark">@android:color/white</item>
+        <item name="android:centerBright">@android:color/white</item>
+        
+        <item name="android:centerMedium">@color/light</item>
+        <item name="android:bottomMedium">@color/dark</item>   // color for button bar
+              
+    </style>
+
+    <style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+        <item name="android:background">@drawable/ab_item_background</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <color name="dark">#9933cc</color>
