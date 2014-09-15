@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	  xmlns:my="http://schemas.android.com/apk/res-auto">
-    
-    <item 
-		android:id="@+id/some"
-		my:showAsAction="always"
-		my:actionViewClass="android.widget.ToggleButton"/>
     <item 
 		android:id="@+id/add_alarm"       
         my:showAsAction="always"
@@ -16,15 +11,9 @@
 		my:showAsAction="ifRoom|collapseActionView"
 		my:actionViewClass="android.widget.EditText"/>
     <item
-        android:id="@+id/enable_alarm"
+        android:id="@+id/switch_button"
         my:showAsAction="always"
-        android:icon="@drawable/ic_action_volume_on"
-        android:title="@string/enable"/>
-    <item
-        android:id="@+id/disable_alarm"
-        my:showAsAction="always"
-        android:icon="@drawable/ic_action_volume_muted"
-        android:title="@string/disable"/>
+        my:actionViewClass="android.widget.ToggleButton"/>
     <item
 		android:id="@+id/delete"
         my:showAsAction="always"

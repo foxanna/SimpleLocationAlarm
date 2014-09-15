@@ -45,9 +45,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem, _settingsMenuItem;
+        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem;
 		EditText _alarmNameEditText;
-		ToggleButton _switchButton;
+		ToggleButton _enableAlarmToggleButton;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
 		{
@@ -58,20 +58,30 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_acceptMenuButton = menu.FindItem (Resource.Id.cancel);
 			_alarmNameMenuItem = menu.FindItem (Resource.Id.alarm_name);
 			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
-			_disableAlarmMenuItem = menu.FindItem (Resource.Id.disable_alarm);
-			_enableAlarmMenuItem = menu.FindItem (Resource.Id.enable_alarm);
-
+            _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
+            
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
 			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
 
-			_switchButton = MenuItemCompat.GetActionView (menu.FindItem (Resource.Id.some)) as ToggleButton;
-			_switchButton.SetBackgroundResource (Resource.Drawable.switch_bg);
+            _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
+			_enableAlarmToggleButton.SetBackgroundResource (Resource.Drawable.toggle_button);
+            _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
 
 			ManageMenuItemsVisibilityForMode ();
 
 			return base.OnCreateOptionsMenu (menu);
 		}
+
+        void AlarmEnabledChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            EnableAlarm(_selectedAlarm, e.IsChecked);
+            Mode = Mode.MarkerSelected;
+            if (!e.IsChecked)
+            {
+                StopRinging();
+            }
+        }
 
 		public override bool OnOptionsItemSelected (IMenuItem item)
 		{
@@ -96,15 +106,6 @@ namespace SimpleLocationAlarm.Droid.Screens
 				DeleteSelectedMarker ();
 				StopRinging ();
 				Mode = Mode.None;
-				return true;
-			case Resource.Id.enable_alarm:				
-				EnableAlarm (_selectedAlarm, true);
-				Mode = Mode.MarkerSelected;
-				return true;
-			case Resource.Id.disable_alarm:				
-				EnableAlarm (_selectedAlarm, false);
-				StopRinging ();
-				Mode = Mode.MarkerSelected;
 				return true;
 			case Resource.Id.action_settings:
 				OpenSettings ();
@@ -142,8 +143,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 				_deleteAlarmMenuItem.SetVisible (true);
 
-				_enableAlarmMenuItem.SetVisible (!_selectedAlarm.Enabled);
-				_disableAlarmMenuItem.SetVisible (_selectedAlarm.Enabled);
+				_disableAlarmMenuItem.SetVisible (true);
+                _enableAlarmToggleButton.Checked = _selectedAlarm.Enabled;
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (true);
 
@@ -161,7 +162,6 @@ namespace SimpleLocationAlarm.Droid.Screens
             MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, null);
 			_alarmNameMenuItem.SetVisible (false);
 			_deleteAlarmMenuItem.SetVisible (false);
-			_enableAlarmMenuItem.SetVisible (false);
 			_disableAlarmMenuItem.SetVisible (false);
 			_settingsMenuItem.SetVisible (false);
 

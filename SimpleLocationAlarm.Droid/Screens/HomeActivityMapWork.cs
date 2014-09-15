@@ -119,6 +119,11 @@ namespace SimpleLocationAlarm.Droid.Screens
 			if (Mode == Mode.None || Mode == Mode.MarkerSelected) {
 				RedrawMapData ();
 				ZoomToMyLocationAndAlarms ();
+
+                if (Mode == Mode.MarkerSelected)
+                {
+                    ManageMenuItemsVisibilityForMode();
+                }
 			}
 		}
 

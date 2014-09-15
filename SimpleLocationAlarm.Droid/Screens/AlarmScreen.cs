@@ -5,6 +5,8 @@ using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using SimpleLocationAlarm.Droid.Services;
 using Newtonsoft.Json;
+using Android.Widget;
+using Android.Support.V4.View;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -71,33 +73,40 @@ namespace SimpleLocationAlarm.Droid.Screens
 			base.OnStop ();
 		}
 
-		IMenuItem _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem;
+		IMenuItem _deleteAlarmMenuItem, _disableAlarmMenuItem;
+        ToggleButton _enableAlarmToggleButton;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
 		{
 			MenuInflater.Inflate (Resource.Menu.alarm_screen, menu);
 
 			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
-			_disableAlarmMenuItem = menu.FindItem (Resource.Id.disable_alarm);
-			_enableAlarmMenuItem = menu.FindItem (Resource.Id.enable_alarm);
+            _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
+
+            _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
+            _enableAlarmToggleButton.SetBackgroundResource(Resource.Drawable.toggle_button);
+            _enableAlarmToggleButton.Checked = _selectedAlarm.Enabled;
+            _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
 
 			CorrectOptionsMenuVisibility ();
 
 			return base.OnCreateOptionsMenu (menu);
 		}
 
+        void AlarmEnabledChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        {
+            EnableAlarm(_selectedAlarm, e.IsChecked);
+            if (!e.IsChecked)
+            {
+                StopRinging();
+            }
+        }
+
 		public override bool OnOptionsItemSelected (IMenuItem item)
 		{
 			switch (item.ItemId) {
 			case Resource.Id.delete:
 				DeleteSelectedMarker ();
-				StopRinging ();
-				return true;
-			case Resource.Id.enable_alarm:
-				EnableAlarm (_selectedAlarm, true);
-				return true;
-			case Resource.Id.disable_alarm:
-				EnableAlarm (_selectedAlarm, false);
 				StopRinging ();
 				return true;
 			case Resource.Id.stop_noise:
@@ -166,8 +175,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		void CorrectOptionsMenuVisibility ()
 		{
 			_deleteAlarmMenuItem.SetVisible (_selectedAlarm != null);
-			_disableAlarmMenuItem.SetVisible (_selectedAlarm != null && _selectedAlarm.Enabled);
-			_enableAlarmMenuItem.SetVisible (_selectedAlarm != null && !_selectedAlarm.Enabled);
+			_disableAlarmMenuItem.SetVisible (_selectedAlarm != null);
 		}
 	}
 }
