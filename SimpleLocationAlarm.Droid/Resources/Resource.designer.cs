@@ -1686,10 +1686,13 @@ namespace SimpleLocationAlarm.Droid
 			public const int NumberPickerDialog = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int support_simple_spinner_dropdown_item = 2130903071;
+			public const int RadioGroupDialog = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int undo_bar = 2130903072;
+			public const int support_simple_spinner_dropdown_item = 2130903072;
+			
+			// aapt resource value: 0x7f030021
+			public const int undo_bar = 2130903073;
 			
 			static Layout()
 			{

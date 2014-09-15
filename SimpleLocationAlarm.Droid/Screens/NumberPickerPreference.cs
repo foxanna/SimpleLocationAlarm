@@ -7,6 +7,7 @@ using Android.Widget;
 using Android.Preferences;
 using Android.Util;
 using Android.Content.Res;
+using Android.OS;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -14,7 +15,7 @@ namespace SimpleLocationAlarm.Droid.Screens
     {
         public NumberPickerPreference(Context context, IAttributeSet attrs) : base (context, attrs)
         {
-            DialogLayoutResource = Resource.Layout.NumberPickerDialog;            
+            DialogLayoutResource = (BuildVersionCodes.Honeycomb > Build.VERSION.SdkInt) ? Resource.Layout.RadioGroupDialog : Resource.Layout.NumberPickerDialog;            
 
             SetPositiveButtonText(Android.Resource.String.Ok);
             SetNegativeButtonText(Android.Resource.String.Cancel);
@@ -27,28 +28,55 @@ namespace SimpleLocationAlarm.Droid.Screens
         {
             if (positiveResult)
             {
-                PersistInt(int.Parse(_values[_numberPicker.Value]));
-                Summary = string.Format(Context.GetString(Resource.String.settings_default_radius_sum), GetPersistedInt(SettingsScreen.DefaultRadiusValue));
+                if (BuildVersionCodes.Honeycomb > Build.VERSION.SdkInt)
+                {
+                    PersistInt(_radioGroup.CheckedRadioButtonId);
+                }
+                else
+                {
+                    PersistInt(_values[_numberPicker.Value]);
+                }
+                    
+                Summary = string.Format(Context.GetString(Resource.String.settings_default_radius_sum), GetPersistedInt(SettingsScreen.DefaultRadiusValue));                
             }
 
             base.OnDialogClosed(positiveResult);
         }
         
         NumberPicker _numberPicker;
-        List<string> _values = new List<string>() { "50", "100", "150", "200", "300", "400", "500", "600", "700", "800", "900", "1000" };
+        RadioGroup _radioGroup;
+
+        List<int> _values = new List<int>() { 50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
 
         protected override void OnBindDialogView(View view)
         {
             base.OnBindDialogView(view);
 
-            _numberPicker = (NumberPicker)view;
-            _numberPicker.DescendantFocusability = DescendantFocusability.BlockDescendants;
-            _numberPicker.SetDisplayedValues(_values.ToArray());
-            _numberPicker.MinValue = 0;
-            _numberPicker.MaxValue = _values.Count() - 1;
-            _numberPicker.WrapSelectorWheel = false;
+            var currentValue = GetPersistedInt(SettingsScreen.DefaultRadiusValue);
 
-            _numberPicker.Value = _values.IndexOf(GetPersistedInt(SettingsScreen.DefaultRadiusValue).ToString());
+            if (BuildVersionCodes.Honeycomb > Build.VERSION.SdkInt)
+            {
+                _radioGroup = (RadioGroup)view;
+                foreach (var distance in _values)
+                {
+                    var radioButton = new RadioButton(Context);
+                    radioButton.Gravity = GravityFlags.Right;
+                    radioButton.SetText(string.Format(Context.GetString(Resource.String.settings_default_radius_sum), distance), TextView.BufferType.Normal);
+                    radioButton.Checked = distance == currentValue;
+                    radioButton.Id = distance;
+                    _radioGroup.AddView(radioButton);
+                }
+            }
+            else
+            {
+                _numberPicker = (NumberPicker)view;
+                _numberPicker.DescendantFocusability = DescendantFocusability.BlockDescendants;
+                _numberPicker.SetDisplayedValues(_values.Select(v=> v.ToString()).ToArray());
+                _numberPicker.MinValue = 0;
+                _numberPicker.MaxValue = _values.Count() - 1;
+                _numberPicker.WrapSelectorWheel = false;
+                _numberPicker.Value = _values.IndexOf(currentValue);
+            }
         }
     }
 }

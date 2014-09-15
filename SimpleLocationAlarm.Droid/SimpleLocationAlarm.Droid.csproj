@@ -132,6 +132,9 @@
     <AndroidResource Include="Resources\drawable-mdpi\switch_bg.9.png" />
     <AndroidResource Include="Resources\drawable-hdpi\switch_bg.9.png" />
     <AndroidResource Include="Resources\drawable\switch_on.9.png" />
+    <AndroidResource Include="Resources\layout\RadioGroupDialog.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
