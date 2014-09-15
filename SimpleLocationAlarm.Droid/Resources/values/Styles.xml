@@ -11,6 +11,7 @@
         <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
         <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
         <item name="android:textSelectHandle">@drawable/alarm_text_select_handle_middle</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonAlarm</item>
 	</style>
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
@@ -47,6 +48,10 @@
 
     <style name="SettingsActionBar" parent="@style/AlarmActionBar">
         <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
+    </style>
+
+    <style name="RadioButtonAlarm" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/radio_button</item>
     </style>
 
     <color name="dark">#9933cc</color>
