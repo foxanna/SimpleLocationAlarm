@@ -8,9 +8,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 	[Activity (
 		Label = "@string/app_name", 
 		Icon = "@drawable/alarm_white",
-		MainLauncher = true, 
+		MainLauncher = true,
 		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
-
     public partial class HomeActivity : BaseAlarmActivity
 	{
         protected override string TAG

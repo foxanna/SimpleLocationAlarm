@@ -21,7 +21,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		None
 	}
 
-	public partial class HomeActivity : IMenuItemOnActionExpandListener
+    public partial class HomeActivity : MenuItemCompat.IOnActionExpandListener
 	{
 		Mode _mode = Mode.None;
 
@@ -45,7 +45,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-		IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem, _settingsMenuItem;
+        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _enableAlarmMenuItem, _settingsMenuItem;
 		EditText _alarmNameEditText;
 		ToggleButton _switchButton;
 
@@ -134,7 +134,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_alarmNameMenuItem.SetVisible (true);
 
 				_alarmNameMenuItem.ExpandActionView ();
-				_alarmNameMenuItem.SetOnActionExpandListener (this);
+			    MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, this);
                     
 				break;
 			case Mode.MarkerSelected:
@@ -158,7 +158,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_cancelMenuButton.SetVisible (false);
 			_acceptMenuButton.SetVisible (false);
 			_alarmNameMenuItem.CollapseActionView ();
-			_alarmNameMenuItem.SetOnActionExpandListener (null);
+            MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, null);
 			_alarmNameMenuItem.SetVisible (false);
 			_deleteAlarmMenuItem.SetVisible (false);
 			_enableAlarmMenuItem.SetVisible (false);
@@ -230,7 +230,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			ShowUndoBar (() => AddGeofence (alarm));
 		}
 
-		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
+        public bool OnMenuItemActionCollapse(Android.Views.IMenuItem item)
 		{
 			if (Mode != Mode.None) {
 				OnBackPressed ();
@@ -239,9 +239,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			return true;
 		}
 
-		public bool OnMenuItemActionExpand (Android.Views.IMenuItem item)
+        public bool OnMenuItemActionExpand(Android.Views.IMenuItem item)
 		{
 			return true;
 		}
-	}
+    }
 }
