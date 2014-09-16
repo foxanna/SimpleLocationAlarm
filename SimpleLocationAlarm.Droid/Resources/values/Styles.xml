@@ -8,10 +8,6 @@
         <item name="android:editTextStyle">@style/EditTextAlarm</item>       
         <item name="android:textColorHighlight">#999933cc</item>
         <item name="android:buttonStyle">@style/ButtonAlarm</item>
-        
-        <item name="android:buttonStyleSmall">@style/ButtonAlarm</item>
-        <item name="android:buttonStyleInset">@style/ButtonAlarm</item>
-
         <item name="android:buttonStyleToggle">@style/ToggleButtonAlarm</item>
 
         <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
@@ -21,9 +17,8 @@
         <item name="actionBarItemBackground">@drawable/ab_item_background</item>
         <item name="android:actionBarItemBackground">@drawable/ab_item_background</item>
         
-        <item name="android:dialogTheme">@style/DialogAlarm</item>
-        <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
-	</style>
+        <item name="android:alertDialogTheme">@style/DialogAlarm</item>
+    </style>
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@drawable/actionbar_background</item>
@@ -70,31 +65,34 @@
     </style>
 
     <style name="RadioButtonAlarm" parent="android:Widget.CompoundButton.RadioButton">
-        <item name="android:button">@drawable/radio_button</item>
+        <item name="android:button">@drawable/radio_button</item>        
     </style>
 
     <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
-        <item name="android:buttonBarButtonStyle">@style/BorderlessAlarmButton</item>
+        <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="DialogAlarmStyle">
-        <item name="android:fullDark">@color/dark_light</item>
-        <item name="android:fullBright">@color/dark_light</item>
+    <style name="DialogAlarmStyle" >
+        <item name="android:fullDark">@color/dark_light</item>                         
+        <item name="android:fullBright">@color/dark_light</item>                            
+       
+        <item name="android:topDark">@color/dark</item>   
+        <item name="android:topBright">@color/dark</item>                                  
         
-        <item name="android:topDark">@color/dark</item>   // action bar of dialog window
-        <item name="android:topBright">@color/dark</item> 
+        <item name="android:centerDark">@android:color/white</item>                        
+        <item name="android:centerBright">@android:color/white</item>                      
+        <item name="android:centerMedium">@color/light</item>                              
         
-        <item name="android:centerDark">@android:color/white</item>
-        <item name="android:centerBright">@android:color/white</item>
-        
-        <item name="android:centerMedium">@color/light</item>
-        <item name="android:bottomMedium">@color/dark</item>   // color for button bar              
+        <item name="android:bottomMedium">@color/dark</item>     
+        <item name="android:bottomBright">@color/dark</item>
+        <item name="android:bottomDark">@color/dark</item>    
     </style>
-
-    <style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+    
+    <!--<style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:background">@drawable/ab_item_background</item>
         <item name="android:textColor">@android:color/white</item>
-    </style>
+    </style>-->
     
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>

@@ -119,8 +119,6 @@ namespace SimpleLocationAlarm.Droid.Screens
                         {
                             Log.Debug("setNumberPickerTextColor", e.Message);
                         }
-
-
                     }
                 }
 
