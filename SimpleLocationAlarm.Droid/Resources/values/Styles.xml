@@ -8,15 +8,20 @@
         <item name="android:editTextStyle">@style/EditTextAlarm</item>       
         <item name="android:textColorHighlight">#999933cc</item>
         <item name="android:buttonStyle">@style/ButtonAlarm</item>
+        
+        <item name="android:buttonStyleSmall">@style/ButtonAlarm</item>
+        <item name="android:buttonStyleInset">@style/ButtonAlarm</item>
+
+        <item name="android:buttonStyleToggle">@style/ToggleButtonAlarm</item>
+
         <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
         <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
         <item name="android:textSelectHandle">@drawable/alarm_text_select_handle_middle</item>
         <item name="android:radioButtonStyle">@style/RadioButtonAlarm</item>
         <item name="actionBarItemBackground">@drawable/ab_item_background</item>
         <item name="android:actionBarItemBackground">@drawable/ab_item_background</item>
-        <item name="android:textColorSecondary">@color/dark</item>
         
-        <item name="android:alertDialogTheme">@style/DialogAlarm</item>
+        <item name="android:dialogTheme">@style/DialogAlarm</item>
         <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
 	</style>
     
@@ -38,6 +43,14 @@
         <item name="android:textColor">@color/light</item>
     </style>
 
+    <style name="ToggleButtonAlarm" parent="android:Widget.Button.Toggle">
+        <item name="android:background">@drawable/toggle_button</item>
+        <item name="android:textOn">@string/on</item>
+        <item name="android:textOff">@string/off</item>
+        <item name="android:minEms">5</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+           
     <style name="CheckBoxAlarm" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox</item>
     </style>
@@ -75,15 +88,14 @@
         <item name="android:centerBright">@android:color/white</item>
         
         <item name="android:centerMedium">@color/light</item>
-        <item name="android:bottomMedium">@color/dark</item>   // color for button bar
-              
+        <item name="android:bottomMedium">@color/dark</item>   // color for button bar              
     </style>
 
     <style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:background">@drawable/ab_item_background</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
-
+    
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>
     <color name="light">#66e5caf2</color>

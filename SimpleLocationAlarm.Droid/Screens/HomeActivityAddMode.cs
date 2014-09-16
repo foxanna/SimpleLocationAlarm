@@ -66,12 +66,6 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
 
             _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
-			_enableAlarmToggleButton.SetBackgroundResource (Resource.Drawable.toggle_button);
-            _enableAlarmToggleButton.SetTextColor (Resources.GetColor(Resource.Color.dark));
-            _enableAlarmToggleButton.TextOff = GetString(Resource.String.off);
-            _enableAlarmToggleButton.TextOn = GetString(Resource.String.on);
-            _enableAlarmToggleButton.SetMinEms(5);
-            //_enableAlarmToggleButton.SetTextSize(Android.Util.ComplexUnitType.Dip, Resource.Dimension.abc_action_bar_subtitle_text_size);
             _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
 
 			ManageMenuItemsVisibilityForMode ();

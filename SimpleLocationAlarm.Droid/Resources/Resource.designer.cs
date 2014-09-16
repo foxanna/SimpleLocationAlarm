@@ -1275,19 +1275,16 @@ namespace SimpleLocationAlarm.Droid
 			public const int radio_button = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int switch_bg = 2130837676;
+			public const int switch_off = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int switch_off = 2130837677;
+			public const int switch_on = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int switch_on = 2130837678;
+			public const int toggle_button = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int toggle_button = 2130837679;
-			
-			// aapt resource value: 0x7f0200b0
-			public const int undo_bar_bg = 2130837680;
+			public const int undo_bar_bg = 2130837679;
 			
 			static Drawable()
 			{
@@ -2006,32 +2003,32 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070094
 			public const int AlarmTheme = 2131165332;
 			
-			// aapt resource value: 0x7f07009f
-			public const int BorderlessAlarmButton = 2131165343;
+			// aapt resource value: 0x7f0700a0
+			public const int BorderlessAlarmButton = 2131165344;
 			
 			// aapt resource value: 0x7f070097
 			public const int ButtonAlarm = 2131165335;
 			
-			// aapt resource value: 0x7f070098
-			public const int CheckBoxAlarm = 2131165336;
-			
-			// aapt resource value: 0x7f07009d
-			public const int DialogAlarm = 2131165341;
+			// aapt resource value: 0x7f070099
+			public const int CheckBoxAlarm = 2131165337;
 			
 			// aapt resource value: 0x7f07009e
-			public const int DialogAlarmStyle = 2131165342;
+			public const int DialogAlarm = 2131165342;
+			
+			// aapt resource value: 0x7f07009f
+			public const int DialogAlarmStyle = 2131165343;
 			
 			// aapt resource value: 0x7f070096
 			public const int EditTextAlarm = 2131165334;
 			
+			// aapt resource value: 0x7f07009d
+			public const int RadioButtonAlarm = 2131165341;
+			
 			// aapt resource value: 0x7f07009c
-			public const int RadioButtonAlarm = 2131165340;
+			public const int SettingsActionBar = 2131165340;
 			
 			// aapt resource value: 0x7f07009b
-			public const int SettingsActionBar = 2131165339;
-			
-			// aapt resource value: 0x7f07009a
-			public const int SettingsTheme = 2131165338;
+			public const int SettingsTheme = 2131165339;
 			
 			// aapt resource value: 0x7f070067
 			public const int TextAppearance_AppCompat_Base_CompactMenu_Dialog = 2131165287;
@@ -2224,6 +2221,9 @@ namespace SimpleLocationAlarm.Droid
 			
 			// aapt resource value: 0x7f070003
 			public const int Theme_MediaRouter_Light = 2131165187;
+			
+			// aapt resource value: 0x7f070098
+			public const int ToggleButtonAlarm = 2131165336;
 			
 			// aapt resource value: 0x7f070092
 			public const int WalletFragmentDefaultButtonTextAppearance = 2131165330;
@@ -2477,8 +2477,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070000
 			public const int Widget_MediaRouter_MediaRouteButton = 2131165184;
 			
-			// aapt resource value: 0x7f070099
-			public const int popup_fade_animation = 2131165337;
+			// aapt resource value: 0x7f07009a
+			public const int popup_fade_animation = 2131165338;
 			
 			static Style()
 			{
