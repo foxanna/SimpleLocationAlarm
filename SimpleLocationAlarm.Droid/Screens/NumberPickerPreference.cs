@@ -65,6 +65,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                     var radioButton = new RadioButton(Context);
                     radioButton.Gravity = GravityFlags.Right | GravityFlags.CenterVertical;
                     radioButton.SetText(string.Format(Context.GetString(Resource.String.settings_default_radius_sum), distance), TextView.BufferType.Normal);
+                    radioButton.SetTextColor(Context.Resources.GetColor(Resource.Color.dark));
                     radioButton.Checked = distance == currentValue;
                     radioButton.Id = distance;
                     _radioGroup.AddView(radioButton);

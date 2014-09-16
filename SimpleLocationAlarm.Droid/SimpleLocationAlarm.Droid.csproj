@@ -127,11 +127,6 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\toggle_button.xml" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\switch_bg.9.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\switch_bg.9.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\switch_bg.9.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\switch_bg.9.png" />
-    <AndroidResource Include="Resources\drawable\switch_on.9.png" />
     <AndroidResource Include="Resources\layout\RadioGroupDialog.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
@@ -533,6 +528,9 @@
     <AndroidResource Include="Resources\drawable\ab_item_background.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\np_numberpicker_selection_divider.xml" />
+    <AndroidResource Include="Resources\drawable\switch_on.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\switch_off.xml" />
   </ItemGroup>
 </Project>

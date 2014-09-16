@@ -31,4 +31,8 @@
     <string name="settings_sound_sum">Default alarm sound</string>
     <string name="settings_default_radius">Default zone radius</string>
     <string name="settings_default_radius_sum">{0} meters</string>
+    
+    <!-- not translatable-->
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 </resources>
