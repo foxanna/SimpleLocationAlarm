@@ -49,7 +49,7 @@ namespace SimpleLocationAlarm.Droid.Screens
         NumberPicker _numberPicker;
         RadioGroup _radioGroup;
 
-        List<int> _values = new List<int>() { 50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900, 1000 };
+        List<int> _values = new List<int>() { 50, 100, 150, 200, 300, 400, 500, 700, 1000 };
 
         protected override void OnBindDialogView(View view)
         {
