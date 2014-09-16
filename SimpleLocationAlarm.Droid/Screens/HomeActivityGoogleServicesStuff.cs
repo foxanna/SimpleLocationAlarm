@@ -17,8 +17,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				if (GooglePlayServicesUtil.IsUserRecoverableError (_isGooglePlayServicesAvailable)) {
 					GooglePlayServicesUtil.ShowErrorDialogFragment (_isGooglePlayServicesAvailable, this, _googleServicesCheckRequestCode);
 				} else {
-					Toast.MakeText (this, Resource.String.device_not_supported, 
-						ToastLength.Long).Show ();
+					ShowToast(Resource.String.device_not_supported);
 					Finish ();
 				}
 			}

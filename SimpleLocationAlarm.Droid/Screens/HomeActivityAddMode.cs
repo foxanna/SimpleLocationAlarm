@@ -192,7 +192,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		bool AcceptAdd ()
 		{
 			if (_alarmToAdd == null) {
-				Toast.MakeText (this, Resource.String.click_on_map_to_set_alarm, ToastLength.Short).Show ();
+				ShowToast(Resource.String.click_on_map_to_set_alarm);
 				return false;
 			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
 				_alarmNameEditText.RequestFocus ();

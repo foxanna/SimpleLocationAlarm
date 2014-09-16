@@ -69,7 +69,19 @@ namespace SimpleLocationAlarm.Droid.Screens
 
         void OnGeofenceManagerError(object sender, StringEventArgs e)
         {
-            Toast.MakeText(this, e.Data, ToastLength.Short).Show();
+            ShowToast(e.Data);
+        }
+
+        protected void ShowToast(int resId)
+        {
+            ShowToast(Resources.GetString(resId));
+        }
+
+        protected void ShowToast(string data)
+        {
+            var toast = Toast.MakeText(this, data, ToastLength.Short);
+            toast.View.SetBackgroundResource(Resource.Drawable.undo_bar_bg);
+            toast.Show();
         }
         
         void OnGeofenceManagerStoped(object sender, EventArgs e)
@@ -122,7 +134,7 @@ namespace SimpleLocationAlarm.Droid.Screens
             {
                 Log.Debug(TAG, ex.Message);
 
-                Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
+                ShowToast(Resource.String.failed_to_connect);
             }
         }
 
@@ -182,7 +194,7 @@ namespace SimpleLocationAlarm.Droid.Screens
             {
                 Log.Debug(TAG, "OnActivityResultForLM canceled");
 
-                Toast.MakeText(this, Resource.String.failed_to_connect, ToastLength.Short).Show();
+                ShowToast(Resource.String.failed_to_connect);
             }
         }
     }
