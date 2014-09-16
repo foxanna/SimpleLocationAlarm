@@ -533,4 +533,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\switch_off.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\numberpicker_selection_divider.9.png" />
+  </ItemGroup>
 </Project>

@@ -96,13 +96,16 @@ namespace SimpleLocationAlarm.Droid.Screens
                     {
                         try
                         {
-                            ((EditText)child).SetTextColor(color);
-
                             Field selectorWheelPaintField = numberPicker.Class
                                 .GetDeclaredField("mSelectorWheelPaint");
                             selectorWheelPaintField.Accessible = true;
                             ((Paint)selectorWheelPaintField.Get(numberPicker)).Color = color;
-                            var a = selectorWheelPaintField.Get(numberPicker);
+
+                            Field selectionDivider = numberPicker.Class.GetDeclaredField("mSelectionDivider");
+                            selectionDivider.Accessible = true;
+                            selectionDivider.Set(numberPicker, numberPicker.Context.Resources.GetDrawable(Resource.Drawable.numberpicker_selection_divider));
+                            
+                            ((EditText)child).SetTextColor(color);
                         }
                         catch (NoSuchFieldException e)
                         {
@@ -112,10 +115,12 @@ namespace SimpleLocationAlarm.Droid.Screens
                         {
                             Log.Debug("setNumberPickerTextColor", e.Message);
                         }
-                        catch (IllegalArgumentException e)
+                        catch (Resources.NotFoundException e)
                         {
                             Log.Debug("setNumberPickerTextColor", e.Message);
                         }
+
+
                     }
                 }
 
