@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Android.Views.InputMethods;
 using Android.Preferences;
 using System.Security.Cryptography;
+using Android.Text;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -196,8 +197,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 				return false;
 			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
 				_alarmNameEditText.RequestFocus ();
-				_alarmNameEditText.SetError (
-					new Java.Lang.String (Resources.GetString (Resource.String.enter_alarm_name)), null);
+                _alarmNameEditText.SetError(Html.FromHtml(string.Format("<font color='#9933cc'>{0}</font>", Resources.GetString(Resource.String.enter_alarm_name))),
+                    null);
 				return false;
 			} else {
 				var defaultRadius = PreferenceManager.GetDefaultSharedPreferences (Application.Context).GetInt (SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);

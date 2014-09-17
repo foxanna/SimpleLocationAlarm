@@ -65,7 +65,9 @@
     </style>
 
     <style name="RadioButtonAlarm" parent="android:Widget.CompoundButton.RadioButton">
-        <item name="android:button">@drawable/radio_button</item>        
+        <item name="android:button">@drawable/radio_button</item>   
+        <!--<item name="android:textColor">@color/dark</item>-->
+        <item name="android:gravity">center_vertical|right</item>
     </style>
 
     <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">

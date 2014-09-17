@@ -2006,9 +2006,6 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f070094
 			public const int AlarmTheme = 2131165332;
 			
-			// aapt resource value: 0x7f0700a0
-			public const int BorderlessAlarmButton = 2131165344;
-			
 			// aapt resource value: 0x7f070097
 			public const int ButtonAlarm = 2131165335;
 			
