@@ -148,10 +148,6 @@
     <AndroidResource Include="Resources\drawable-mdpi\ic_action_accept.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_action_accept.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_accept.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\ic_action_cancel.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\ic_action_cancel.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_action_cancel.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_cancel.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_action_add_alarm.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_action_add_alarm.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_action_add_alarm.png" />

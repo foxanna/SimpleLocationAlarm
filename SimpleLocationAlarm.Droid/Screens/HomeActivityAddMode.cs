@@ -46,7 +46,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-        IMenuItem _addAlarmMenuButton, _cancelMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem;
+        IMenuItem _addAlarmMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem;
 		EditText _alarmNameEditText;
 		ToggleButton _enableAlarmToggleButton;
 
@@ -55,8 +55,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			MenuInflater.Inflate (Resource.Menu.main_screen, menu);
 
 			_addAlarmMenuButton = menu.FindItem (Resource.Id.add_alarm);
-			_cancelMenuButton = menu.FindItem (Resource.Id.accept);
-			_acceptMenuButton = menu.FindItem (Resource.Id.cancel);
+            _acceptMenuButton = menu.FindItem(Resource.Id.accept);
 			_alarmNameMenuItem = menu.FindItem (Resource.Id.alarm_name);
 			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
             _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
@@ -93,9 +92,6 @@ namespace SimpleLocationAlarm.Droid.Screens
 			case Resource.Id.add_alarm:
 				Mode = Mode.Add;
 				return true;
-			case Resource.Id.cancel:
-				Mode = Mode.None;
-				return true;
 			case Resource.Id.accept:
 				if (Mode == Mode.Add) {
 					if (AcceptAdd ()) {
@@ -131,7 +127,6 @@ namespace SimpleLocationAlarm.Droid.Screens
 			case Mode.Add:
 				HideAllActionbarButtons ();
 
-				_cancelMenuButton.SetVisible (true);
 				_acceptMenuButton.SetVisible (true);
 				_alarmNameMenuItem.SetVisible (true);
 
@@ -157,7 +152,6 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			_addAlarmMenuButton.SetVisible (false);
 
-			_cancelMenuButton.SetVisible (false);
 			_acceptMenuButton.SetVisible (false);
 			_alarmNameMenuItem.CollapseActionView ();
             MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, null);
