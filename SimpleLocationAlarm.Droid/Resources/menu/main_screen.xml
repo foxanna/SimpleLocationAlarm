@@ -27,7 +27,7 @@
 		android:id="@+id/accept"       
         my:showAsAction="always"
         android:icon="@drawable/ic_action_accept"
-        android:title="@string/done"/>      
+        android:title="@string/add_alarm"/>      
     <item 
         android:id="@+id/action_settings"
         android:title="@string/action_settings"

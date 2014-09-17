@@ -616,4 +616,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values-v11\Styles.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-ru\Strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
 </Project>
