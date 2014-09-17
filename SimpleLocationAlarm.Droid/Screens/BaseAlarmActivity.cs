@@ -98,5 +98,13 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			StopService (new Intent (this, typeof(UIWhileRingingIntentService)));
 		}
+
+        protected GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager();
+
+        protected override void OnCreate(Android.OS.Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
+        }
 	}
 }

@@ -6,6 +6,7 @@ using Android.Content;
 using Android.Widget;
 using Android.Graphics;
 using Android.Net;
+using SimpleLocationAlarm.Droid.Services;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -15,9 +16,13 @@ namespace SimpleLocationAlarm.Droid.Screens
     [IntentFilter(new[] { "openaboutscreenaction" }, Categories = new[] { Intent.CategoryDefault})]
     public class AboutScreen : ActionBarActivity
     {
+        GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager();
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
+
             SetContentView(Resource.Layout.AboutScreen);
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -43,6 +48,8 @@ namespace SimpleLocationAlarm.Droid.Screens
             var intent = new Intent(Intent.ActionSendto);
             intent.SetData(Android.Net.Uri.FromParts("mailto", Constants.DeveloperEmail, null));
             StartActivity(intent);
+
+            GoogleAnalyticsManager.ReportEvent(GACategory.AboutScreen, GAAction.Click, "send email");
         }
 
         void RateTextViewClick(object sender, System.EventArgs e)
@@ -50,6 +57,8 @@ namespace SimpleLocationAlarm.Droid.Screens
             var intent = new Intent(Intent.ActionView);
             intent.SetData(Uri.Parse("market://details?id=" + PackageName));
             StartActivity(intent);
+
+            GoogleAnalyticsManager.ReportEvent(GACategory.AboutScreen, GAAction.Click, "rate on store");
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

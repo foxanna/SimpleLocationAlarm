@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Media;
 using Android.Preferences;
+using SimpleLocationAlarm.Droid.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,13 @@ namespace SimpleLocationAlarm.Droid.Screens
 
         Preference _soundPref;
 
+        protected GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager();
+
         protected override void OnCreate(Android.OS.Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
+
             AddPreferencesFromResource(Resource.Xml.preferences);
 
             _soundPref = (Preference)FindPreference(SoundSettingKey);
@@ -58,6 +63,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 
                         _soundPref.Summary = ringtone.GetTitle(this);
                         PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString(SoundSettingKey, uri.ToString()).Commit();
+
+                        GoogleAnalyticsManager.ReportEvent(GACategory.SettingsScreen, GAAction.Click, "new ringtone is set");
                     }
                     break;
                 default:

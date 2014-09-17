@@ -95,6 +95,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 
         void AlarmEnabledChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
+            GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "alarm " + (e.IsChecked ? "enabled" : "disabled"));
+
             EnableAlarm(_selectedAlarm, e.IsChecked);
             if (!e.IsChecked)
             {
@@ -106,10 +108,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			switch (item.ItemId) {
 			case Resource.Id.delete:
+                GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "alarm deleted");
 				DeleteSelectedMarker ();
 				StopRinging ();
 				return true;
 			case Resource.Id.stop_noise:
+                GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "sound muted");
 				StopRinging ();
 				return true;
 			default:

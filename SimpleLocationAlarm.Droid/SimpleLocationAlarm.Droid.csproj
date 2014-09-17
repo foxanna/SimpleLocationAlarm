@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Screens\AboutScreen.cs" />
     <Compile Include="Screens\NumberPickerPreference.cs" />
+    <Compile Include="Services\GoogleAnalyticsManager.cs" />
     <Compile Include="Services\ReceiveTransitionsIntentService.cs" />
     <Compile Include="Screens\AlarmScreen.cs" />
     <Compile Include="Services\DBManager.cs" />

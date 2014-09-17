@@ -13,6 +13,7 @@ using Android.Preferences;
 using System.Security.Cryptography;
 using Android.Text;
 using Android.Gms.Common;
+using SimpleLocationAlarm.Droid.Services;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -92,6 +93,8 @@ namespace SimpleLocationAlarm.Droid.Screens
             {
                 StopRinging();
             }
+
+            GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm " + (e.IsChecked ? "enabled" : "disabled"));
         }
 
 		public override bool OnOptionsItemSelected (IMenuItem item)
@@ -106,7 +109,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 			case Resource.Id.accept:
 				if (Mode == Mode.Add) {
 					if (AcceptAdd ()) {
-						Mode = Mode.None;
+                        Mode = Mode.None;
+                        GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm added");
 					}
 				}
 				return true;
@@ -114,6 +118,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				DeleteSelectedMarker ();
 				StopRinging ();
 				Mode = Mode.None;
+                GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm deleted");
 				return true;
 			case Resource.Id.action_settings:
 				OpenSettings ();
