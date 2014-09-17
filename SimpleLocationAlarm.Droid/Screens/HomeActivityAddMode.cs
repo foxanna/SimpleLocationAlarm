@@ -46,8 +46,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-        IMenuItem _addAlarmMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem;
+        IMenuItem _addAlarmMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem, _alarmRadiusMenuItem;
 		EditText _alarmNameEditText;
+        Spinner _alarmRadiusSpinner;
 		ToggleButton _enableAlarmToggleButton;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
@@ -59,14 +60,21 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_alarmNameMenuItem = menu.FindItem (Resource.Id.alarm_name);
 			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
             _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
+            _alarmRadiusMenuItem = menu.FindItem(Resource.Id.alarm_radius);
+			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
             
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
             _alarmNameEditText.SetWidth(Resources.GetDimensionPixelSize(Resource.Dimension.abc_search_view_preferred_width));
-			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
 
             _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
             _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
+
+            _alarmRadiusSpinner = MenuItemCompat.GetActionView(_alarmRadiusMenuItem) as Spinner;
+            var adapter = new ArrayAdapter(this, Resource.Layout.support_simple_spinner_dropdown_item, 
+                Android.Resource.Id.Text1, Constants.AlarmRadiusValues.Select(r => string.Format("{0} m", r)).ToList());
+            adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            _alarmRadiusSpinner.Adapter = adapter;
 
 			ManageMenuItemsVisibilityForMode ();
 
@@ -129,6 +137,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 				_acceptMenuButton.SetVisible (true);
 				_alarmNameMenuItem.SetVisible (true);
+                _alarmRadiusMenuItem.SetVisible(true);
+
+                var radius = PreferenceManager.GetDefaultSharedPreferences(this).GetInt(SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
+                _alarmRadiusSpinner.SetSelection(Constants.AlarmRadiusValues.IndexOf(radius));
 
 				_alarmNameMenuItem.ExpandActionView ();
 			    MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, this);
@@ -159,6 +171,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			_deleteAlarmMenuItem.SetVisible (false);
 			_disableAlarmMenuItem.SetVisible (false);
 			_settingsMenuItem.SetVisible (false);
+            _alarmRadiusMenuItem.SetVisible(false);
 
 			_alarmNameEditText.Text = string.Empty;
 
@@ -195,12 +208,12 @@ namespace SimpleLocationAlarm.Droid.Screens
                     null);
 				return false;
 			} else {
-				var defaultRadius = PreferenceManager.GetDefaultSharedPreferences (Application.Context).GetInt (SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
-
+				var radius = Constants.AlarmRadiusValues[_alarmRadiusSpinner.SelectedItemPosition];
+                
 				var newAlarm = new AlarmData () {
 					Latitude = _alarmToAdd.Position.Latitude,
 					Longitude = _alarmToAdd.Position.Longitude,
-					Radius = defaultRadius,
+					Radius = radius,
 					Name = _alarmNameEditText.Text,
 					Enabled = true,
 					RequestId = string.Format ("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble ())

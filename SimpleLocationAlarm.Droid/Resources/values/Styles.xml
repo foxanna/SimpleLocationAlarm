@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <resources>
-	<style name="AlarmTheme" parent="@style/Theme.AppCompat">
+	<style name="_AlarmTheme" parent="@style/Theme.AppCompat">
         <item name="android:actionBarStyle">@style/AlarmActionBar</item>
         <item name="android:windowBackground">@color/light</item>
         <item name="actionBarStyle">@style/AlarmActionBar</item>
@@ -9,16 +9,18 @@
         <item name="android:textColorHighlight">#999933cc</item>
         <item name="android:buttonStyle">@style/ButtonAlarm</item>
         <item name="android:buttonStyleToggle">@style/ToggleButtonAlarm</item>
-
         <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
         <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
         <item name="android:textSelectHandle">@drawable/alarm_text_select_handle_middle</item>
         <item name="android:radioButtonStyle">@style/RadioButtonAlarm</item>
         <item name="actionBarItemBackground">@drawable/ab_item_background</item>
         <item name="android:actionBarItemBackground">@drawable/ab_item_background</item>
-        
-        <item name="android:alertDialogTheme">@style/DialogAlarm</item>
     </style>
+    
+    <style name="AlarmTheme" parent="@style/_AlarmTheme">        
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemAlarm</item>
+        <item name="android:spinnerStyle">@style/SpinnerAlarm</item>
+    </style>        
     
     <style name="AlarmActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@drawable/actionbar_background</item>
@@ -64,37 +66,21 @@
         <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
     </style>
 
+    <style name="SpinnerDropDownItemAlarm" parent="android:Widget.DropDownItem.Spinner">
+          <item name="android:checkMark">@drawable/radio_button</item>
+    </style>
+    
+    <style name="SpinnerAlarm" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:dropDownSelector">@drawable/spinner_list_selector</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+      
     <style name="RadioButtonAlarm" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:button">@drawable/radio_button</item>   
         <!--<item name="android:textColor">@color/dark</item>-->
         <item name="android:gravity">center_vertical|right</item>
     </style>
-
-    <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
-        <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="DialogAlarmStyle" >
-        <item name="android:fullDark">@color/dark_light</item>                         
-        <item name="android:fullBright">@color/dark_light</item>                            
-       
-        <item name="android:topDark">@color/dark</item>   
-        <item name="android:topBright">@color/dark</item>                                  
-        
-        <item name="android:centerDark">@android:color/white</item>                        
-        <item name="android:centerBright">@android:color/white</item>                      
-        <item name="android:centerMedium">@color/light</item>                              
-        
-        <item name="android:bottomMedium">@color/dark</item>     
-        <item name="android:bottomBright">@color/dark</item>
-        <item name="android:bottomDark">@color/dark</item>    
-    </style>
-    
-    <!--<style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
-        <item name="android:background">@drawable/ab_item_background</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>-->
     
     <color name="dark">#9933cc</color>
     <color name="dark_light">#aa66cc</color>

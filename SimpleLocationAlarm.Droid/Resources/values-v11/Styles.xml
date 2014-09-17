@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="AlarmTheme" parent="@style/_AlarmTheme">
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerAlarm</item>
+        <item name="android:alertDialogTheme">@style/DialogAlarm</item>
+    </style>
+
+    <style name="SpinnerAlarm" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:dropDownSelector">@drawable/spinner_list_selector</item>
+        <item name="android:popupBackground">@color/dark_light</item>
+    </style>
+
+    <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
+        <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="DialogAlarmStyle" >
+        <item name="android:fullDark">@color/dark_light</item>
+        <item name="android:fullBright">@color/dark_light</item>
+
+        <item name="android:topDark">@color/dark</item>
+        <item name="android:topBright">@color/dark</item>
+
+        <item name="android:centerDark">@android:color/white</item>
+        <item name="android:centerBright">@android:color/white</item>
+        <item name="android:centerMedium">@color/light</item>
+
+        <item name="android:bottomMedium">@color/dark</item>
+        <item name="android:bottomBright">@color/dark</item>
+        <item name="android:bottomDark">@color/dark</item>
+    </style>
+
+    <!--<style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+        <item name="android:background">@drawable/ab_item_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>-->
+</resources>

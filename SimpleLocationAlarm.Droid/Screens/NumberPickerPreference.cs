@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 
 using Android.Content;
@@ -37,7 +36,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                 }
                 else
                 {
-                    PersistInt(_values[_numberPicker.Value]);
+                    PersistInt(Constants.AlarmRadiusValues[_numberPicker.Value]);
                 }
                     
                 Summary = string.Format(Context.GetString(Resource.String.settings_default_radius_sum), GetPersistedInt(SettingsScreen.DefaultRadiusValue));                
@@ -47,9 +46,7 @@ namespace SimpleLocationAlarm.Droid.Screens
         }
         
         NumberPicker _numberPicker;
-        RadioGroup _radioGroup;
-
-        List<int> _values = new List<int>() { 50, 100, 150, 200, 300, 400, 500, 700, 1000 };
+        RadioGroup _radioGroup;        
 
         protected override void OnBindDialogView(View view)
         {
@@ -60,7 +57,7 @@ namespace SimpleLocationAlarm.Droid.Screens
             if (BuildVersionCodes.Honeycomb > Build.VERSION.SdkInt)
             {
                 _radioGroup = (RadioGroup)view;
-                foreach (var distance in _values)
+                foreach (var distance in Constants.AlarmRadiusValues)
                 {
                     var radioButton = new RadioButton(Context);
                     radioButton.SetText(string.Format(Context.GetString(Resource.String.settings_default_radius_sum), distance), TextView.BufferType.Normal);
@@ -74,11 +71,11 @@ namespace SimpleLocationAlarm.Droid.Screens
                 _numberPicker = (NumberPicker)view;
                 SetNumberPickerTextColor(_numberPicker, Context.Resources.GetColor(Resource.Color.dark));
                 _numberPicker.DescendantFocusability = DescendantFocusability.BlockDescendants;
-                _numberPicker.SetDisplayedValues(_values.Select(v=> v.ToString()).ToArray());
+                _numberPicker.SetDisplayedValues(Constants.AlarmRadiusValues.Select(v => v.ToString()).ToArray());
                 _numberPicker.MinValue = 0;
-                _numberPicker.MaxValue = _values.Count() - 1;
+                _numberPicker.MaxValue = Constants.AlarmRadiusValues.Count() - 1;
                 _numberPicker.WrapSelectorWheel = false;
-                _numberPicker.Value = _values.IndexOf(currentValue);
+                _numberPicker.Value = Constants.AlarmRadiusValues.IndexOf(currentValue);
             }
         }
 

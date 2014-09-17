@@ -11,6 +11,10 @@
 		my:showAsAction="ifRoom|collapseActionView"
 		my:actionViewClass="android.widget.EditText"/>
     <item
+        android:id="@+id/alarm_radius"
+        my:showAsAction="always"
+        my:actionViewClass="android.widget.Spinner"/>
+    <item
         android:id="@+id/switch_button"
         my:showAsAction="always"
         my:actionViewClass="android.widget.ToggleButton"/>
