@@ -13,7 +13,17 @@ namespace SimpleLocationAlarm.Droid.Screens
 		void CheckGS ()
 		{
 			_isGooglePlayServicesAvailable = GooglePlayServicesUtil.IsGooglePlayServicesAvailable (this);
-			if (_isGooglePlayServicesAvailable != ConnectionResult.Success) {
+
+            try
+            {
+                _addAlarmMenuButton.SetVisible(_isGooglePlayServicesAvailable == ConnectionResult.Success);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            if (_isGooglePlayServicesAvailable != ConnectionResult.Success) {
 				if (GooglePlayServicesUtil.IsUserRecoverableError (_isGooglePlayServicesAvailable)) {
 					GooglePlayServicesUtil.ShowErrorDialogFragment (_isGooglePlayServicesAvailable, this, _googleServicesCheckRequestCode);
 				} else {
@@ -25,10 +35,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		void OnActivityResultForGS (Result resultCode)
 		{
-			if (resultCode == Result.Canceled) {
-				GooglePlayServicesUtil.ShowErrorNotification (_isGooglePlayServicesAvailable, this);
-				Finish ();
-			}
+            //if (resultCode == Result.Canceled) {
+            //    GooglePlayServicesUtil.ShowErrorNotification (_isGooglePlayServicesAvailable, this);
+            //    Finish ();
+            //}
 		}
 	}
 }

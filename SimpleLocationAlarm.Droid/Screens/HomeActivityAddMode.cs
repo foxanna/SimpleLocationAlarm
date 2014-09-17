@@ -12,6 +12,7 @@ using Android.Views.InputMethods;
 using Android.Preferences;
 using System.Security.Cryptography;
 using Android.Text;
+using Android.Gms.Common;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -77,6 +78,8 @@ namespace SimpleLocationAlarm.Droid.Screens
             _alarmRadiusSpinner.Adapter = adapter;
 
 			ManageMenuItemsVisibilityForMode ();
+
+            _addAlarmMenuButton.SetVisible(_isGooglePlayServicesAvailable == ConnectionResult.Success);
 
 			return base.OnCreateOptionsMenu (menu);
 		}

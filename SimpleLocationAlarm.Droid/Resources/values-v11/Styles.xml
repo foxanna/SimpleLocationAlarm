@@ -14,6 +14,7 @@
     <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
         <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:textColorPrimary">@color/dark</item>
     </style>
 
     <style name="DialogAlarmStyle" >
