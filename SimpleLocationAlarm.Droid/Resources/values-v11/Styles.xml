@@ -14,9 +14,13 @@
     <style name="DialogAlarm" parent="@style/Theme.AppCompat.CompactMenu.Dialog">
         <item name="android:alertDialogStyle">@style/DialogAlarmStyle</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textColorPrimary">@color/dark</item>
+        <item name="android:buttonBarButtonStyle">@style/BorderlessAlarmButton</item>
     </style>
 
+    <style name="A" parent="@style/TextAppearance.AppCompat.Base.CompactMenu.Dialog">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    
     <style name="DialogAlarmStyle" >
         <item name="android:fullDark">@color/dark_light</item>
         <item name="android:fullBright">@color/dark_light</item>
@@ -24,19 +28,19 @@
         <item name="android:topDark">@color/dark</item>
         <item name="android:topBright">@color/dark</item>
 
-        <item name="android:centerDark">@android:color/white</item>
-        <item name="android:centerBright">@android:color/white</item>
-        <item name="android:centerMedium">@color/light</item>
+        <item name="android:centerDark">@color/dark_light</item>
+        <item name="android:centerBright">@color/dark_light</item>
+        <item name="android:centerMedium">@color/dark_light</item>
 
         <item name="android:bottomMedium">@color/dark</item>
         <item name="android:bottomBright">@color/dark</item>
         <item name="android:bottomDark">@color/dark</item>
     </style>
 
-    <!--<style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+    <style name="BorderlessAlarmButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:background">@drawable/ab_item_background</item>
         <item name="android:textColor">@android:color/white</item>
-    </style>-->
+    </style>
 
     <style name="ListViewAlarm" parent="@android:style/Widget.Holo.ListView">
         <item name="android:listSelector">@drawable/ab_item_background</item>

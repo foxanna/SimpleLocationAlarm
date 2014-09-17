@@ -2039,11 +2039,17 @@ namespace SimpleLocationAlarm.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f0700a3
+			public const int A = 2131165347;
+			
 			// aapt resource value: 0x7f070096
 			public const int AlarmActionBar = 2131165334;
 			
 			// aapt resource value: 0x7f070095
 			public const int AlarmTheme = 2131165333;
+			
+			// aapt resource value: 0x7f0700a5
+			public const int BorderlessAlarmButton = 2131165349;
 			
 			// aapt resource value: 0x7f070098
 			public const int ButtonAlarm = 2131165336;
@@ -2054,8 +2060,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f0700a2
 			public const int DialogAlarm = 2131165346;
 			
-			// aapt resource value: 0x7f0700a3
-			public const int DialogAlarmStyle = 2131165347;
+			// aapt resource value: 0x7f0700a4
+			public const int DialogAlarmStyle = 2131165348;
 			
 			// aapt resource value: 0x7f070097
 			public const int EditTextAlarm = 2131165335;
