@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Будильник</string>
+    <string name="app_name">Будильник</string>
     <string name="device_not_supported">Это устройство не поддерживается</string>
-	<string name="add_alarm">Добавить</string>
-	<string name="alarm_name">Описание</string>
-	<string name="undo">Отменить</string>
+    <string name="add_alarm">Добавить</string>
+    <string name="alarm_name">Описание</string>
+    <string name="undo">Отменить</string>
     <string name="delete">Удалить</string>
     <string name="alarm_deleted">Удалено</string>
-	<string name="enter_alarm_name">Заполните описание</string>
-	<string name="click_on_map_to_set_alarm">Коснитесь карты, чтобы указать место прибытия</string>
+    <string name="enter_alarm_name">Заполните описание</string>
+    <string name="click_on_map_to_set_alarm">Коснитесь карты, чтобы указать место прибытия</string>
     <string name="failed_to_add">Your alarm is created disabled</string>
     <string name="failed_to_remove">Не удалось удалить</string>
     <string name="go_to_settings">Открыть настройки местоположения</string>
@@ -16,6 +16,9 @@
     <string name="failed_to_connect">Не удалось подключиться к сервису местоположения</string>
     <string name="probably_location_services_are_off">Возможно сервис местоположения отключен</string>
     <string name="error_with_alarm">Возможно сервис местоположения был отключен\n\nAll your alarms were disabled</string>
+    <string name="rate_us">Оцените нас на Google play</string>
+    <string name="send_feedback">Отправить отзыв</string>
+    <string name="disclaimer">Disclaimer\n\n\n\n\n\n\n\n\n\nLong disclaimer</string>
     
     <!--Settings strings-->
     <string name="action_settings">Настройки</string>
@@ -26,5 +29,7 @@
     <string name="settings_sound">Рингтон</string>
     <string name="settings_sound_sum">Рингтон будильника по умолчанию</string>
     <string name="settings_default_radius">Default zone radius</string>
-    <string name="settings_default_radius_sum">{0} метров</string>    
+    <string name="settings_default_radius_sum">{0} метров</string>
+    <string name="settings_about">O приложении</string>
+    <string name="settings_version">Версия {0}.{1}</string>
 </resources>

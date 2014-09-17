@@ -36,4 +36,15 @@
         <item name="android:background">@drawable/ab_item_background</item>
         <item name="android:textColor">@android:color/white</item>
     </style>-->
+
+    <style name="ListViewAlarm" parent="@android:style/Widget.Holo.ListView">
+        <item name="android:listSelector">@drawable/ab_item_background</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:fadingEdge">@color/light</item>
+        <item name="android:cacheColorHint">@color/light</item>
+        <item name="android:fadingEdgeLength">20dp</item>
+        <item name="android:requiresFadingEdge">vertical</item>
+        <item name="android:listDivider">@color/dark_light</item>
+        <item name="android:overScrollMode">never</item>
+    </style>
 </resources>

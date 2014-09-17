@@ -8,6 +8,7 @@
         <item name="android:editTextStyle">@style/EditTextAlarm</item>       
         <item name="android:textColorHighlight">#999933cc</item>
         <item name="android:buttonStyle">@style/ButtonAlarm</item>
+        <item name="android:listViewStyle">@style/ListViewAlarm</item>
         <item name="android:buttonStyleToggle">@style/ToggleButtonAlarm</item>
         <item name="android:textSelectHandleLeft">@drawable/alarm_text_select_handle_left</item>        
         <item name="android:textSelectHandleRight">@drawable/alarm_text_select_handle_right</item>        
@@ -80,6 +81,17 @@
         <item name="android:button">@drawable/radio_button</item>   
         <!--<item name="android:textColor">@color/dark</item>-->
         <item name="android:gravity">center_vertical|right</item>
+    </style>
+
+    <style name="ListViewAlarm" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/ab_item_background</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:fadingEdge">@color/light</item>
+        <item name="android:cacheColorHint">@color/light</item>
+        <item name="android:fadingEdgeLength">20dp</item>
+        <item name="android:requiresFadingEdge">vertical</item>
+        <item name="android:listDivider">@color/dark_light</item>
+        <item name="android:overScrollMode">never</item>
     </style>
     
     <color name="dark">#9933cc</color>
