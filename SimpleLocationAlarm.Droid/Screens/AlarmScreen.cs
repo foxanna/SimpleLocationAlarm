@@ -10,77 +10,89 @@ using Android.Support.V4.View;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
-	[Activity (
-		Icon = "@drawable/alarm_white",
-		ExcludeFromRecents = true,
-		LaunchMode = Android.Content.PM.LaunchMode.SingleTask,
-		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
-	public class AlarmScreen : BaseAlarmActivity
-	{
-		protected override string TAG {
-			get {
-				return "AlarmScreen";
-			}
-		}
+    [Activity(
+        Icon = "@drawable/alarm_white",
+        ExcludeFromRecents = true,
+        LaunchMode = Android.Content.PM.LaunchMode.SingleTask,
+        ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
+    public class AlarmScreen : BaseAlarmActivity
+    {
+        protected override string TAG
+        {
+            get
+            {
+                return "AlarmScreen";
+            }
+        }
 
-		string _requestId;
-		bool _firstStart;
+        protected override string AdId
+        {
+            get
+            {
+                return Resources.GetString(Resource.String.alarm_screen_ad);
+            }
+        }
 
-		protected override void OnCreate (Bundle bundle)
-		{
-			base.OnCreate (bundle);
-			SetContentView (Resource.Layout.AlarmGeofenceTriggered);
+        string _requestId;
+        bool _firstStart;
 
-			_firstStart = true;
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
+            SetContentView(Resource.Layout.AlarmGeofenceTriggered);
 
-			OnNewIntent (Intent);
-		}
+            _firstStart = true;
 
-		protected override void OnNewIntent (Android.Content.Intent intent)
-		{
-			base.OnNewIntent (intent);
+            OnNewIntent(Intent);
+        }
 
-			_selectedAlarm = JsonConvert.DeserializeObject<AlarmData> (intent.GetStringExtra (Constants.AlarmsData_Extra));
-			_requestId = _selectedAlarm.RequestId;
+        protected override void OnNewIntent(Android.Content.Intent intent)
+        {
+            base.OnNewIntent(intent);
 
-			SupportActionBar.Title = _selectedAlarm.Name;            
-		}
+            _selectedAlarm = JsonConvert.DeserializeObject<AlarmData>(intent.GetStringExtra(Constants.AlarmsData_Extra));
+            _requestId = _selectedAlarm.RequestId;
 
-		GoogleMap _map;
+            SupportActionBar.Title = _selectedAlarm.Name;
+        }
 
-		protected override void OnStart ()
-		{
-			base.OnStart ();
-            		
-			_map = (SupportFragmentManager.FindFragmentById (Resource.Id.map) as SupportMapFragment).Map;
+        GoogleMap _map;
 
-			if (_map != null) {
-				_map.MyLocationEnabled = true;
+        protected override void OnStart()
+        {
+            base.OnStart();
 
-				RedrawAlarm ();
-			}			
-		}
+            _map = (SupportFragmentManager.FindFragmentById(Resource.Id.map) as SupportMapFragment).Map;
 
-		protected override void OnStop ()
-		{
-			if (_map != null) {
-				_selectedMarker = null;
-				_map.Clear ();
-			}
+            if (_map != null)
+            {
+                _map.MyLocationEnabled = true;
 
-			_map = null;
+                RedrawAlarm();
+            }
+        }
 
-			base.OnStop ();
-		}
+        protected override void OnStop()
+        {
+            if (_map != null)
+            {
+                _selectedMarker = null;
+                _map.Clear();
+            }
 
-		IMenuItem _deleteAlarmMenuItem, _disableAlarmMenuItem;
+            _map = null;
+
+            base.OnStop();
+        }
+
+        IMenuItem _deleteAlarmMenuItem, _disableAlarmMenuItem;
         ToggleButton _enableAlarmToggleButton;
 
-		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
-		{
-			MenuInflater.Inflate (Resource.Menu.alarm_screen, menu);
+        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.alarm_screen, menu);
 
-			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
+            _deleteAlarmMenuItem = menu.FindItem(Resource.Id.delete);
             _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
 
             _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
@@ -88,10 +100,10 @@ namespace SimpleLocationAlarm.Droid.Screens
             _enableAlarmToggleButton.Checked = _selectedAlarm.Enabled;
             _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
 
-			CorrectOptionsMenuVisibility ();
+            CorrectOptionsMenuVisibility();
 
-			return base.OnCreateOptionsMenu (menu);
-		}
+            return base.OnCreateOptionsMenu(menu);
+        }
 
         void AlarmEnabledChange(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
@@ -104,82 +116,88 @@ namespace SimpleLocationAlarm.Droid.Screens
             }
         }
 
-		public override bool OnOptionsItemSelected (IMenuItem item)
-		{
-			switch (item.ItemId) {
-			case Resource.Id.delete:
-                GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "alarm deleted");
-				DeleteSelectedMarker ();
-				StopRinging ();
-				return true;
-			case Resource.Id.stop_noise:
-                GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "sound muted");
-				StopRinging ();
-				return true;
-			default:
-				return base.OnOptionsItemSelected (item);
-			}
-		}
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.delete:
+                    GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "alarm deleted");
+                    DeleteSelectedMarker();
+                    StopRinging();
+                    return true;
+                case Resource.Id.stop_noise:
+                    GoogleAnalyticsManager.ReportEvent(GACategory.AlarmsScreen, GAAction.Click, "sound muted");
+                    StopRinging();
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
+        }
 
-		void DeleteSelectedMarker ()
-		{
-			var alarm = _selectedAlarm;
-			alarm.Enabled = true;
-			_selectedAlarm = null;
+        void DeleteSelectedMarker()
+        {
+            var alarm = _selectedAlarm;
+            alarm.Enabled = true;
+            _selectedAlarm = null;
 
-			CorrectOptionsMenuVisibility ();
-			RemoveGeofence (alarm, ActionOnAlarm.Delete);
+            CorrectOptionsMenuVisibility();
+            RemoveGeofence(alarm, ActionOnAlarm.Delete);
 
-			_selectedMarker.Remove ();
-			_selectedMarker = null;
-            
-			ShowUndoBar (() => AddGeofence (alarm), Finish);
-		}
+            _selectedMarker.Remove();
+            _selectedMarker = null;
 
-		protected override void OnDataUpdated (object sender, AlarmsEventArgs e)
-		{
-			_selectedAlarm = _dbManager.GetAlarmByGeofenceRequestId (_requestId);       
-  
-			RedrawAlarm ();
-			CorrectOptionsMenuVisibility ();
-		}
+            ShowUndoBar(() => AddGeofence(alarm), Finish);
+        }
 
-		void RedrawAlarm ()
-		{
-			if (_selectedMarker != null) {
-				_selectedMarker.Remove ();
-				_selectedMarker = null;
-			}
+        protected override void OnDataUpdated(object sender, AlarmsEventArgs e)
+        {
+            _selectedAlarm = _dbManager.GetAlarmByGeofenceRequestId(_requestId);
 
-			_map.Clear ();
+            RedrawAlarm();
+            CorrectOptionsMenuVisibility();
+        }
 
-			if (_selectedAlarm != null) {
-				var position = new LatLng (_selectedAlarm.Latitude, _selectedAlarm.Longitude);
+        void RedrawAlarm()
+        {
+            if (_selectedMarker != null)
+            {
+                _selectedMarker.Remove();
+                _selectedMarker = null;
+            }
 
-				var circle = _map.AddCircle (new CircleOptions ()
-                    .InvokeCenter (position)
-                    .InvokeRadius (_selectedAlarm.Radius));
+            _map.Clear();
 
-				circle.FillColor = Resources.GetColor (_selectedAlarm.Enabled ? Resource.Color.light : Resource.Color.light_grey);
-				circle.StrokeColor = Resources.GetColor (_selectedAlarm.Enabled ? Resource.Color.dark : Resource.Color.dark_grey);
-				circle.StrokeWidth = 1.0f;
+            if (_selectedAlarm != null)
+            {
+                var position = new LatLng(_selectedAlarm.Latitude, _selectedAlarm.Longitude);
 
-				_selectedMarker = _map.AddMarker (new MarkerOptions ()
-                                .SetPosition (position)
-                                .InvokeIcon (BitmapDescriptorFactory.FromResource (_selectedAlarm.Enabled ? Resource.Drawable.alarm_violet : Resource.Drawable.alarm_grey)));
-				if (_firstStart) {
-					_map.MoveCamera (CameraUpdateFactory.NewLatLngZoom (position, _map.MaxZoomLevel - 6));
-					_firstStart = false;
-				} else {
-					_map.AnimateCamera (CameraUpdateFactory.NewLatLng (position));
-				}				
-			}
-		}
+                var circle = _map.AddCircle(new CircleOptions()
+                    .InvokeCenter(position)
+                    .InvokeRadius(_selectedAlarm.Radius));
 
-		void CorrectOptionsMenuVisibility ()
-		{
-			_deleteAlarmMenuItem.SetVisible (_selectedAlarm != null);
-			_disableAlarmMenuItem.SetVisible (_selectedAlarm != null);
-		}
-	}
+                circle.FillColor = Resources.GetColor(_selectedAlarm.Enabled ? Resource.Color.light : Resource.Color.light_grey);
+                circle.StrokeColor = Resources.GetColor(_selectedAlarm.Enabled ? Resource.Color.dark : Resource.Color.dark_grey);
+                circle.StrokeWidth = 1.0f;
+
+                _selectedMarker = _map.AddMarker(new MarkerOptions()
+                                .SetPosition(position)
+                                .InvokeIcon(BitmapDescriptorFactory.FromResource(_selectedAlarm.Enabled ? Resource.Drawable.alarm_violet : Resource.Drawable.alarm_grey)));
+                if (_firstStart)
+                {
+                    _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, _map.MaxZoomLevel - 6));
+                    _firstStart = false;
+                }
+                else
+                {
+                    _map.AnimateCamera(CameraUpdateFactory.NewLatLng(position));
+                }
+            }
+        }
+
+        void CorrectOptionsMenuVisibility()
+        {
+            _deleteAlarmMenuItem.SetVisible(_selectedAlarm != null);
+            _disableAlarmMenuItem.SetVisible(_selectedAlarm != null);
+        }
+    }
 }

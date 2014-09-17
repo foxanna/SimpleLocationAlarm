@@ -20,6 +20,14 @@ namespace SimpleLocationAlarm.Droid.Screens
             }
         }
 
+        protected override string AdId
+        {
+            get
+            {
+                return Resources.GetString(Resource.String.main_screen_ad);
+            }
+        }
+
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);

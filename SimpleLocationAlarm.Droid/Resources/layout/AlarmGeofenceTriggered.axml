@@ -13,10 +13,9 @@
         android:layout_margin="40dp"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
-    <com.google.android.gms.ads.AdView 
-        android:id="@+id/adView"
+    <LinearLayout        
+        android:id="@+id/adViewContainer"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/alarm_screen_ad"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

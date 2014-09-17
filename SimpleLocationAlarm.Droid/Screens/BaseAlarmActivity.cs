@@ -4,10 +4,11 @@ using Android.Gms.Maps.Model;
 using SimpleLocationAlarm.Droid.Services;
 using Android.Content;
 using Android.Gms.Ads;
+using Android.Widget;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
-	public abstract partial class BaseAlarmActivity : ActionBarActivity
+    public abstract partial class BaseAlarmActivity : ActionBarActivity
 	{
 		protected DBManager _dbManager = new DBManager ();
 		protected GeofenceManager _geofenceManager = new GeofenceManager ();
@@ -107,6 +108,8 @@ namespace SimpleLocationAlarm.Droid.Screens
             base.OnCreate(savedInstanceState);
             GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
         }
+        
+        protected abstract string AdId { get; }
 
         AdView _adView;
 
@@ -114,10 +117,17 @@ namespace SimpleLocationAlarm.Droid.Screens
         {
             base.SetContentView(layoutResID);
 
-            _adView = FindViewById<AdView>(Resource.Id.adView);
-            if (_adView != null)
+            var adViewContainer = FindViewById<LinearLayout>(Resource.Id.adViewContainer);
+            if (adViewContainer != null && !string.IsNullOrEmpty(AdId))
             {
-                _adView.LoadAd(new AdRequest.Builder().Build());
+                var adView = new AdView(this)
+                {
+                    AdSize = AdSize.SmartBanner,
+                    AdUnitId = AdId,
+                };
+
+                adViewContainer.AddView(adView);
+                adView.LoadAd(new AdRequest.Builder().Build());
             }
         }
         
@@ -138,7 +148,7 @@ namespace SimpleLocationAlarm.Droid.Screens
             if (_adView != null)
             {
                 _adView.Resume();
-            }
+            }           
         }
 
         protected override void OnDestroy()
@@ -150,5 +160,5 @@ namespace SimpleLocationAlarm.Droid.Screens
 
             base.OnDestroy();
         }
-	}
+    }
 }

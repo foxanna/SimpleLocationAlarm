@@ -1369,7 +1369,7 @@ namespace SimpleLocationAlarm.Droid
 			public const int activity_chooser_view_content = 2131230775;
 			
 			// aapt resource value: 0x7f080053
-			public const int adView = 2131230803;
+			public const int adViewContainer = 2131230803;
 			
 			// aapt resource value: 0x7f08005e
 			public const int add_alarm = 2131230814;
