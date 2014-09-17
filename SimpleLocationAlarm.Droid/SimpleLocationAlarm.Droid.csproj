@@ -626,4 +626,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\ads.xml" />
+  </ItemGroup>
 </Project>

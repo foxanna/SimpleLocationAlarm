@@ -18,7 +18,7 @@ namespace SimpleLocationAlarm.Droid.Services
         Click
     }
 
-    class GoogleAnalyticsManager
+    public class GoogleAnalyticsManager
     {
         enum TrackerType
         {

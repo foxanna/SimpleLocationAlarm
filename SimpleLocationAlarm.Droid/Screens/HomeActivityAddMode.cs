@@ -183,7 +183,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			_alarmNameEditText.Text = string.Empty;
 
-			(this.GetSystemService (Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow (_alarmNameEditText.WindowToken, 0);
+            try
+            {
+                (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(_alarmNameEditText.WindowToken, 0);
+                (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(CurrentFocus.WindowToken, 0);
+            }
+            catch { }
 		}
 
 		void CancelAnything ()

@@ -3,6 +3,7 @@ using Android.Support.V7.App;
 using Android.Gms.Maps.Model;
 using SimpleLocationAlarm.Droid.Services;
 using Android.Content;
+using Android.Gms.Ads;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -105,6 +106,49 @@ namespace SimpleLocationAlarm.Droid.Screens
         {
             base.OnCreate(savedInstanceState);
             GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
+        }
+
+        AdView _adView;
+
+        public override void SetContentView(int layoutResID)
+        {
+            base.SetContentView(layoutResID);
+
+            _adView = FindViewById<AdView>(Resource.Id.adView);
+            if (_adView != null)
+            {
+                _adView.LoadAd(new AdRequest.Builder().Build());
+            }
+        }
+        
+        protected override void OnPause()
+        {
+            if (_adView != null)
+            {
+                _adView.Pause();
+            }
+
+            base.OnPause();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if (_adView != null)
+            {
+                _adView.Resume();
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            if (_adView != null)
+            {
+                _adView.Destroy();
+            }
+
+            base.OnDestroy();
         }
 	}
 }
