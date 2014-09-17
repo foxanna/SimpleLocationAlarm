@@ -14,9 +14,29 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		BitmapDescriptor _alarm_marker_normal, _alarm_marker_selected, _alarm_marker_disabled;
 
-		Marker _alarmToAdd;
+        Circle _circleToAdd;
 
-		List<AlarmData> _mapData = new List<AlarmData> ();
+	    Marker _alarmToAdd;
+        Marker AlarmToAddMarker
+        {
+            get
+            {
+                return _alarmToAdd;
+            }
+            set
+            {
+                if (_alarmToAdd != null)
+                {
+                    _alarmToAdd.Remove();
+                }
+                
+                _alarmToAdd = value;
+
+                RedrawAddCircle();
+            }
+        }
+
+        List<AlarmData> _mapData = new List<AlarmData> ();
 		List<Marker> _currentMarkers = new List<Marker> ();
 		List<Circle> _currentCircles = new List<Circle> ();
 
@@ -52,8 +72,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_map.SetOnMapLoadedCallback (this);
 
 				if (Mode == Mode.Add) {
-					if (_alarmToAdd != null) {
-						_alarmToAdd = _map.AddMarker (new MarkerOptions ().SetPosition (_alarmToAdd.Position).InvokeIcon (_alarm_marker_normal));
+					if (AlarmToAddMarker != null) {
+						AlarmToAddMarker = _map.AddMarker (new MarkerOptions ().SetPosition (AlarmToAddMarker.Position).InvokeIcon (_alarm_marker_normal));
 					}
 				}
 			}
@@ -141,8 +161,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			_currentCircles.Clear ();
 
-			if (_alarmToAdd != null) {
-				_alarmToAdd.Remove ();
+			if (AlarmToAddMarker != null) {
+				AlarmToAddMarker.Remove ();
 			}
 
 			if (_selectedMarker != null) {
@@ -217,12 +237,13 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			switch (Mode) {
 			case Mode.Add:
-				if (_alarmToAdd == null) {
-					_alarmToAdd = _map.AddMarker (new MarkerOptions ().SetPosition (e.Point));
-					_alarmToAdd.SetIcon (_alarm_marker_normal);
-					_alarmToAdd.Draggable = true;
+				if (AlarmToAddMarker == null) {
+					AlarmToAddMarker = _map.AddMarker (new MarkerOptions ().SetPosition (e.Point));
+					AlarmToAddMarker.SetIcon (_alarm_marker_normal);
+					AlarmToAddMarker.Draggable = true;
 				} else {
-					_alarmToAdd.Position = e.Point;
+					AlarmToAddMarker.Position = e.Point;
+                    RedrawAddCircle();
 				}
                     
 				break;
@@ -265,5 +286,31 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			ZoomToMyLocationAndAlarms ();
 		}
+
+        void RedrawAddCircle()
+        {
+            if (_alarmToAdd != null)
+            {
+                if (_circleToAdd == null) {
+                    _circleToAdd = _map.AddCircle(new CircleOptions().InvokeCenter(_alarmToAdd.Position));
+
+                    _circleToAdd.FillColor = Resources.GetColor(Resource.Color.light);
+                    _circleToAdd.StrokeColor = Resources.GetColor(Resource.Color.dark);
+                    _circleToAdd.StrokeWidth = 1.0f;
+                } else {
+                    _circleToAdd.Center = _alarmToAdd.Position;
+                }
+                    
+                _circleToAdd.Radius = (float)Constants.AlarmRadiusValues[_alarmRadiusSpinner.SelectedItemPosition];
+            }
+            else
+            {
+                if (_circleToAdd != null)
+                {
+                    _circleToAdd.Remove();
+                    _circleToAdd = null;
+                }
+            }
+        }
 	}
 }

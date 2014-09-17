@@ -16,7 +16,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
             try
             {
-                _addAlarmMenuButton.SetVisible(_isGooglePlayServicesAvailable == ConnectionResult.Success);
+                _addAlarmMenuButton.SetVisible(_isGooglePlayServicesAvailable == ConnectionResult.Success && Mode == Screens.Mode.None);
             }
             catch (Exception e)
             {

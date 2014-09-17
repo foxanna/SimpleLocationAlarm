@@ -77,6 +77,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                 Android.Resource.Id.Text1, Constants.AlarmRadiusValues.Select(r => string.Format("{0} m", r)).ToList());
             adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
             _alarmRadiusSpinner.Adapter = adapter;
+            _alarmRadiusSpinner.ItemSelected += (s, e) => RedrawAddCircle();
 
 			ManageMenuItemsVisibilityForMode ();
 
@@ -195,7 +196,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			ClearMap ();
          
-			_alarmToAdd = null;
+			AlarmToAddMarker = null;
 
 			_selectedMarker = null;
 
@@ -212,7 +213,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		bool AcceptAdd ()
 		{
-			if (_alarmToAdd == null) {
+			if (AlarmToAddMarker == null) {
 				ShowToast(Resource.String.click_on_map_to_set_alarm);
 				return false;
 			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
@@ -224,12 +225,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 				var radius = Constants.AlarmRadiusValues[_alarmRadiusSpinner.SelectedItemPosition];
                 
 				var newAlarm = new AlarmData () {
-					Latitude = _alarmToAdd.Position.Latitude,
-					Longitude = _alarmToAdd.Position.Longitude,
+					Latitude = AlarmToAddMarker.Position.Latitude,
+					Longitude = AlarmToAddMarker.Position.Longitude,
 					Radius = radius,
 					Name = _alarmNameEditText.Text,
 					Enabled = true,
-					RequestId = string.Format ("{0};{1}_{2}", _alarmToAdd.Position.Latitude, _alarmToAdd.Position.Longitude, random.NextDouble ())
+					RequestId = string.Format ("{0};{1}_{2}", AlarmToAddMarker.Position.Latitude, AlarmToAddMarker.Position.Longitude, random.NextDouble ())
 				};
                 
 				AddGeofence (newAlarm);
