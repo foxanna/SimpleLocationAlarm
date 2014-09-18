@@ -131,7 +131,7 @@ namespace SimpleLocationAlarm.Droid.Services
 		void ShowNotification (AlarmData alarm)
 		{
 			var builder = new NotificationCompat.Builder (this);
-			builder.SetSmallIcon (Resource.Drawable.alarm_white)
+			builder.SetSmallIcon (Resource.Drawable.marker_violet)
                 .SetContentTitle (alarm.Name)
                 .SetContentText (GetString (Resource.String.app_name))
                 .SetAutoCancel (false);

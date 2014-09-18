@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/alarm_white"
+            android:src="@drawable/map_white"
             android:layout_margin="@dimen/default_padding"/>
 
         <TextView
