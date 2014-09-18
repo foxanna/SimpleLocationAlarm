@@ -11,7 +11,7 @@ using SimpleLocationAlarm.Droid.Services;
 namespace SimpleLocationAlarm.Droid.Screens
 {
     [Activity(Label = "@string/settings_about",
-        Icon = "@drawable/alarm_white",
+        Icon = "@drawable/map_white",
         ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     [IntentFilter(new[] { "openaboutscreenaction" }, Categories = new[] { Intent.CategoryDefault})]
     public class AboutScreen : ActionBarActivity

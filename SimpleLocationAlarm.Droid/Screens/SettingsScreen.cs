@@ -11,7 +11,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 {
     [Activity(
         Label = "@string/action_settings",
-        Icon = "@drawable/alarm_white",
+        Icon = "@drawable/map_white",
         Theme = "@style/SettingsTheme",
         ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class SettingsScreen : PreferenceActivity

@@ -14,7 +14,7 @@ using Android.Support.V7.App;
 namespace SimpleLocationAlarm.Droid.Screens
 {
     [Activity(
-        Icon = "@drawable/alarm_white",
+        Icon = "@drawable/map_white",
         LaunchMode = Android.Content.PM.LaunchMode.SingleTask,
         ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class AlarmErrorScreen : ActionBarActivity

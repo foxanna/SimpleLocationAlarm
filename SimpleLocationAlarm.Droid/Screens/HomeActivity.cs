@@ -6,8 +6,8 @@ using SimpleLocationAlarm.Droid.Services;
 namespace SimpleLocationAlarm.Droid.Screens
 {
 	[Activity (
-		Label = "@string/app_name", 
-		Icon = "@drawable/alarm_white",
+		Label = "@string/app_name",
+        Icon = "@drawable/map_white",
 		MainLauncher = true,
 		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public partial class HomeActivity : BaseAlarmActivity
