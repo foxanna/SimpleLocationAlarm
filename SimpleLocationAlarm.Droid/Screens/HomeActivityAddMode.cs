@@ -102,7 +102,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			switch (item.ItemId) {
 			case Android.Resource.Id.Home:
-				OnBackPressed ();
+                if (Mode != Mode.None)
+                {
+                    OnBackPressed();
+                }
 				return true;
 			case Resource.Id.add_alarm:
 				Mode = Mode.Add;
