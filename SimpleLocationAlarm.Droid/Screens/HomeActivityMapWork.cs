@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using Android.Locations;
 using Android.Util;
 using SimpleLocationAlarm.Droid.Services;
+using Android.App;
+using Android.Widget;
+using Android.Content.Res;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -62,6 +65,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_map.MapClick += OnMapClick;
 				_map.MyLocationChange += HandleMyLocationChange;
 				_map.MarkerClick += OnMarkerClick;
+
+                _map.SetInfoWindowAdapter(new InfoWindowAdapter());
 
 				// here because map should be already initialized
 				// http://developer.android.com/reference/com/google/android/gms/maps/model/BitmapDescriptorFactory.html
@@ -308,7 +313,7 @@ namespace SimpleLocationAlarm.Droid.Screens
                     _selectedMarker = e.Marker;
                     _selectedAlarm = _mapData.FirstOrDefault(a => a.Latitude == _selectedMarker.Position.Latitude && a.Longitude == _selectedMarker.Position.Longitude);
                     _selectedMarker.SetIcon(_selectedAlarm.Enabled ? _alarm_marker_normal_selected : _alarm_marker_disabled_selected);
-
+                    
                     Mode = Mode.MarkerSelected;
                     break;
             }
@@ -350,6 +355,25 @@ namespace SimpleLocationAlarm.Droid.Screens
                     _circleToAdd = null;
                 }
             }
+        }
+    }
+
+    class InfoWindowAdapter : Java.Lang.Object, GoogleMap.IInfoWindowAdapter
+    {
+        public Android.Views.View GetInfoContents(Marker marker)
+        {
+            return null;
+        }
+
+        public Android.Views.View GetInfoWindow(Marker marker)
+        {
+            var textView = new TextView(Application.Context);
+            textView.Text = marker.Title;
+            textView.SetBackgroundResource(Resource.Drawable.undo_bar_bg);
+            var padding = Application.Context.Resources.GetDimensionPixelSize(Resource.Dimension.default_text_padding);
+            textView.SetPadding(padding, padding, padding, padding);
+            textView.SetTextColor(Application.Context.Resources.GetColor(Android.Resource.Color.White));
+            return textView;
         }
     }
 }
