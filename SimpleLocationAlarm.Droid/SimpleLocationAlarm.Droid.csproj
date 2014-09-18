@@ -111,10 +111,6 @@
     <AndroidResource Include="Resources\layout\AlarmGeofenceTriggered.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable-mdpi\alarm_grey.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\alarm_grey.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\alarm_grey.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\alarm_grey.png" />
     <AndroidResource Include="Resources\anim\popup_hide.xml" />
     <AndroidResource Include="Resources\anim\popup_show.xml" />
     <AndroidResource Include="Resources\layout\undo_bar.axml" />
@@ -634,5 +630,20 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\marker_violet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\marker_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\marker_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\marker_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\marker_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\marker_grey.png" />
   </ItemGroup>
 </Project>

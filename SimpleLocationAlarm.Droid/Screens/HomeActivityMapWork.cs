@@ -65,7 +65,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				// http://developer.android.com/reference/com/google/android/gms/maps/model/BitmapDescriptorFactory.html
 				_alarm_marker_normal = BitmapDescriptorFactory.FromResource (Resource.Drawable.marker_violet);
 				_alarm_marker_selected = BitmapDescriptorFactory.FromResource (Resource.Drawable.alarm_red);
-				_alarm_marker_disabled = BitmapDescriptorFactory.FromResource (Resource.Drawable.alarm_grey);
+                _alarm_marker_disabled = BitmapDescriptorFactory.FromResource(Resource.Drawable.marker_grey);
                 
 				RefreshData ();
 

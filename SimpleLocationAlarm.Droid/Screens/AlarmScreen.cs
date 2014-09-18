@@ -181,7 +181,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 
                 _selectedMarker = _map.AddMarker(new MarkerOptions()
                                 .SetPosition(position)
-                                .InvokeIcon(BitmapDescriptorFactory.FromResource(_selectedAlarm.Enabled ? Resource.Drawable.marker_violet : Resource.Drawable.alarm_grey)));
+                                .InvokeIcon(BitmapDescriptorFactory.FromResource(_selectedAlarm.Enabled ? Resource.Drawable.marker_violet : Resource.Drawable.marker_grey)));
                 if (_firstStart)
                 {
                     _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, _map.MaxZoomLevel - 6));
