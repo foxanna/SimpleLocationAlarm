@@ -5,6 +5,7 @@ using SimpleLocationAlarm.Droid.Services;
 using Android.Content;
 using Android.Gms.Ads;
 using Android.Widget;
+using Android.Views;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -112,23 +113,14 @@ namespace SimpleLocationAlarm.Droid.Screens
         protected abstract string AdId { get; }
 
         AdView _adView;
+        LinearLayout _adViewContainer;
 
         public override void SetContentView(int layoutResID)
         {
             base.SetContentView(layoutResID);
 
-            var adViewContainer = FindViewById<LinearLayout>(Resource.Id.adViewContainer);
-            if (adViewContainer != null && !string.IsNullOrEmpty(AdId))
-            {
-                var adView = new AdView(this)
-                {
-                    AdSize = AdSize.SmartBanner,
-                    AdUnitId = AdId,
-                };
-
-                adViewContainer.AddView(adView);
-                adView.LoadAd(new AdRequest.Builder().Build());
-            }
+            _adViewContainer = FindViewById<LinearLayout>(Resource.Id.adViewContainer);
+            _adView = AddAd(_adViewContainer, AdId);
         }
         
         protected override void OnPause()
@@ -159,6 +151,38 @@ namespace SimpleLocationAlarm.Droid.Screens
             }
 
             base.OnDestroy();
+        }
+
+        public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+
+            if (_adView != null)
+            {
+                _adView.Destroy();
+                _adView = AddAd(_adViewContainer, AdId);
+            }
+        }
+
+        AdView AddAd(LinearLayout adViewContainer, string adid)
+        {
+            AdView adView = null;
+
+            if (adViewContainer != null && !string.IsNullOrEmpty(adid))
+            {
+                adViewContainer.RemoveAllViews();
+
+                adView = new AdView(this)
+                {
+                    AdSize = AdSize.SmartBanner,
+                    AdUnitId = adid,
+                };
+
+                adViewContainer.AddView(adView);
+                adView.LoadAd(new AdRequest.Builder().Build());
+            }
+
+            return adView;
         }
     }
 }
