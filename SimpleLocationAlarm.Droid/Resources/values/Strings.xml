@@ -2,36 +2,36 @@
 <resources>
     <string name="app_name">app name</string>
     <string name="device_not_supported">This device is not supported</string>
-    <string name="add_alarm">Add alarm</string>
-    <string name="alarm_name">Alarm name</string>
+    <string name="add_alarm">Add location mark</string>
+    <string name="alarm_name">Description</string>
     <string name="undo">Undo</string>
-    <string name="delete">Delete alarm</string>
-    <string name="alarm_deleted">Alarm deleted</string>
-    <string name="enter_alarm_name">Enter alarm name</string>
-    <string name="click_on_map_to_set_alarm">Click on map to set alarm position</string>
-    <string name="failed_to_add">Your alarm was created disabled</string>
-    <string name="failed_to_remove">Failed to remove alarm</string>
+    <string name="delete">Delete location mark</string>
+    <string name="alarm_deleted">Location mark deleted</string>
+    <string name="enter_alarm_name">Enter description</string>
+    <string name="click_on_map_to_set_alarm">Click on map to set the position</string>
+    <string name="failed_to_add">You've created an inactive location mark</string>
+    <string name="failed_to_remove">Failed to remove</string>
     <string name="go_to_settings">Go to location settings</string>
     <string name="stop_noise">Stop making noise</string>
     <string name="failed_to_connect">Failed to connect to location services</string>
     <string name="probably_location_services_are_off">Probably location services are disabled</string>
-    <string name="error_with_alarm">Probably location services were disabled\n\nAll your alarms were disabled</string>
-    <string name="rate_us">Rate us on Google play</string>
+    <string name="error_with_alarm">Probably location services were disabled\n\nAll your location marks were disabled</string>
+    <string name="rate_us">Rate us on Google Play</string>
     <string name="send_feedback">Send feedback</string>
     <string name="disclaimer">Disclaimer\n\n\n\n\n\n\n\n\n\nLong disclaimer</string>
 
     <!--Settings strings-->
     <string name="action_settings">Settings</string>
     <string name="settings_vibrate">Vibrate</string>
-    <string name="settings_vibrate_summ">Vibrate when enter the alarm zone</string>
+    <string name="settings_vibrate_summ">Vibrate when approaching destenation point</string>
     <string name="settings_play_sound">Play sound</string>
-    <string name="settings_play_sound_summ">Play sound when enter the alarm zone</string>
-    <string name="settings_sound">Alarm sound</string>
-    <string name="settings_sound_sum">Default alarm sound</string>
+    <string name="settings_play_sound_summ">Play sound when approaching destenation point</string>
+    <string name="settings_sound">Ringtone</string>
+    <string name="settings_sound_sum">Default alarm ringtone</string>
     <string name="settings_default_radius">Default zone radius</string>
     <string name="settings_default_radius_sum">{0} meters</string>
     <string name="settings_about">About app name</string>
-    <string name="settings_version">Version {0}.{1}</string>
+    <string name="settings_version">Version {0}</string>
     
     <!-- not translatable-->
     <string name="on">ON</string>
