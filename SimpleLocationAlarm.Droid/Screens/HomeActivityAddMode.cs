@@ -142,6 +142,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_settingsMenuItem.SetVisible (true);
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (false);
+                SupportActionBar.SetHomeButtonEnabled(false);
                     
 				break;
 			case Mode.Add:
