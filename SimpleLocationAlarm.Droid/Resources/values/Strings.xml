@@ -9,7 +9,7 @@
     <string name="alarm_deleted">Location mark deleted</string>
     <string name="enter_alarm_name">Enter description</string>
     <string name="click_on_map_to_set_alarm">Click on map to set the position</string>
-    <string name="failed_to_add">You've created an inactive location mark</string>
+    <string name="failed_to_add">You\'ve created an inactive location mark</string>
     <string name="failed_to_remove">Failed to remove</string>
     <string name="go_to_settings">Go to location settings</string>
     <string name="stop_noise">Stop making noise</string>
