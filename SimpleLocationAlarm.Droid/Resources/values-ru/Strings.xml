@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Будильник</string>
+    <string name="app_name">Гео-будильник</string>
     <string name="device_not_supported">Это устройство не поддерживается</string>
     <string name="add_alarm">Добавить отметку</string>
     <string name="alarm_name">Описание</string>
