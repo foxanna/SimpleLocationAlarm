@@ -18,7 +18,7 @@
     <string name="error_with_alarm">Возможно сервис местоположения был отключен\n\nВсе ваши отметки были деактивированы</string>
     <string name="rate_us">Оцените нас на Google Play</string>
     <string name="send_feedback">Отправить отзыв</string>
-    <string name="disclaimer">Disclaimer\n\n\n\n\n\n\n\n\n\nLong disclaimer</string>
+    <string name="disclaimer">Для корректной работы приложения, вам необходимо убедиться, что соединение с интернет активно и стабильно. Для более быстрого определения вашего местоположения рекоммендуется также активировать GPS модуль.\nНеобходимо иметь в виду, что данные о вашем местоположении предотавляются сервисами Google. В случае, когда эти данные приходят с опозданием, в работе приложения могут возникать неточности.</string>
 
     <!--Settings strings-->
     <string name="action_settings">Настройки</string>

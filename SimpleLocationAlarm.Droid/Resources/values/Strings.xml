@@ -18,7 +18,7 @@
     <string name="error_with_alarm">Probably location services were disabled\n\nAll your location marks were disabled</string>
     <string name="rate_us">Rate us on Google Play</string>
     <string name="send_feedback">Send feedback</string>
-    <string name="disclaimer">Disclaimer\n\n\n\n\n\n\n\n\n\nLong disclaimer</string>
+    <string name="disclaimer">In order for app to work correctly, please, make sure that your internet connection is active at all times. It is better if you have your GPS module activated, which will simplify your location detection.\nPlease note, that it is Google Services, which are responsible for delivering your location data to our app. In case this data is late, the app might not work perfectly. </string>
 
     <!--Settings strings-->
     <string name="action_settings">Settings</string>
