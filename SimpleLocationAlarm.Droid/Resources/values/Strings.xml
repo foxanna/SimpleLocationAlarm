@@ -31,7 +31,7 @@
     <string name="settings_default_radius">Default zone radius</string>
     <string name="settings_default_radius_sum">{0} meters</string>
     <string name="settings_about">About GEO Alarm</string>
-    <string name="settings_version">Version {0}</string>
+    <string name="settings_version">Version {0} ({1})</string>
     
     <!-- not translatable-->
     <string name="on">ON</string>

@@ -31,5 +31,5 @@
     <string name="settings_default_radius">Радиус зоны прибытия</string>
     <string name="settings_default_radius_sum">{0} метров</string>
     <string name="settings_about">O приложении</string>
-    <string name="settings_version">Версия {0}</string>
+    <string name="settings_version">Версия {0} ({1})</string>
 </resources>

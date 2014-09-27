@@ -12,203 +12,207 @@ using SimpleLocationAlarm.Droid.Screens;
 
 namespace SimpleLocationAlarm.Droid.Services
 {
-    public class StringEventArgs : EventArgs
-    {
-        public string Data { get; private set; }
+	public class StringEventArgs : EventArgs
+	{
+		public string Data { get; private set; }
 
-        public StringEventArgs(string data)
-        {
-            Data = data;
-        }
-    }
+		public StringEventArgs (string data)
+		{
+			Data = data;
+		}
+	}
 
-    public class GeofenceChangeEventArgs : EventArgs
-    {
-        public int Status { get; private set; }
+	public class GeofenceChangeEventArgs : EventArgs
+	{
+		public int Status { get; private set; }
 
-        public string RequestId { get; private set; }
+		public string[] RequestId { get; private set; }
 
-        public GeofenceChangeEventArgs(int status, string requestId)
-        {
-            Status = status;
-            RequestId = requestId;
-        }
-    }
+		public GeofenceChangeEventArgs (int status, string[] requestId)
+		{
+			Status = status;
+			RequestId = requestId;
+		}
+	}
 
-    public class ConnectionResultEventArgs : EventArgs
-    {
-        public ConnectionResult ConnectionResult { get; private set; }
+	public class ConnectionResultEventArgs : EventArgs
+	{
+		public ConnectionResult ConnectionResult { get; private set; }
 
-        public ConnectionResultEventArgs(ConnectionResult status)
-        {
-            ConnectionResult = status;
-        }
-    }
+		public ConnectionResultEventArgs (ConnectionResult status)
+		{
+			ConnectionResult = status;
+		}
+	}
 
-    public class GeofenceManager : Java.Lang.Object,
+	public class GeofenceManager : Java.Lang.Object,
         IGooglePlayServicesClientConnectionCallbacks, IGooglePlayServicesClientOnConnectionFailedListener,
         LocationClient.IOnRemoveGeofencesResultListener, LocationClient.IOnAddGeofencesResultListener
-    {
-        const string TAG = "GeofenceManager";
-        public const int ConnectionFailedRequestCode = 42;
+	{
+		const string TAG = "GeofenceManager";
+		public const int ConnectionFailedRequestCode = 42;
 
-        LocationClient _locationClient;
+		LocationClient _locationClient;
 
-        public GeofenceManager()
-        {
-            _locationClient = new LocationClient(Application.Context, this, this);
-        }
+		public GeofenceManager ()
+		{
+			_locationClient = new LocationClient (Application.Context, this, this);
+		}
 
-        public event EventHandler<StringEventArgs> Error;
+		public event EventHandler<StringEventArgs> Error;
 
-        void OnError(int errorResId)
-        {
-            string errorText = Application.Context.GetString(errorResId);
+		void OnError (int errorResId)
+		{
+			string errorText = Application.Context.GetString (errorResId);
 
-            var handler = Error;
-            if (handler != null)
-            {
-                handler(this, new StringEventArgs(errorText));
-            }
-        }
+			var handler = Error;
+			if (handler != null) {
+				handler (this, new StringEventArgs (errorText));
+			}
+		}
 
-        #region Add geofence
+		#region Add geofence
 
-        public void AddGeofence(string requestId, double latitude, double longitude, float radius)
-        {
-            var geofence = new GeofenceBuilder()
-                .SetRequestId(requestId)
-                .SetTransitionTypes(Geofence.GeofenceTransitionEnter)
-                .SetCircularRegion(latitude, longitude, radius)
-                .SetExpirationDuration(Geofence.NeverExpire)
-                .Build();
+		public void AddGeofence (string requestId, double latitude, double longitude, float radius)
+		{
+			var geofence = PrepareGeofence (requestId, latitude, longitude, radius);
+			AddGeofences (new List<IGeofence> () { geofence });
+		}
 
-            var transitionIntent = PendingIntent.GetService(Application.Context, 0, new Intent(Application.Context, typeof (ReceiveTransitionsIntentService)), PendingIntentFlags.UpdateCurrent);
+		public void AddGeofences (List<IGeofence> geofences)
+		{
+			var transitionIntent = 
+				PendingIntent.GetService (Application.Context, 0, 
+					new Intent (Application.Context, typeof(ReceiveTransitionsIntentService)), 
+					PendingIntentFlags.UpdateCurrent);
+			
+			_locationClient.AddGeofences (geofences, transitionIntent, this);
+		}
 
-            _locationClient.AddGeofences(new List<IGeofence>() { geofence }, transitionIntent, this);
-        }
+		public IGeofence PrepareGeofence (string requestId, double latitude, double longitude, float radius)
+		{
+			return new GeofenceBuilder ()
+				.SetRequestId (requestId)
+				.SetTransitionTypes (Geofence.GeofenceTransitionEnter)
+				.SetCircularRegion (latitude, longitude, radius)
+				.SetExpirationDuration (Geofence.NeverExpire)
+				.Build ();
+		}
 
-        public void OnAddGeofencesResult(int statusCode, string[] geofenceRequestIds)
-        {
-            Log.Debug(TAG, "OnAddGeofencesResult " + (statusCode == LocationStatusCodes.Success ? "success" : "failure"));
+		public void OnAddGeofencesResult (int statusCode, string[] geofenceRequestIds)
+		{
+			Log.Debug (TAG, "OnAddGeofencesResult " + (statusCode == LocationStatusCodes.Success ? "success" : "failure"));
 
-            OnGeofenceAdded(statusCode, geofenceRequestIds[0]);
+			OnGeofenceAdded (statusCode, geofenceRequestIds);
 
-            if (statusCode != LocationStatusCodes.Success)
-            {
-                OnError(Resource.String.failed_to_add);
-                OnError(Resource.String.probably_location_services_are_off);
-            }
-        }
+			if (statusCode != LocationStatusCodes.Success) {
+				OnError (Resource.String.failed_to_add);
+				OnError (Resource.String.probably_location_services_are_off);
+			}
+		}
 
-        public event EventHandler<GeofenceChangeEventArgs> GeofenceAdded;
+		public event EventHandler<GeofenceChangeEventArgs> GeofenceAdded;
 
-        void OnGeofenceAdded(int status, string requestId)
-        {
-            var handler = GeofenceAdded;
-            if (handler != null)
-            {
-                handler(this, new GeofenceChangeEventArgs(status, requestId));
-            }
-        }
+		void OnGeofenceAdded (int status, string[] requestId)
+		{
+			var handler = GeofenceAdded;
+			if (handler != null) {
+				handler (this, new GeofenceChangeEventArgs (status, requestId));
+			}
+		}
 
-        #endregion // Add geofence
+		#endregion // Add geofence
 
-        #region Remove geofence
+		#region Remove geofence
 
-        public void RemoveGeofence(string requestId)
-        {
-            _locationClient.RemoveGeofences(new List<string>() { requestId }, this);
-        }
+		public void RemoveGeofence (string requestId)
+		{
+			_locationClient.RemoveGeofences (new List<string> () { requestId }, this);
+		}
 
-        public event EventHandler<GeofenceChangeEventArgs> GeofenceRemoved;
+		public event EventHandler<GeofenceChangeEventArgs> GeofenceRemoved;
 
-        void OnGeofenceRemoved(int status, string requestId)
-        {
-            var handler = GeofenceRemoved;
-            if (handler != null)
-            {
-                handler(this, new GeofenceChangeEventArgs(status, requestId));
-            }
-        }
-        
-        public void OnRemoveGeofencesByPendingIntentResult(int statusCode, PendingIntent pendingIntent)
-        {
-            throw new NotImplementedException();
-        }
+		void OnGeofenceRemoved (int status, string requestId)
+		{
+			var handler = GeofenceRemoved;
+			if (handler != null) {
+				handler (this, new GeofenceChangeEventArgs (status, new string[] { requestId }));
+			}
+		}
 
-        public void OnRemoveGeofencesByRequestIdsResult(int statusCode, string[] geofenceRequestIds)
-        {
-            Log.Debug(TAG, "OnRemoveGeofencesByRequestIdsResult " + (statusCode == LocationStatusCodes.Success ? "success" : "failure"));
+		public void OnRemoveGeofencesByPendingIntentResult (int statusCode, PendingIntent pendingIntent)
+		{
+			throw new NotImplementedException ();
+		}
 
-            OnGeofenceRemoved(statusCode, geofenceRequestIds[0]);
+		public void OnRemoveGeofencesByRequestIdsResult (int statusCode, string[] geofenceRequestIds)
+		{
+			Log.Debug (TAG, "OnRemoveGeofencesByRequestIdsResult " + (statusCode == LocationStatusCodes.Success ? "success" : "failure"));
 
-            if (statusCode != LocationStatusCodes.Success)
-            {
-                OnError(Resource.String.failed_to_remove);
-                OnError(Resource.String.probably_location_services_are_off);
-            }
-        }
+			OnGeofenceRemoved (statusCode, geofenceRequestIds [0]);
 
-        #endregion // Remove geofence
+			if (statusCode != LocationStatusCodes.Success) {
+				OnError (Resource.String.failed_to_remove);
+				OnError (Resource.String.probably_location_services_are_off);
+			}
+		}
 
-        #region Location manager callbacks
+		#endregion // Remove geofence
 
-        public event EventHandler Started;
+		#region Location manager callbacks
 
-        public void Start()
-        {
-            _locationClient.Connect();
-        }
+		public event EventHandler Started;
 
-        public void OnConnected(Bundle connectionHint)
-        {
-            Log.Debug(TAG, "OnConnected");
+		public void Start ()
+		{
+			_locationClient.Connect ();
+		}
 
-            var handler = Started;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
+		public void OnConnected (Bundle connectionHint)
+		{
+			Log.Debug (TAG, "OnConnected");
 
-        public event EventHandler<ConnectionResultEventArgs> FailedToStart;
-        public event EventHandler<ConnectionResultEventArgs> FailedToStartWithResolution;
-        
-        public void OnConnectionFailed(ConnectionResult result)
-        {
-            Log.Debug(TAG, "OnConnectionFailed " + (result.HasResolution ? "with" : "without" ) + " resolution");
+			var handler = Started;
+			if (handler != null) {
+				handler (this, EventArgs.Empty);
+			}
+		}
 
-            var handler = result.HasResolution ? FailedToStartWithResolution : FailedToStart;
-            if (handler != null)
-            {
-                handler(this, new ConnectionResultEventArgs(result));
-            }
+		public event EventHandler<ConnectionResultEventArgs> FailedToStart;
 
-            if (!result.HasResolution)
-            {
-                OnError(Resource.String.failed_to_connect);
-            }
-        }
+		public event EventHandler<ConnectionResultEventArgs> FailedToStartWithResolution;
 
-        public void Stop()
-        {
-            _locationClient.Disconnect();
-        }
+		public void OnConnectionFailed (ConnectionResult result)
+		{
+			Log.Debug (TAG, "OnConnectionFailed " + (result.HasResolution ? "with" : "without") + " resolution");
 
-        public event EventHandler Stoped;
+			var handler = result.HasResolution ? FailedToStartWithResolution : FailedToStart;
+			if (handler != null) {
+				handler (this, new ConnectionResultEventArgs (result));
+			}
 
-        public void OnDisconnected()
-        {
-            Log.Debug(TAG, "OnDisconnected");
+			if (!result.HasResolution) {
+				OnError (Resource.String.failed_to_connect);
+			}
+		}
 
-            var handler = Stoped;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
+		public void Stop ()
+		{
+			_locationClient.Disconnect ();
+		}
 
-        #endregion // Location manager callbacks
-    }
+		public event EventHandler Stoped;
+
+		public void OnDisconnected ()
+		{
+			Log.Debug (TAG, "OnDisconnected");
+
+			var handler = Stoped;
+			if (handler != null) {
+				handler (this, EventArgs.Empty);
+			}
+		}
+
+		#endregion // Location manager callbacks
+	}
 }

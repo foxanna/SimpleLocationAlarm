@@ -97,6 +97,8 @@
     <Compile Include="Services\UIWhileRingingIntentService.cs" />
     <Compile Include="UndoBar.cs" />
     <Compile Include="Screens\BaseAlarmActivity.cs" />
+    <Compile Include="Services\RestoreAfterRebootService.cs" />
+    <Compile Include="Screens\AlarmsFailedToRestore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
