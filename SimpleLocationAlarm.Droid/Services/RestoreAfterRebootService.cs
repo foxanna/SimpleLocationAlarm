@@ -5,14 +5,12 @@ using Android.App;
 using System.Collections.Generic;
 using Android.Util;
 using SimpleLocationAlarm.Droid.Screens;
-using Android.Widget;
 
 namespace SimpleLocationAlarm.Droid.Services
 {
 	[BroadcastReceiver]
-	[IntentFilter (new []{ Intent.ActionBootCompleted, "android.intent.action.QUICKBOOT_POWERON" }
-		, Categories = new[] { Intent.CategoryDefault }
-	)]
+	[IntentFilter (new []{ Intent.ActionBootCompleted, "android.intent.action.QUICKBOOT_POWERON" }, 
+		Categories = new[] { Intent.CategoryDefault })]
 	public class PhoneBootedBroadcastReceiver : BroadcastReceiver
 	{
 		public override void OnReceive (Context context, Intent intent)

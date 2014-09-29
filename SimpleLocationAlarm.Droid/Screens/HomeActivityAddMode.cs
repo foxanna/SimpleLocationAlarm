@@ -24,7 +24,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 		None
 	}
 
-    public partial class HomeActivity : MenuItemCompat.IOnActionExpandListener
+	public partial class HomeActivity : MenuItemCompat.IOnActionExpandListener
 	{
 		Mode _mode = Mode.None;
 
@@ -48,9 +48,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-        IMenuItem _addAlarmMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem, _alarmRadiusMenuItem;
+		IMenuItem _addAlarmMenuButton, _acceptMenuButton, _alarmNameMenuItem, _deleteAlarmMenuItem, _disableAlarmMenuItem, _settingsMenuItem, _alarmRadiusMenuItem;
 		EditText _alarmNameEditText;
-        Spinner _alarmRadiusSpinner;
+		Spinner _alarmRadiusSpinner;
 		ToggleButton _enableAlarmToggleButton;
 
 		public override bool OnCreateOptionsMenu (Android.Views.IMenu menu)
@@ -58,54 +58,52 @@ namespace SimpleLocationAlarm.Droid.Screens
 			MenuInflater.Inflate (Resource.Menu.main_screen, menu);
 
 			_addAlarmMenuButton = menu.FindItem (Resource.Id.add_alarm);
-            _acceptMenuButton = menu.FindItem(Resource.Id.accept);
+			_acceptMenuButton = menu.FindItem (Resource.Id.accept);
 			_alarmNameMenuItem = menu.FindItem (Resource.Id.alarm_name);
 			_deleteAlarmMenuItem = menu.FindItem (Resource.Id.delete);
-            _disableAlarmMenuItem = menu.FindItem(Resource.Id.switch_button);
-            _alarmRadiusMenuItem = menu.FindItem(Resource.Id.alarm_radius);
+			_disableAlarmMenuItem = menu.FindItem (Resource.Id.switch_button);
+			_alarmRadiusMenuItem = menu.FindItem (Resource.Id.alarm_radius);
 			_settingsMenuItem = menu.FindItem (Resource.Id.action_settings);
             
 			_alarmNameEditText = MenuItemCompat.GetActionView (_alarmNameMenuItem) as EditText;
 			_alarmNameEditText.Hint = Resources.GetString (Resource.String.alarm_name);
-            _alarmNameEditText.SetWidth(Resources.GetDimensionPixelSize(Resource.Dimension.abc_search_view_preferred_width));
+			_alarmNameEditText.SetWidth (Resources.GetDimensionPixelSize (Resource.Dimension.abc_search_view_preferred_width));
 
-            _enableAlarmToggleButton = MenuItemCompat.GetActionView(_disableAlarmMenuItem) as ToggleButton;
-            _enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
+			_enableAlarmToggleButton = MenuItemCompat.GetActionView (_disableAlarmMenuItem) as ToggleButton;
+			_enableAlarmToggleButton.CheckedChange += AlarmEnabledChange;
 
-            _alarmRadiusSpinner = MenuItemCompat.GetActionView(_alarmRadiusMenuItem) as Spinner;
-            var adapter = new ArrayAdapter(this, Resource.Layout.support_simple_spinner_dropdown_item, 
-                Android.Resource.Id.Text1, Constants.AlarmRadiusValues.Select(r => string.Format("{0} m", r)).ToList());
-            adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            _alarmRadiusSpinner.Adapter = adapter;
-            _alarmRadiusSpinner.ItemSelected += (s, e) => RedrawAddCircle();
+			_alarmRadiusSpinner = MenuItemCompat.GetActionView (_alarmRadiusMenuItem) as Spinner;
+			var adapter = new ArrayAdapter (this, Resource.Layout.support_simple_spinner_dropdown_item, 
+				              Android.Resource.Id.Text1, Constants.AlarmRadiusValues.Select (r => string.Format ("{0} m", r)).ToList ());
+			adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
+			_alarmRadiusSpinner.Adapter = adapter;
+			_alarmRadiusSpinner.ItemSelected += (s, e) => RedrawAddCircle ();
 
 			ManageMenuItemsVisibilityForMode ();
 
-            _addAlarmMenuButton.SetVisible(_isGooglePlayServicesAvailable == ConnectionResult.Success);
+			_addAlarmMenuButton.SetVisible (_isGooglePlayServicesAvailable == ConnectionResult.Success);
 
 			return base.OnCreateOptionsMenu (menu);
 		}
 
-        void AlarmEnabledChange(object sender, CompoundButton.CheckedChangeEventArgs e)
-        {
-            EnableAlarm(_selectedAlarm, e.IsChecked);
-            Mode = Mode.MarkerSelected;
-            if (!e.IsChecked)
-            {
-                StopRinging();
-            }
+		void AlarmEnabledChange (object sender, CompoundButton.CheckedChangeEventArgs e)
+		{
+			EnableAlarm (_selectedAlarm, e.IsChecked);
+			Mode = Mode.MarkerSelected;
+			if (!e.IsChecked) {
+				StopRinging ();
+			}
 
-            GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm " + (e.IsChecked ? "enabled" : "disabled"));
-        }
+			GoogleAnalyticsManager.ReportEvent (GACategory.MainScreen, GAAction.Click, "alarm " + (e.IsChecked ? "enabled" : "disabled"));
+		}
 
 		public override bool OnOptionsItemSelected (IMenuItem item)
 		{
 			switch (item.ItemId) {
 			case Android.Resource.Id.Home:
-                if (Mode != Mode.None)
-                {
-                    OnBackPressed();
-                }
+				if (Mode != Mode.None) {
+					OnBackPressed ();
+				}
 				return true;
 			case Resource.Id.add_alarm:
 				Mode = Mode.Add;
@@ -113,8 +111,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 			case Resource.Id.accept:
 				if (Mode == Mode.Add) {
 					if (AcceptAdd ()) {
-                        Mode = Mode.None;
-                        GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm added");
+						Mode = Mode.None;
+						GoogleAnalyticsManager.ReportEvent (GACategory.MainScreen, GAAction.Click, "alarm added");
 					}
 				}
 				return true;
@@ -122,7 +120,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				DeleteSelectedMarker ();
 				StopRinging ();
 				Mode = Mode.None;
-                GoogleAnalyticsManager.ReportEvent(GACategory.MainScreen, GAAction.Click, "alarm deleted");
+				GoogleAnalyticsManager.ReportEvent (GACategory.MainScreen, GAAction.Click, "alarm deleted");
 				return true;
 			case Resource.Id.action_settings:
 				OpenSettings ();
@@ -142,7 +140,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_settingsMenuItem.SetVisible (true);
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (false);
-                SupportActionBar.SetHomeButtonEnabled(false);
+				SupportActionBar.SetHomeButtonEnabled (false);
                     
 				break;
 			case Mode.Add:
@@ -150,13 +148,13 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 				_acceptMenuButton.SetVisible (true);
 				_alarmNameMenuItem.SetVisible (true);
-                _alarmRadiusMenuItem.SetVisible(true);
+				_alarmRadiusMenuItem.SetVisible (true);
 
-                var radius = PreferenceManager.GetDefaultSharedPreferences(this).GetInt(SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
-                _alarmRadiusSpinner.SetSelection(Constants.AlarmRadiusValues.IndexOf(radius));
+				var radius = PreferenceManager.GetDefaultSharedPreferences (this).GetInt (SettingsScreen.DefaultRadiusKey, SettingsScreen.DefaultRadiusValue);
+				_alarmRadiusSpinner.SetSelection (Constants.AlarmRadiusValues.IndexOf (radius));
 
 				_alarmNameMenuItem.ExpandActionView ();
-			    MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, this);
+				MenuItemCompat.SetOnActionExpandListener (_alarmNameMenuItem, this);
                     
 				break;
 			case Mode.MarkerSelected:
@@ -165,7 +163,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_deleteAlarmMenuItem.SetVisible (true);
 
 				_disableAlarmMenuItem.SetVisible (true);
-                _enableAlarmToggleButton.Checked = _selectedAlarm.Enabled;
+				_enableAlarmToggleButton.Checked = _selectedAlarm.Enabled;
                     
 				SupportActionBar.SetDisplayHomeAsUpEnabled (true);
 
@@ -179,21 +177,20 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 			_acceptMenuButton.SetVisible (false);
 			_alarmNameMenuItem.CollapseActionView ();
-            MenuItemCompat.SetOnActionExpandListener(_alarmNameMenuItem, null);
+			MenuItemCompat.SetOnActionExpandListener (_alarmNameMenuItem, null);
 			_alarmNameMenuItem.SetVisible (false);
 			_deleteAlarmMenuItem.SetVisible (false);
 			_disableAlarmMenuItem.SetVisible (false);
 			_settingsMenuItem.SetVisible (false);
-            _alarmRadiusMenuItem.SetVisible(false);
+			_alarmRadiusMenuItem.SetVisible (false);
 
 			_alarmNameEditText.Text = string.Empty;
 
-            try
-            {
-                (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(_alarmNameEditText.WindowToken, 0);
-                (this.GetSystemService(Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow(CurrentFocus.WindowToken, 0);
-            }
-            catch { }
+			try {
+				(this.GetSystemService (Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow (_alarmNameEditText.WindowToken, 0);
+				(this.GetSystemService (Context.InputMethodService) as InputMethodManager).HideSoftInputFromWindow (CurrentFocus.WindowToken, 0);
+			} catch {
+			}
 		}
 
 		void CancelAnything ()
@@ -218,15 +215,15 @@ namespace SimpleLocationAlarm.Droid.Screens
 		bool AcceptAdd ()
 		{
 			if (AlarmToAddMarker == null) {
-				ShowToast(Resource.String.click_on_map_to_set_alarm);
+				ShowToast (Resource.String.click_on_map_to_set_alarm);
 				return false;
 			} else if (string.IsNullOrEmpty (_alarmNameEditText.Text)) {
 				_alarmNameEditText.RequestFocus ();
-                _alarmNameEditText.SetError(Html.FromHtml(string.Format("<font color='#9933cc'>{0}</font>", Resources.GetString(Resource.String.enter_alarm_name))),
-                    null);
+				_alarmNameEditText.SetError (Html.FromHtml (string.Format ("<font color='#9933cc'>{0}</font>", Resources.GetString (Resource.String.enter_alarm_name))),
+					null);
 				return false;
 			} else {
-				var radius = Constants.AlarmRadiusValues[_alarmRadiusSpinner.SelectedItemPosition];
+				var radius = Constants.AlarmRadiusValues [_alarmRadiusSpinner.SelectedItemPosition];
                 
 				var newAlarm = new AlarmData () {
 					Latitude = AlarmToAddMarker.Position.Latitude,
@@ -256,7 +253,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			ShowUndoBar (() => AddGeofence (alarm));
 		}
 
-        public bool OnMenuItemActionCollapse(Android.Views.IMenuItem item)
+		public bool OnMenuItemActionCollapse (Android.Views.IMenuItem item)
 		{
 			if (Mode != Mode.None) {
 				OnBackPressed ();
@@ -265,9 +262,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			return true;
 		}
 
-        public bool OnMenuItemActionExpand(Android.Views.IMenuItem item)
+		public bool OnMenuItemActionExpand (Android.Views.IMenuItem item)
 		{
 			return true;
 		}
-    }
+	}
 }

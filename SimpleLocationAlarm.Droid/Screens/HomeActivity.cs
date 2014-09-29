@@ -7,26 +7,22 @@ namespace SimpleLocationAlarm.Droid.Screens
 {
 	[Activity (
 		Label = "@string/app_name",
-        Icon = "@drawable/map_white",
+		Icon = "@drawable/map_white",
 		MainLauncher = true,
 		ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
-    public partial class HomeActivity : BaseAlarmActivity
+	public partial class HomeActivity : BaseAlarmActivity
 	{
-        protected override string TAG
-        {
-            get
-            {
-                return "HomeActivity";
-            }
-        }
+		protected override string TAG {
+			get {
+				return "HomeActivity";
+			}
+		}
 
-        protected override string AdId
-        {
-            get
-            {
-                return Resources.GetString(Resource.String.main_screen_ad);
-            }
-        }
+		protected override string AdId {
+			get {
+				return Resources.GetString (Resource.String.main_screen_ad);
+			}
+		}
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -83,10 +79,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 			}
 		}
 
-        void OpenSettings()
-        {
-            var intent = new Intent(this, typeof(SettingsScreen));
-            StartActivity(intent);
-        }
+		void OpenSettings ()
+		{
+			var intent = new Intent (this, typeof(SettingsScreen));
+			StartActivity (intent);
+		}
 	}
 }

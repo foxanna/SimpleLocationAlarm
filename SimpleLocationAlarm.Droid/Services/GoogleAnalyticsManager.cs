@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Android.App;
 using Android.Gms.Analytics;
 
@@ -20,11 +18,14 @@ namespace SimpleLocationAlarm.Droid.Services
 
 	public class GoogleAnalyticsManager
 	{
-		Tracker _tracker;
+		readonly Tracker _tracker;
 
 		public GoogleAnalyticsManager ()
 		{
 			var analytics = GoogleAnalytics.GetInstance (Application.Context);
+			#if (DEBUG)
+			analytics.SetDryRun(true);
+			#endif
 			_tracker = analytics.NewTracker ("UA-54114842-3");
 			_tracker.EnableExceptionReporting (true);
 		}

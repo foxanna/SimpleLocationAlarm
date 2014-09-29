@@ -1329,8 +1329,8 @@ namespace SimpleLocationAlarm.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080061
-			public const int accept = 2131230817;
+			// aapt resource value: 0x7f080063
+			public const int accept = 2131230819;
 			
 			// aapt resource value: 0x7f08002e
 			public const int action_bar = 2131230766;
@@ -1365,8 +1365,11 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080036
 			public const int action_mode_close_button = 2131230774;
 			
-			// aapt resource value: 0x7f080062
-			public const int action_settings = 2131230818;
+			// aapt resource value: 0x7f080064
+			public const int action_settings = 2131230820;
+			
+			// aapt resource value: 0x7f080055
+			public const int activate_manually_button = 2131230805;
 			
 			// aapt resource value: 0x7f080037
 			public const int activity_chooser_view_content = 2131230775;
@@ -1374,14 +1377,14 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080053
 			public const int adViewContainer = 2131230803;
 			
-			// aapt resource value: 0x7f08005e
-			public const int add_alarm = 2131230814;
-			
-			// aapt resource value: 0x7f08005f
-			public const int alarm_name = 2131230815;
-			
 			// aapt resource value: 0x7f080060
-			public const int alarm_radius = 2131230816;
+			public const int add_alarm = 2131230816;
+			
+			// aapt resource value: 0x7f080061
+			public const int alarm_name = 2131230817;
+			
+			// aapt resource value: 0x7f080062
+			public const int alarm_radius = 2131230818;
 			
 			// aapt resource value: 0x7f08000b
 			public const int always = 2131230731;
@@ -1413,8 +1416,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f08003a
 			public const int default_activity_button = 2131230778;
 			
-			// aapt resource value: 0x7f08005d
-			public const int delete = 2131230813;
+			// aapt resource value: 0x7f08005f
+			public const int delete = 2131230815;
 			
 			// aapt resource value: 0x7f08000e
 			public const int dialog = 2131230734;
@@ -1467,6 +1470,9 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080039
 			public const int image = 2131230777;
 			
+			// aapt resource value: 0x7f080054
+			public const int keep_inactive_button = 2131230804;
+			
 			// aapt resource value: 0x7f080001
 			public const int listMode = 2131230721;
 			
@@ -1479,20 +1485,20 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080024
 			public const int match_parent = 2131230756;
 			
-			// aapt resource value: 0x7f080057
-			public const int media_route_control_frame = 2131230807;
+			// aapt resource value: 0x7f080059
+			public const int media_route_control_frame = 2131230809;
 			
-			// aapt resource value: 0x7f080058
-			public const int media_route_disconnect_button = 2131230808;
-			
-			// aapt resource value: 0x7f080054
-			public const int media_route_list = 2131230804;
-			
-			// aapt resource value: 0x7f080055
-			public const int media_route_volume_layout = 2131230805;
+			// aapt resource value: 0x7f08005a
+			public const int media_route_disconnect_button = 2131230810;
 			
 			// aapt resource value: 0x7f080056
-			public const int media_route_volume_slider = 2131230806;
+			public const int media_route_list = 2131230806;
+			
+			// aapt resource value: 0x7f080057
+			public const int media_route_volume_layout = 2131230807;
+			
+			// aapt resource value: 0x7f080058
+			public const int media_route_volume_slider = 2131230808;
 			
 			// aapt resource value: 0x7f080012
 			public const int middle = 2131230738;
@@ -1581,8 +1587,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080030
 			public const int split_action_bar = 2131230768;
 			
-			// aapt resource value: 0x7f08005b
-			public const int stop_noise = 2131230811;
+			// aapt resource value: 0x7f08005d
+			public const int stop_noise = 2131230813;
 			
 			// aapt resource value: 0x7f080021
 			public const int strict_sandbox = 2131230753;
@@ -1590,8 +1596,8 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f08004b
 			public const int submit_area = 2131230795;
 			
-			// aapt resource value: 0x7f08005c
-			public const int switch_button = 2131230812;
+			// aapt resource value: 0x7f08005e
+			public const int switch_button = 2131230814;
 			
 			// aapt resource value: 0x7f080002
 			public const int tabMode = 2131230722;
@@ -1605,11 +1611,11 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f080032
 			public const int top_action_bar = 2131230770;
 			
-			// aapt resource value: 0x7f08005a
-			public const int undo_button = 2131230810;
+			// aapt resource value: 0x7f08005c
+			public const int undo_button = 2131230812;
 			
-			// aapt resource value: 0x7f080059
-			public const int undo_message = 2131230809;
+			// aapt resource value: 0x7f08005b
+			public const int undo_message = 2131230811;
 			
 			// aapt resource value: 0x7f080033
 			public const int up = 2131230771;
@@ -1740,28 +1746,31 @@ namespace SimpleLocationAlarm.Droid
 			public const int AlarmGeofenceTriggered = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int Main = 2130903067;
+			public const int AlarmsFailedToRestore = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int mr_media_route_chooser_dialog = 2130903068;
+			public const int Main = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int mr_media_route_controller_dialog = 2130903069;
+			public const int mr_media_route_chooser_dialog = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int mr_media_route_list_item = 2130903070;
+			public const int mr_media_route_controller_dialog = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int NumberPickerDialog = 2130903071;
+			public const int mr_media_route_list_item = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int RadioGroupDialog = 2130903072;
+			public const int NumberPickerDialog = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int support_simple_spinner_dropdown_item = 2130903073;
+			public const int RadioGroupDialog = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int undo_bar = 2130903074;
+			public const int support_simple_spinner_dropdown_item = 2130903074;
+			
+			// aapt resource value: 0x7f030023
+			public const int undo_bar = 2130903075;
 			
 			static Layout()
 			{
@@ -1840,8 +1849,11 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f060011
 			public const int abc_shareactionprovider_share_with_application = 2131099665;
 			
-			// aapt resource value: 0x7f060044
-			public const int action_settings = 2131099716;
+			// aapt resource value: 0x7f06004a
+			public const int action_settings = 2131099722;
+			
+			// aapt resource value: 0x7f060048
+			public const int activate_manually = 2131099720;
 			
 			// aapt resource value: 0x7f060033
 			public const int add_alarm = 2131099699;
@@ -1942,11 +1954,20 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f060032
 			public const int device_not_supported = 2131099698;
 			
-			// aapt resource value: 0x7f060043
-			public const int disclaimer = 2131099715;
+			// aapt resource value: 0x7f060046
+			public const int disclaimer = 2131099718;
 			
 			// aapt resource value: 0x7f060038
 			public const int enter_alarm_name = 2131099704;
+			
+			// aapt resource value: 0x7f060043
+			public const int error_on_restore_activate = 2131099715;
+			
+			// aapt resource value: 0x7f060042
+			public const int error_on_restore_keep_inactivated = 2131099714;
+			
+			// aapt resource value: 0x7f060041
+			public const int error_on_restore_text = 2131099713;
 			
 			// aapt resource value: 0x7f060040
 			public const int error_with_alarm = 2131099712;
@@ -1960,8 +1981,14 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f06003b
 			public const int failed_to_remove = 2131099707;
 			
+			// aapt resource value: 0x7f060047
+			public const int failed_to_restore = 2131099719;
+			
 			// aapt resource value: 0x7f06003c
 			public const int go_to_settings = 2131099708;
+			
+			// aapt resource value: 0x7f060049
+			public const int keep_inactive = 2131099721;
 			
 			// aapt resource value: 0x7f06002f
 			public const int main_screen_ad = 2131099695;
@@ -1984,50 +2011,50 @@ namespace SimpleLocationAlarm.Droid
 			// aapt resource value: 0x7f060001
 			public const int mr_user_route_category_name = 2131099649;
 			
-			// aapt resource value: 0x7f060050
-			public const int off = 2131099728;
+			// aapt resource value: 0x7f060056
+			public const int off = 2131099734;
 			
-			// aapt resource value: 0x7f06004f
-			public const int on = 2131099727;
+			// aapt resource value: 0x7f060055
+			public const int on = 2131099733;
 			
 			// aapt resource value: 0x7f06003f
 			public const int probably_location_services_are_off = 2131099711;
 			
-			// aapt resource value: 0x7f060041
-			public const int rate_us = 2131099713;
-			
-			// aapt resource value: 0x7f060042
-			public const int send_feedback = 2131099714;
-			
-			// aapt resource value: 0x7f06004d
-			public const int settings_about = 2131099725;
-			
-			// aapt resource value: 0x7f06004b
-			public const int settings_default_radius = 2131099723;
-			
-			// aapt resource value: 0x7f06004c
-			public const int settings_default_radius_sum = 2131099724;
-			
-			// aapt resource value: 0x7f060047
-			public const int settings_play_sound = 2131099719;
-			
-			// aapt resource value: 0x7f060048
-			public const int settings_play_sound_summ = 2131099720;
-			
-			// aapt resource value: 0x7f060049
-			public const int settings_sound = 2131099721;
-			
-			// aapt resource value: 0x7f06004a
-			public const int settings_sound_sum = 2131099722;
-			
-			// aapt resource value: 0x7f06004e
-			public const int settings_version = 2131099726;
+			// aapt resource value: 0x7f060044
+			public const int rate_us = 2131099716;
 			
 			// aapt resource value: 0x7f060045
-			public const int settings_vibrate = 2131099717;
+			public const int send_feedback = 2131099717;
 			
-			// aapt resource value: 0x7f060046
-			public const int settings_vibrate_summ = 2131099718;
+			// aapt resource value: 0x7f060053
+			public const int settings_about = 2131099731;
+			
+			// aapt resource value: 0x7f060051
+			public const int settings_default_radius = 2131099729;
+			
+			// aapt resource value: 0x7f060052
+			public const int settings_default_radius_sum = 2131099730;
+			
+			// aapt resource value: 0x7f06004d
+			public const int settings_play_sound = 2131099725;
+			
+			// aapt resource value: 0x7f06004e
+			public const int settings_play_sound_summ = 2131099726;
+			
+			// aapt resource value: 0x7f06004f
+			public const int settings_sound = 2131099727;
+			
+			// aapt resource value: 0x7f060050
+			public const int settings_sound_sum = 2131099728;
+			
+			// aapt resource value: 0x7f060054
+			public const int settings_version = 2131099732;
+			
+			// aapt resource value: 0x7f06004b
+			public const int settings_vibrate = 2131099723;
+			
+			// aapt resource value: 0x7f06004c
+			public const int settings_vibrate_summ = 2131099724;
 			
 			// aapt resource value: 0x7f06003d
 			public const int stop_noise = 2131099709;

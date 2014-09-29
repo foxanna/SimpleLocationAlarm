@@ -133,6 +133,7 @@
     <AndroidResource Include="Resources\layout\AboutScreen.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\AlarmsFailedToRestore.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">

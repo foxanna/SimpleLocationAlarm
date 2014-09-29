@@ -16,9 +16,15 @@
     <string name="failed_to_connect">Failed to connect to location services</string>
     <string name="probably_location_services_are_off">Probably location services are disabled</string>
     <string name="error_with_alarm">Probably location services were disabled\n\nAll your location marks were disabled</string>
+    <string name="error_on_restore_text">GEO Alarm could not activate all your location marks after device reboot</string>
+    <string name="error_on_restore_keep_inactivated">Keep location marks inactive</string>
+    <string name="error_on_restore_activate">Activate location marks manually</string>
     <string name="rate_us">Rate us on Google Play</string>
     <string name="send_feedback">Send feedback</string>
     <string name="disclaimer">In order for app to work correctly, please, make sure that your internet connection is active at all times. It is better if you have your GPS module activated, which will simplify your location detection.\nPlease note, that it is Google Services, which are responsible for delivering your location data to our app. In case this data is late, the app might not work perfectly. </string>
+    <string name="failed_to_restore">GEO Alarm could not reactivate all your location marks after the device reboot</string>
+    <string name="activate_manually">Activate manually</string>
+    <string name="keep_inactive">Keep inactive</string>
 
     <!--Settings strings-->
     <string name="action_settings">Settings</string>
