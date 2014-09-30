@@ -7,6 +7,8 @@ using Android.Media;
 using Android.Util;
 using Android.Support.V4.App;
 using Newtonsoft.Json;
+using Android.Net;
+using System;
 
 namespace SimpleLocationAlarm.Droid.Services
 {
@@ -83,20 +85,44 @@ namespace SimpleLocationAlarm.Droid.Services
 			HideNotification ();
 		}
 
-		Ringtone _ringtone;
+		MediaPlayer _ringtone;
 
 		void PlaySound (string customSound)
 		{
 			if (_ringtone != null) {
 				return;
-			}
+			}           
 
-			var sound = string.IsNullOrEmpty (customSound) ? (RingtoneManager.GetDefaultUri (RingtoneType.Alarm) != null ?
-                RingtoneManager.GetDefaultUri (RingtoneType.Alarm) : RingtoneManager.GetDefaultUri (RingtoneType.Ringtone)) : Android.Net.Uri.Parse (customSound);
+//			_ringtone = RingtoneManager.GetRingtone (Application.Context, sound);
+//			_ringtone.Play ();
 
-			_ringtone = RingtoneManager.GetRingtone (Application.Context, sound);
-			_ringtone.Play ();
+			try {
+				var sound = GetRingtoneUri(customSound);
+
+				_ringtone = new MediaPlayer();
+				_ringtone.SetDataSource(this, sound);
+
+				_ringtone.SetAudioStreamType(Stream.Alarm);
+
+				_ringtone.Looping = true;
+				_ringtone.Prepare();
+				_ringtone.Start();
+			} catch(Exception e) {
+			}   
 		}
+
+        Android.Net.Uri GetRingtoneUri(string customSound)
+        {
+            if (!string.IsNullOrEmpty(customSound))
+            {
+                return Android.Net.Uri.Parse(customSound);
+            }
+            else
+            {
+                return (RingtoneManager.GetDefaultUri(RingtoneType.Alarm) != null ?
+                    RingtoneManager.GetDefaultUri(RingtoneType.Alarm) : RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
+            }
+        }
 
 		void StopPlaying ()
 		{
