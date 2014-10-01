@@ -1,4 +1,5 @@
 ﻿using SimpleLocationAlarm.Phone.Common;
+using SimpleLocationAlarm.Phone.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,0 +1,61 @@
+﻿<Page
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" 
+    x:Class="SimpleLocationAlarm.Phone.Views.AddPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLocationAlarm.Phone.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:valueconverter="using:SimpleLocationAlarm.Phone.ValueConverters"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddPageViewModel, RelativeSource={RelativeSource Self}}">
+
+    <Page.Resources>
+        <valueconverter:BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Save" 
+                          x:Uid="SaveLocationMark" 
+                          IsEnabled="{Binding CanBeSaved}" 
+                          Click="AppBarButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid x:Name="LayoutRoot" Margin="20,12,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock x:Uid="AppName"
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       Margin="0,0,0,12"/>
+            <TextBox x:Uid="AlarmName"
+                     Margin="0,0,0,12">
+                <TextBox.Text>
+                    <Binding Source="{Binding}" 
+                                 Path="Title"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged"/>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+            
+        <Maps:MapControl x:Name="Map"
+                            Grid.Row="1"                             
+                            MapTapped="Map_MapTapped" >
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding IsLocationSet, Converter={StaticResource BooleanToVisibility}}"
+                        Maps:MapControl.Location="{Binding Location}"
+                        Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}">
+                <Image Source="../Assets/marker_violet.png" 
+                        Height="40" />
+                    
+            </StackPanel>
+        </Maps:MapControl>
+    </Grid>
+</Page>

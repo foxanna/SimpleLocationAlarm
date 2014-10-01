@@ -120,7 +120,13 @@
   <data name="AddLocationMark.Label" xml:space="preserve">
     <value>Add mark</value>
   </data>
+  <data name="AlarmName.PlaceholderText" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="AppName.Text" xml:space="preserve">
-    <value>Geo Alarm</value>
+    <value>GEO ALARM</value>
+  </data>
+  <data name="SaveLocationMark.Label" xml:space="preserve">
+    <value>Save mark</value>
   </data>
 </root>

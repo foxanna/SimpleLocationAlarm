@@ -5,28 +5,25 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace SimpleLocationAlarm.Phone
+namespace SimpleLocationAlarm.Phone.Views
 {
     public sealed partial class MapPage : Page
     {
         private readonly NavigationHelper navigationHelper;
-        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-        private readonly MapPageViewModel defaultViewModel = new MapPageViewModel();
 
-        public MapPageViewModel MapPageViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
+        public MapPageViewModel MapPageViewModel { get; private set; }
 
         public MapPage()
         {
+            MapPageViewModel = new MapPageViewModel();
+
             this.InitializeComponent();
-            
+
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;           
+            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
         public NavigationHelper NavigationHelper
@@ -43,7 +40,7 @@ namespace SimpleLocationAlarm.Phone
         {
             // TODO: Save the unique state of the page here.
         }
-               
+
         #region NavigationHelper registration
 
         /// <summary>
@@ -72,7 +69,7 @@ namespace SimpleLocationAlarm.Phone
 
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            MapPageViewModel.AddAlarm();
+            Frame.Navigate(typeof(AddPage));
         }
     }
 }

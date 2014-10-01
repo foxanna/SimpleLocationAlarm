@@ -17,7 +17,7 @@ namespace SimpleLocationAlarm.Phone.ViewModels
         public string Title { get; set; }
         public bool Enabled { get; set; }
         public double Radius { get; set; }        
-        public Geopoint Location { get; set; }
-        public string Anchor { get; set; }      
+        public Geopoint Location { get; private set; }
+        public string Anchor { get; private set; }      
     }
 }

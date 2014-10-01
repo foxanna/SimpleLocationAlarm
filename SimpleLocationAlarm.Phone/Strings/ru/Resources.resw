@@ -120,7 +120,13 @@
   <data name="AddLocationMark.Label" xml:space="preserve">
     <value>Добавить отметку</value>
   </data>
+  <data name="AlarmName.PlaceholderText" xml:space="preserve">
+    <value>Описание</value>
+  </data>
   <data name="AppName.Text" xml:space="preserve">
-    <value>Гео-будильник</value>
+    <value>ГЕО-БУДИЛЬНИК</value>
+  </data>
+  <data name="SaveLocationMark.Label" xml:space="preserve">
+    <value>Сохранить отметку</value>
   </data>
 </root>

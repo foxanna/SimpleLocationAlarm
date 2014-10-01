@@ -12,6 +12,8 @@ namespace SimpleLocationAlarm.Phone.Services
 {
     public class AlarmsSource : INotifyCollectionChanged
     {
+        public static AlarmsSource Instance = new AlarmsSource();
+
         const string fileName = "alarms.json";
 
         ObservableCollection<AlarmItem> _alarms = new ObservableCollection<AlarmItem>();
