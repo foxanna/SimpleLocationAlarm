@@ -1,9 +1,19 @@
 ﻿using SimpleLocationAlarm.Phone.Common;
 using SimpleLocationAlarm.Phone.ViewModels;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Devices.Geolocation;
+using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 namespace SimpleLocationAlarm.Phone.Views
 {
@@ -31,14 +41,59 @@ namespace SimpleLocationAlarm.Phone.Views
             get { return this.navigationHelper; }
         }
 
+        Geolocator locator = new Geolocator();
+
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            locator.MovementThreshold = 5;
+            locator.PositionChanged += LocatorPositionChanged;
+
+            MapPageViewModel.Alarms.CollectionChanged += Alarms_CollectionChanged;
             MapPageViewModel.Load();
+        }
+
+        void Alarms_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ZoomToMyLocationAndAlarms();
+        }
+
+        async void ZoomToMyLocationAndAlarms()
+        {
+            var locations = new List<BasicGeoposition>();
+
+            if (MapPageViewModel.Alarms != null && MapPageViewModel.Alarms.Count != 0)
+            {
+                locations = MapPageViewModel.Alarms.Cast<AlarmItemViewModel>()
+                    .Select(alarm => alarm.Location.Position).ToList();
+            }
+
+            if (myCurrentLocation != null)
+            {
+                locations.Add(myCurrentLocation.Coordinate.Point.Position);
+            }
+
+            if (locations.Count > 0)
+            {
+                await Map.TrySetViewBoundsAsync(GeoboundingBox.TryCompute(locations), null, MapAnimationKind.Default);
+            }
+        }
+
+        Geoposition myCurrentLocation;
+
+        async void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
+        {
+            if (myCurrentLocation == null && MapPageViewModel.Alarms.Count == 0)
+            {
+                await Map.TrySetViewAsync(args.Position.Coordinate.Point, 16D);
+            }
+
+            myCurrentLocation = args.Position;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            // TODO: Save the unique state of the page here.
+            locator.PositionChanged -= LocatorPositionChanged;
+            MapPageViewModel.Alarms.CollectionChanged -= Alarms_CollectionChanged;
         }
 
         #region NavigationHelper registration
