@@ -1,22 +1,8 @@
 ﻿using SimpleLocationAlarm.Phone.Common;
 using SimpleLocationAlarm.Phone.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.Notifications;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace SimpleLocationAlarm.Phone.Views
@@ -52,10 +38,13 @@ namespace SimpleLocationAlarm.Phone.Views
             var myPoint = position.Coordinate.Point;
             
             await Map.TrySetViewAsync(myPoint, 16D);
+
+            AddPageViewModel.Saved += OnSaved;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            AddPageViewModel.Saved -= OnSaved;
         }
 
         #region NavigationHelper registration
@@ -90,10 +79,9 @@ namespace SimpleLocationAlarm.Phone.Views
             AddPageViewModel.Location = args.Location;
         }
 
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        void OnSaved(object sender, EventArgs e)
         {
-            await AddPageViewModel.Save();
-            Frame.GoBack();           
+            Frame.GoBack();      
         }
     }
 }

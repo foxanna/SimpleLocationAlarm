@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using SimpleLocationAlarm.Phone.Services;
 using Windows.Devices.Geolocation;
@@ -9,7 +8,7 @@ using System.Windows.Input;
 
 namespace SimpleLocationAlarm.Phone.ViewModels
 {
-    public class AddPageViewModel : INotifyPropertyChanged
+    public class AddPageViewModel : BaseViewModel
     {
         public AddPageViewModel()
         {
@@ -50,18 +49,7 @@ namespace SimpleLocationAlarm.Phone.ViewModels
         {
             get { return Location != null; }
         }
-
-        void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public async Task Save()
         {
             await AlarmsSource.Instance.AddAlarm(new AlarmItem()
@@ -73,6 +61,19 @@ namespace SimpleLocationAlarm.Phone.ViewModels
                 Title = Title,
                 UniqueId = string.Format("{0}_{1}", Title, Location.Position, ToString()),
             });
+
+            OnSaved();
+        }
+
+        public EventHandler Saved;
+
+        void OnSaved()
+        {
+            var handler = Saved;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         public class SaveLocationMarkCommand : ICommand

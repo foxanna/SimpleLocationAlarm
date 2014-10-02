@@ -1,19 +1,11 @@
 ﻿using SimpleLocationAlarm.Phone.Common;
 using SimpleLocationAlarm.Phone.ViewModels;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 namespace SimpleLocationAlarm.Phone.Views
 {
@@ -48,52 +40,38 @@ namespace SimpleLocationAlarm.Phone.Views
             locator.MovementThreshold = 5;
             locator.PositionChanged += LocatorPositionChanged;
 
-            MapPageViewModel.Alarms.CollectionChanged += Alarms_CollectionChanged;
+            MapPageViewModel.MapZoomChanged += MapPageViewModel_MapZoomChanged;
+
             MapPageViewModel.Load();
         }
 
-        void Alarms_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        GeoboundingBox boxToDisplay;
+
+        void MapPageViewModel_MapZoomChanged(object sender, GeoboundingBoxEventArgs e)
         {
-            ZoomToMyLocationAndAlarms();
+            boxToDisplay = e.Data;
+
+            ZoomMap(boxToDisplay);
         }
 
-        async void ZoomToMyLocationAndAlarms()
+        async void ZoomMap(GeoboundingBox box)
         {
-            var locations = new List<BasicGeoposition>();
-
-            if (MapPageViewModel.Alarms != null && MapPageViewModel.Alarms.Count != 0)
+            if (box != null)
             {
-                locations = MapPageViewModel.Alarms.Cast<AlarmItemViewModel>()
-                    .Select(alarm => alarm.Location.Position).ToList();
-            }
-
-            if (myCurrentLocation != null)
-            {
-                locations.Add(myCurrentLocation.Coordinate.Point.Position);
-            }
-
-            if (locations.Count > 0)
-            {
-                await Map.TrySetViewBoundsAsync(GeoboundingBox.TryCompute(locations), null, MapAnimationKind.Default);
+                await Map.TrySetViewBoundsAsync(box, null, MapAnimationKind.Default);
             }
         }
-
-        Geoposition myCurrentLocation;
-
-        async void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
+        
+        void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            if (myCurrentLocation == null && MapPageViewModel.Alarms.Count == 0)
-            {
-                await Map.TrySetViewAsync(args.Position.Coordinate.Point, 16D);
-            }
-
-            myCurrentLocation = args.Position;
+            MapPageViewModel.MyCurrentLocation = args.Position;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            MapPageViewModel.MapZoomChanged -= MapPageViewModel_MapZoomChanged;
+
             locator.PositionChanged -= LocatorPositionChanged;
-            MapPageViewModel.Alarms.CollectionChanged -= Alarms_CollectionChanged;
         }
 
         #region NavigationHelper registration
@@ -125,6 +103,15 @@ namespace SimpleLocationAlarm.Phone.Views
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AddPage));
+        }
+
+        void Map_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {            
+            ZoomMap(boxToDisplay);
+        }
+
+        void Map_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {            
         }
     }
 }

@@ -19,8 +19,7 @@
         <CommandBar>
             <AppBarButton Icon="Save" 
                           x:Uid="SaveLocationMark" 
-                          Command="{Binding SaveCommand}"
-                          Click="AppBarButton_Click"/>
+                          Command="{Binding SaveCommand}"/>
         </CommandBar>
     </Page.BottomAppBar>
 

@@ -16,7 +16,9 @@
     
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Add" x:Uid="AddLocationMark" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Add" 
+                          x:Uid="AddLocationMark" 
+                          Click="AppBarButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -32,7 +34,10 @@
 
         <Maps:MapControl x:Name="Map"
                          Grid.Row="1"
-                         DataContext="{Binding Alarms}">
+                         DataContext="{Binding Alarms}" 
+                         Loaded="Map_Loaded" 
+                         Unloaded="Map_Unloaded" >
+            
             <Maps:MapItemsControl ItemsSource="{Binding}">
                 <Maps:MapItemsControl.ItemTemplate>
                     <DataTemplate>                        
