@@ -19,7 +19,7 @@
         <CommandBar>
             <AppBarButton Icon="Save" 
                           x:Uid="SaveLocationMark" 
-                          IsEnabled="{Binding CanBeSaved}" 
+                          Command="{Binding SaveCommand}"
                           Click="AppBarButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
@@ -53,8 +53,7 @@
                         Maps:MapControl.Location="{Binding Location}"
                         Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}">
                 <Image Source="../Assets/marker_violet.png" 
-                        Height="40" />
-                    
+                        Height="40" />                    
             </StackPanel>
         </Maps:MapControl>
     </Grid>

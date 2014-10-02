@@ -5,7 +5,7 @@ using SimpleLocationAlarm.Phone.Services;
 using Windows.Devices.Geolocation;
 using SimpleLocationAlarm.Phone.Models;
 using System;
-using Windows.ApplicationModel.Resources;
+using System.Windows.Input;
 
 namespace SimpleLocationAlarm.Phone.ViewModels
 {
@@ -14,6 +14,7 @@ namespace SimpleLocationAlarm.Phone.ViewModels
         public AddPageViewModel()
         {
             Anchor = ".5,1";
+            SaveCommand = new SaveLocationMarkCommand(this);
         }
 
         public string Anchor { get; private set; }
@@ -28,7 +29,6 @@ namespace SimpleLocationAlarm.Phone.ViewModels
 
                 OnPropertyChanged();
                 OnPropertyChanged("IsLocationSet");
-                OnPropertyChanged("CanBeSaved");
             }
         }
 
@@ -41,17 +41,10 @@ namespace SimpleLocationAlarm.Phone.ViewModels
                 title = value;
 
                 OnPropertyChanged();
-                OnPropertyChanged("CanBeSaved");
             }
         }
 
-        public bool CanBeSaved
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(title) && Location != null;
-            }
-        }
+        public SaveLocationMarkCommand SaveCommand { get; private set; }
 
         public bool IsLocationSet
         {
@@ -82,32 +75,48 @@ namespace SimpleLocationAlarm.Phone.ViewModels
             });
         }
 
-        //public class SaveLocationMarkCommand : ICommand
-        //{
-        //    public bool CanExecute(object parameter)
-        //    {
-        //        if (parameter == null)
-        //            return false;
+        public class SaveLocationMarkCommand : ICommand
+        {
+            AddPageViewModel viewModel;
 
-        //        var alarmData = (AddPageViewModel)parameter;
-        //        return alarmData.IsLocationSet && !string.IsNullOrEmpty(alarmData.Title);
-        //    }
+            public SaveLocationMarkCommand(AddPageViewModel viewModel)
+            {
+                this.viewModel = viewModel;
 
-        //    public event EventHandler CanExecuteChanged;
+                viewModel.PropertyChanged += viewModel_PropertyChanged;
+            }
 
-        //    public void OnCanExecuteChanged()
-        //    {
-        //        CanExecuteChanged(this, EventArgs.Empty);
-        //    }
+            void viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals("Title") || e.PropertyName.Equals("Location"))
+                {
+                    OnCanExecuteChanged();
+                }
+            }
 
-        //    public async void Execute(object parameter)
-        //    {
-        //        if (CanExecute(parameter))
-        //        {
-        //            var alarmData = (AddPageViewModel)parameter;
-        //            await alarmData.Save();
-        //        }
-        //    }
-        //}
+            public bool CanExecute(object parameter)
+            {
+                return viewModel.IsLocationSet && !string.IsNullOrEmpty(viewModel.Title);
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            void OnCanExecuteChanged()
+            {
+                var handler = CanExecuteChanged;
+                if (handler != null)
+                {
+                    handler(this, EventArgs.Empty);
+                }
+            }
+
+            public async void Execute(object parameter)
+            {
+                if (CanExecute(parameter))
+                {
+                    await viewModel.Save();
+                }
+            }
+        }
     }
 }
