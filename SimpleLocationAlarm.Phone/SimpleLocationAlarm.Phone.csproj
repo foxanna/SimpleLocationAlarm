@@ -87,6 +87,8 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Models\AlarmItem.cs" />
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="ValueConverters\AlarmEnabledToMenuEnabledItemConverter.cs" />
     <Compile Include="ValueConverters\AlarmEnabledToMapMarkerTitleColorConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModels\AddPageViewModel.cs" />

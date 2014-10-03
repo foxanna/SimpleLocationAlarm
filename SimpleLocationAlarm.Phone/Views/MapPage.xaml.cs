@@ -3,8 +3,10 @@ using SimpleLocationAlarm.Phone.ViewModels;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 
 namespace SimpleLocationAlarm.Phone.Views
@@ -112,6 +114,16 @@ namespace SimpleLocationAlarm.Phone.Views
 
         void Map_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {            
+        }
+
+        private void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);  
+        }
+
+        private void DeteleMarker_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

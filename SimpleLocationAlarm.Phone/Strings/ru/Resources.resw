@@ -126,6 +126,12 @@
   <data name="AppName.Text" xml:space="preserve">
     <value>ГЕО-БУДИЛЬНИК</value>
   </data>
+  <data name="DisableAlarm" xml:space="preserve">
+    <value>Деактивировать</value>
+  </data>
+  <data name="EnableAlarm" xml:space="preserve">
+    <value>Активировать</value>
+  </data>
   <data name="SaveLocationMark.Label" xml:space="preserve">
     <value>Сохранить отметку</value>
   </data>

@@ -126,6 +126,12 @@
   <data name="AppName.Text" xml:space="preserve">
     <value>GEO ALARM</value>
   </data>
+  <data name="DisableAlarm" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="EnableAlarm" xml:space="preserve">
+    <value>Activate</value>
+  </data>
   <data name="SaveLocationMark.Label" xml:space="preserve">
     <value>Save mark</value>
   </data>

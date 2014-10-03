@@ -11,7 +11,16 @@
     
     <Page.Resources>
         <valueconverter:AlarmEnabledToMapMarkerImageConverter x:Key="AlarmEnabledToMapMarkerImage" />
-        <valueconverter:AlarmEnabledToMapMarkerTitleColorConverter x:Key="AlarmEnabledToMapMarkerTitleColor" />        
+        <valueconverter:AlarmEnabledToMapMarkerTitleColorConverter x:Key="AlarmEnabledToMapMarkerTitleColor" />
+        <valueconverter:AlarmEnabledToMenuEnabledItemConverter x:Key="AlarmEnabledToMenuEnabledItem" />
+
+        <MenuFlyout x:Key="MarkerMenuFlyout">
+            <MenuFlyoutItem Text="{Binding Enabled, Converter={StaticResource AlarmEnabledToMenuEnabledItem}}"
+                            Command="{Binding EnableCommand}"
+                            CommandParameter="{Binding}" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Delete" Click="DeteleMarker_Click"/>
+        </MenuFlyout>
     </Page.Resources>
     
     <Page.BottomAppBar>
@@ -43,12 +52,14 @@
                     <DataTemplate>                        
                         <StackPanel Orientation="Vertical"
                                     Maps:MapControl.Location="{Binding Location}"
-                                    Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}">
+                                    Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}" 
+                                    Tapped="StackPanel_Tapped"
+                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}">
                             <TextBlock Text="{Binding Title}"
                                        Foreground="{Binding Enabled, Converter={StaticResource AlarmEnabledToMapMarkerTitleColor}}" 
                                        HorizontalAlignment="Center"/>
                             <Image Source="{Binding Enabled, Converter={StaticResource AlarmEnabledToMapMarkerImage}}" 
-                                   Height="40" /> 
+                                   Height="40" />
                         </StackPanel>
                     </DataTemplate>
                 </Maps:MapItemsControl.ItemTemplate>

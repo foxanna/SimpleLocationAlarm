@@ -67,10 +67,13 @@ namespace SimpleLocationAlarm.Phone.Services
             await SaveMapNoteDataAsync();
         }
 
-        public async Task Enable(AlarmItem alarm, bool enabled)
+        public async Task SwitchEnable(string uniqueId)
         {
-            Alarms.FirstOrDefault(a => a.UniqueId.Equals(alarm.UniqueId)).Enabled = enabled;
+            var alarm = Alarms.FirstOrDefault(a => a.UniqueId.Equals(uniqueId));
+            alarm.Enabled = !alarm.Enabled;
 
+            OnCollectionChanged(this, null);
+            
             await SaveMapNoteDataAsync();
         }
 
