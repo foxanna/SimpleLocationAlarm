@@ -88,6 +88,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 
 		void AlarmEnabledChange (object sender, CompoundButton.CheckedChangeEventArgs e)
 		{
+			if (_selectedAlarm == null || _selectedAlarm.Enabled == e.IsChecked)
+				return;
+
 			EnableAlarm (_selectedAlarm, e.IsChecked);
 			Mode = Mode.MarkerSelected;
 			if (!e.IsChecked) {
