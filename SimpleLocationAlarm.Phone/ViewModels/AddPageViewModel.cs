@@ -5,6 +5,7 @@ using Windows.Devices.Geolocation;
 using SimpleLocationAlarm.Phone.Models;
 using System;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace SimpleLocationAlarm.Phone.ViewModels
 {
@@ -14,6 +15,8 @@ namespace SimpleLocationAlarm.Phone.ViewModels
         {
             Anchor = ".5,1";
             SaveCommand = new SaveLocationMarkCommand(this);
+            Radiuses = Constants.Radiuses;
+            SelectedRadius = 200;
         }
 
         public string Anchor { get; private set; }
@@ -43,6 +46,10 @@ namespace SimpleLocationAlarm.Phone.ViewModels
             }
         }
 
+        public List<int> Radiuses { get; private set; }
+
+        public int SelectedRadius { get; set; }
+
         public SaveLocationMarkCommand SaveCommand { get; private set; }
 
         public bool IsLocationSet
@@ -57,7 +64,7 @@ namespace SimpleLocationAlarm.Phone.ViewModels
                 Enabled = true,
                 Latitude = Location.Position.Latitude,
                 Longitude = Location.Position.Longitude,
-                Radius = 200,
+                Radius = SelectedRadius,
                 Title = Title,
                 UniqueId = string.Format("{0}_{1}", Title, Location.Position, ToString()),
             });
