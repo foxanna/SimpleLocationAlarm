@@ -91,6 +91,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 			if (shouldAdd && Mode == Mode.None) {
 				Mode = Mode.Add;
 				MapClickWhileAddMode (e.Point);
+
+				GoogleAnalyticsManager.ReportEvent (GACategory.MainScreen, GAAction.Click, 
+					"map long click used to add alarm");
 			}
 		}
 
