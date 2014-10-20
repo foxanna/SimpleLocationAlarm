@@ -27,6 +27,10 @@
     <string name="keep_inactive">Keep inactive</string>
     <string name="add_mark_on_long_tap">Add on long tap</string>
     <string name="add_mark_on_long_tap_summary">Add location mark on long tap on map</string>
+    <string name="rate_please">Please take a moment to rate our application</string>
+    <string name="rate_now">Rate now</string>
+    <string name="rate_later">Remind later</string>
+    <string name="never_ask">"Don't ask again"</string>
 
     <!--Settings strings-->
     <string name="action_settings">Settings</string>

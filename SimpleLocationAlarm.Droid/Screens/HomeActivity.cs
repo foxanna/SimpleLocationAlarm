@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using SimpleLocationAlarm.Droid.Services;
+using Android.Preferences;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
@@ -82,6 +83,12 @@ namespace SimpleLocationAlarm.Droid.Screens
 		void OpenSettings ()
 		{
 			var intent = new Intent (this, typeof(SettingsScreen));
+			StartActivity (intent);
+		}
+
+		protected override void ShowRatingDialog ()
+		{
+			var intent = new Intent (this, typeof(RatingDialog));
 			StartActivity (intent);
 		}
 	}

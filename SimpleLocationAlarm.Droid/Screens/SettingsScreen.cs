@@ -22,6 +22,8 @@ namespace SimpleLocationAlarm.Droid.Screens
 		public const string SoundSettingKey = "pref_sound";
 		public const string DefaultRadiusKey = "pref_radius";
 		public const int DefaultRadiusValue = 200;
+		public const string StartsCount = "StartsCount";
+		public const string ShouldAskForRating = "ShouldAskForRating";
 
 		Preference _soundPref;
 

@@ -31,4 +31,3 @@ namespace SimpleLocationAlarm.Droid.Screens
 		}
 	}
 }
-

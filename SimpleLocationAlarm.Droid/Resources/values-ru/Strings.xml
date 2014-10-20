@@ -24,6 +24,10 @@
     <string name="keep_inactive">Оставить неактивными</string>
     <string name="add_mark_on_long_tap">Добавление по длинному тапу</string>
     <string name="add_mark_on_long_tap_summary">Добавлять отметку по длинному тапу на карте</string>
+    <string name="rate_please">Пожалуйста, отвлекитесь на минутку, чтобы оценить наше приложение</string>
+    <string name="rate_now">Оценить сейчас</string>
+    <string name="rate_later">Напомнить позже</string>
+    <string name="never_ask">Больше не спрашивать</string>
 
     <!--Settings strings-->
     <string name="action_settings">Настройки</string>

@@ -6,10 +6,11 @@ using Android.Content;
 using Android.Gms.Ads;
 using Android.Widget;
 using Android.Views;
+using Android.Preferences;
 
 namespace SimpleLocationAlarm.Droid.Screens
 {
-    public abstract partial class BaseAlarmActivity : ActionBarActivity
+	public abstract partial class BaseAlarmActivity : ActionBarActivity
 	{
 		protected DBManager _dbManager = new DBManager ();
 		protected GeofenceManager _geofenceManager = new GeofenceManager ();
@@ -102,87 +103,105 @@ namespace SimpleLocationAlarm.Droid.Screens
 			StopService (new Intent (this, typeof(UIWhileRingingIntentService)));
 		}
 
-        protected GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager();
+		protected GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager ();
 
-        protected override void OnCreate(Android.OS.Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-            GoogleAnalyticsManager.ReportScreenEnter(this.GetType().FullName);
-        }
-        
-        protected abstract string AdId { get; }
+		protected override void OnCreate (Android.OS.Bundle savedInstanceState)
+		{
+			base.OnCreate (savedInstanceState);
+			GoogleAnalyticsManager.ReportScreenEnter (this.GetType ().FullName);
 
-        AdView _adView;
-        LinearLayout _adViewContainer;
+			CountForStarts ();
+		}
 
-        public override void SetContentView(int layoutResID)
-        {
-            base.SetContentView(layoutResID);
+		protected abstract string AdId { get; }
 
-            _adViewContainer = FindViewById<LinearLayout>(Resource.Id.adViewContainer);
-            _adView = AddAd(_adViewContainer, AdId);
-        }
-        
-        protected override void OnPause()
-        {
-            if (_adView != null)
-            {
-                _adView.Pause();
-            }
+		AdView _adView;
+		LinearLayout _adViewContainer;
 
-            base.OnPause();
-        }
+		public override void SetContentView (int layoutResID)
+		{
+			base.SetContentView (layoutResID);
 
-        protected override void OnResume()
-        {
-            base.OnResume();
+			_adViewContainer = FindViewById<LinearLayout> (Resource.Id.adViewContainer);
+			_adView = AddAd (_adViewContainer, AdId);
+		}
 
-            if (_adView != null)
-            {
-                _adView.Resume();
-            }           
-        }
+		protected override void OnPause ()
+		{
+			if (_adView != null) {
+				_adView.Pause ();
+			}
 
-        protected override void OnDestroy()
-        {
-            if (_adView != null)
-            {
-                _adView.Destroy();
-            }
+			base.OnPause ();
+		}
 
-            base.OnDestroy();
-        }
+		protected override void OnResume ()
+		{
+			base.OnResume ();
 
-        public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
-        {
-            base.OnConfigurationChanged(newConfig);
+			if (_adView != null) {
+				_adView.Resume ();
+			}           
+		}
 
-            if (_adView != null)
-            {
-                _adView.Destroy();
-                _adView = AddAd(_adViewContainer, AdId);
-            }
-        }
+		protected override void OnDestroy ()
+		{
+			if (_adView != null) {
+				_adView.Destroy ();
+			}
 
-        AdView AddAd(LinearLayout adViewContainer, string adid)
-        {
-            AdView adView = null;
+			base.OnDestroy ();
+		}
 
-            if (adViewContainer != null && !string.IsNullOrEmpty(adid))
-            {
-                adViewContainer.RemoveAllViews();
+		public override void OnConfigurationChanged (Android.Content.Res.Configuration newConfig)
+		{
+			base.OnConfigurationChanged (newConfig);
 
-                adView = new AdView(this)
-                {
-                    AdSize = AdSize.SmartBanner,
-                    AdUnitId = adid,
-                };
+			if (_adView != null) {
+				_adView.Destroy ();
+				_adView = AddAd (_adViewContainer, AdId);
+			}
+		}
 
-                adViewContainer.AddView(adView);
-                adView.LoadAd(new AdRequest.Builder().Build());
-            }
+		AdView AddAd (LinearLayout adViewContainer, string adid)
+		{
+			AdView adView = null;
 
-            return adView;
-        }
-    }
+			if (adViewContainer != null && !string.IsNullOrEmpty (adid)) {
+				adViewContainer.RemoveAllViews ();
+
+				adView = new AdView (this) {
+					AdSize = AdSize.SmartBanner,
+					AdUnitId = adid,
+				};
+
+				adViewContainer.AddView (adView);
+				adView.LoadAd (new AdRequest.Builder ().Build ());
+			}
+
+			return adView;
+		}
+
+		void CountForStarts ()
+		{
+			var prefs = PreferenceManager.GetDefaultSharedPreferences (this);
+			var shouldAskForRating = prefs.GetBoolean (SettingsScreen.ShouldAskForRating, true);
+			if (!shouldAskForRating)
+				return;
+
+			var startsCount = prefs.GetInt (SettingsScreen.StartsCount, 0);
+			startsCount++;
+
+			if (startsCount >= 10) {
+				ShowRatingDialog ();
+			}
+
+			prefs.Edit ().PutInt (SettingsScreen.StartsCount, startsCount).Commit ();
+		}
+
+		protected virtual void ShowRatingDialog ()
+		{
+
+		}
+	}
 }

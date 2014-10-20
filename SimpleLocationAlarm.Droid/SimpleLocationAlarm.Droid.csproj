@@ -99,6 +99,7 @@
     <Compile Include="Screens\BaseAlarmActivity.cs" />
     <Compile Include="Services\RestoreAfterRebootService.cs" />
     <Compile Include="Screens\AlarmsFailedToRestore.cs" />
+    <Compile Include="Screens\RatingDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -134,6 +135,7 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\AlarmsFailedToRestore.axml" />
+    <AndroidResource Include="Resources\layout\RatingDialog.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
