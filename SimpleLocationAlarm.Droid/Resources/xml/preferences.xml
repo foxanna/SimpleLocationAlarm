@@ -10,6 +10,11 @@
         android:title="@string/settings_play_sound"
         android:summary="@string/settings_play_sound_summ"
         android:defaultValue="true" />
+ 	<CheckBoxPreference
+        android:key="pref_long_tap"
+        android:title="@string/add_mark_on_long_tap"
+        android:summary="@string/add_mark_on_long_tap_summary"
+        android:defaultValue="false" />
     <Preference android:title="@string/settings_sound" 
                 android:key="pref_sound">
         <intent  />        

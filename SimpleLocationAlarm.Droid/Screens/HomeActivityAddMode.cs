@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Android.Views;
-using Android.App;
 using Android.Widget;
 using Android.Support.V4.View;
-using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
 using Android.Content;
-using Newtonsoft.Json;
 using Android.Views.InputMethods;
 using Android.Preferences;
-using System.Security.Cryptography;
 using Android.Text;
 using Android.Gms.Common;
 using SimpleLocationAlarm.Droid.Services;

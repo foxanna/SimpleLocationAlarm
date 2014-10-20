@@ -22,6 +22,8 @@
     <string name="failed_to_restore">Приложению не удалось восстановить все пользовательские отметки после перезагрузки устройства</string>
     <string name="activate_manually">Активировать вручную</string>
     <string name="keep_inactive">Оставить неактивными</string>
+    <string name="add_mark_on_long_tap">Добавление по длинному тапу</string>
+    <string name="add_mark_on_long_tap_summary">Добавлять отметку по длинному тапу на карте</string>
 
     <!--Settings strings-->
     <string name="action_settings">Настройки</string>

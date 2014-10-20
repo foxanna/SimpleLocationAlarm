@@ -25,6 +25,8 @@
     <string name="failed_to_restore">GEO Alarm could not reactivate all your location marks after the device reboot</string>
     <string name="activate_manually">Activate manually</string>
     <string name="keep_inactive">Keep inactive</string>
+    <string name="add_mark_on_long_tap">Add on long tap</string>
+    <string name="add_mark_on_long_tap_summary">Add location mark on long tap on map</string>
 
     <!--Settings strings-->
     <string name="action_settings">Settings</string>
