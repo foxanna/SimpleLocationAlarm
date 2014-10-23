@@ -29,6 +29,7 @@ namespace SimpleLocationAlarm.Droid.Services
 		const string TAG = "UIWhileRingingIntentService";
 
 		public const string StartAlarmAction = "StartAlarmAction";
+		public const string StopAlarmAction = "StopAlarmAction";
 
 		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)
 		{
@@ -43,6 +44,9 @@ namespace SimpleLocationAlarm.Droid.Services
 					_vibrator = null;
 					StartVibrating ();
 				}
+				break;
+			case StopAlarmAction:
+				StopSelf ();
 				break;
 			}
 
@@ -97,32 +101,29 @@ namespace SimpleLocationAlarm.Droid.Services
 //			_ringtone.Play ();
 
 			try {
-				var sound = GetRingtoneUri(customSound);
+				var sound = GetRingtoneUri (customSound);
 
-				_ringtone = new MediaPlayer();
-				_ringtone.SetDataSource(this, sound);
+				_ringtone = new MediaPlayer ();
+				_ringtone.SetDataSource (this, sound);
 
-				_ringtone.SetAudioStreamType(Stream.Alarm);
+				_ringtone.SetAudioStreamType (Stream.Alarm);
 
 				_ringtone.Looping = true;
-				_ringtone.Prepare();
-				_ringtone.Start();
-			} catch(Exception e) {
+				_ringtone.Prepare ();
+				_ringtone.Start ();
+			} catch {
 			}   
 		}
 
-        Android.Net.Uri GetRingtoneUri(string customSound)
-        {
-            if (!string.IsNullOrEmpty(customSound))
-            {
-                return Android.Net.Uri.Parse(customSound);
-            }
-            else
-            {
-                return (RingtoneManager.GetDefaultUri(RingtoneType.Alarm) != null ?
-                    RingtoneManager.GetDefaultUri(RingtoneType.Alarm) : RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
-            }
-        }
+		Android.Net.Uri GetRingtoneUri (string customSound)
+		{
+			if (!string.IsNullOrEmpty (customSound)) {
+				return Android.Net.Uri.Parse (customSound);
+			} else {
+				return RingtoneManager.GetDefaultUri (RingtoneType.Alarm) ??
+				RingtoneManager.GetDefaultUri (RingtoneType.Ringtone);
+			}
+		}
 
 		void StopPlaying ()
 		{
@@ -152,7 +153,7 @@ namespace SimpleLocationAlarm.Droid.Services
 			}
 		}
 
-		int _notificationId = 67;
+		const int _notificationId = 67;
 
 		void ShowNotification (AlarmData alarm)
 		{
@@ -160,7 +161,9 @@ namespace SimpleLocationAlarm.Droid.Services
 			builder.SetSmallIcon (Resource.Drawable.marker_violet)
                 .SetContentTitle (alarm.Name)
                 .SetContentText (GetString (Resource.String.app_name))
-                .SetAutoCancel (false);
+                .SetAutoCancel (false)
+				.AddAction (Resource.Drawable.ic_action_volume_muted, GetString (Resource.String.stop_noise), 
+				PendingIntent.GetService (this, 0, new Intent (this, typeof(UIWhileRingingIntentService)).SetAction (StopAlarmAction), 0));
 
 			var intent = new Intent (this, typeof(AlarmScreen))
                 .SetFlags (ActivityFlags.NewTask)

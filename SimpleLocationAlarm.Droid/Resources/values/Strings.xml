@@ -12,7 +12,7 @@
     <string name="failed_to_add">You\'ve created an inactive location mark</string>
     <string name="failed_to_remove">Failed to remove</string>
     <string name="go_to_settings">Go to location settings</string>
-    <string name="stop_noise">Stop making noise</string>
+    <string name="stop_noise">Mute</string>
     <string name="failed_to_connect">Failed to connect to location services</string>
     <string name="probably_location_services_are_off">Probably location services are disabled</string>
     <string name="error_with_alarm">Probably location services were disabled\n\nAll your location marks were disabled</string>
