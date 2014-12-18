@@ -35,14 +35,15 @@
     <!--Settings strings-->
     <string name="action_settings">Settings</string>
     <string name="settings_vibrate">Vibrate</string>
-    <string name="settings_vibrate_summ">Vibrate when approaching destenation point</string>
+    <string name="settings_vibrate_summ">Vibrate when approaching destination point</string>
     <string name="settings_play_sound">Play sound</string>
-    <string name="settings_play_sound_summ">Play sound when approaching destenation point</string>
+    <string name="settings_play_sound_summ">Play sound when approaching destination point</string>
     <string name="settings_sound">Ringtone</string>
     <string name="settings_sound_sum">Default alarm ringtone</string>
     <string name="settings_default_radius">Default zone radius</string>
     <string name="settings_default_radius_sum">{0} meters</string>
     <string name="settings_about">About GEO Alarm</string>
+    <string name="settings_remove_ads">Turn ads off</string>
     <string name="settings_version">Version {0} ({1})</string>
     
     <!-- not translatable-->

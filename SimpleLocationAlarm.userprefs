@@ -1,10 +1,31 @@
 ﻿<Properties GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.AVD_for_Nexus_7_by_Google" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SimpleLocationAlarm.Droid\Services\GoogleAnalyticsManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.nexus5" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SimpleLocationAlarm.Droid\Services\InAppBillingManager.cs">
     <Files>
-      <File FileName="SimpleLocationAlarm.Droid\Screens\AboutScreen.cs" Line="57" Column="57" />
-      <File FileName="SimpleLocationAlarm.Droid\Services\GoogleAnalyticsManager.cs" Line="28" Column="28" />
+      <File FileName="SimpleLocationAlarm.Droid\Screens\BaseAlarmActivity.cs" Line="69" Column="69" />
+      <File FileName="SimpleLocationAlarm.Droid\Services\InAppBillingManager.cs" Line="99" Column="99" />
+      <File FileName="SimpleLocationAlarm.Droid\Screens\SettingsScreen.cs" Line="27" Column="27" />
+      <File FileName="SimpleLocationAlarm.Droid\Properties\AndroidManifest.xml" Line="12" Column="12" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="SimpleLocationAlarm.Droid" expanded="True">
+            <Node name="ComponentReferenceFolder" expanded="True" />
+            <Node name="Properties" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="values" expanded="True" />
+              <Node name="values-ru" expanded="True" />
+              <Node name="xml" expanded="True" />
+            </Node>
+            <Node name="Screens" expanded="True" />
+            <Node name="Services" expanded="True">
+              <Node name="InAppBillingManager.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

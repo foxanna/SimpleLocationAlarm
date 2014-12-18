@@ -23,6 +23,10 @@
         android:key="pref_radius"
         android:title="@string/settings_default_radius"
         android:defaultValue="200" />
+    <Preference android:title="@string/settings_remove_ads" 
+                android:key="pref_ads">
+        <intent  />        
+    </Preference>
     <Preference android:title="@string/settings_about">
         <intent android:action="openaboutscreenaction"/>
     </Preference>

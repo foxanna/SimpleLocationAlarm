@@ -14,7 +14,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AssemblyName>SimpleLocationAlarm.Droid</AssemblyName>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
@@ -74,6 +74,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.InAppBilling">
+      <HintPath>..\Components\xamarin.inappbilling-2.1\lib\android\Xamarin.InAppBilling.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Screens\AboutScreen.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Services\RestoreAfterRebootService.cs" />
     <Compile Include="Screens\AlarmsFailedToRestore.cs" />
     <Compile Include="Screens\RatingDialog.cs" />
+    <Compile Include="Services\InAppBillingManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -166,6 +170,10 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="sqlite-net">
       <Version>1.0.8</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="xamarin.inappbilling">
+      <Version>2.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
