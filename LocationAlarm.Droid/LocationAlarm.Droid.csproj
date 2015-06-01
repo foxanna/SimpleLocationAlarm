@@ -169,12 +169,12 @@
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="sqlite-net">
-      <Version>1.0.8</Version>
       <Visible>False</Visible>
+      <Version>1.0.8.3</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.inappbilling">
-      <Version>2.1</Version>
       <Visible>False</Visible>
+      <Version>2.2</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
