@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLocationAlarm.Droid", "LocationAlarm.Droid\SimpleLocationAlarm.Droid.csproj", "{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.PCL", "LocationAlarm.PCL\LocationAlarm.PCL.csproj", "{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhone", "LocationAlarm.WindowsPhone\LocationAlarm.WindowsPhone.csproj", "{9CC3677F-67BF-4668-A3B3-91BCD9C21967}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}.Release|x86.ActiveCfg = Release|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|ARM.ActiveCfg = Debug|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|ARM.Build.0 = Debug|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|ARM.Deploy.0 = Debug|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|x86.ActiveCfg = Debug|x86
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|x86.Build.0 = Debug|x86
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Debug|x86.Deploy.0 = Debug|x86
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|ARM.ActiveCfg = Release|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|ARM.Build.0 = Release|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|ARM.Deploy.0 = Release|ARM
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.ActiveCfg = Release|x86
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.Build.0 = Release|x86
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SimpleLocationAlarm.Droid\SimpleLocationAlarm.Droid.csproj
+	EndGlobalSection
+EndGlobal
