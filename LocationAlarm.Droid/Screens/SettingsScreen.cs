@@ -24,8 +24,11 @@ namespace SimpleLocationAlarm.Droid.Screens
 		public const int DefaultRadiusValue = 200;
 		public const string StartsCount = "StartsCount";
 		public const string ShouldAskForRating = "ShouldAskForRating";
+		public const string AdsSettingKey = "pref_ads";
 
-		Preference _soundPref;
+		Preference _soundPref, _adsPref;
+
+		InAppBillingManager _billingManager;
 
 		protected GoogleAnalyticsManager GoogleAnalyticsManager = new GoogleAnalyticsManager ();
 
@@ -40,7 +43,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 			var soundPrefValue = PreferenceManager.GetDefaultSharedPreferences (this).GetString (SoundSettingKey, "");
 			_soundPref.Summary = string.IsNullOrEmpty (soundPrefValue) ? GetString (Resource.String.settings_sound_sum) :
                 RingtoneManager.GetRingtone (this, Android.Net.Uri.Parse (soundPrefValue)).GetTitle (this);
-			_soundPref.PreferenceClick += SoundPreferenceClick;            
+			_soundPref.PreferenceClick += SoundPreferenceClick;     
+
+			_adsPref = FindPreference (AdsSettingKey);
+			_adsPref.PreferenceClick += AdsPreferenceClick;
 		}
 
 		const int _pickSoundRequestId = 45;
@@ -67,6 +73,9 @@ namespace SimpleLocationAlarm.Droid.Screens
 				}
 				break;
 			default:
+				if (_billingManager != null)
+					_billingManager.OnActivityResult (requestCode, resultCode, data);
+
 				base.OnActivityResult (requestCode, resultCode, data);
 				break;
 			}
@@ -81,6 +90,22 @@ namespace SimpleLocationAlarm.Droid.Screens
 			default:
 				return base.OnOptionsItemSelected (item);
 			}
+		}
+
+		void AdsPreferenceClick (object sender, Preference.PreferenceClickEventArgs e)
+		{
+			if (_billingManager == null) {
+				_billingManager = new InAppBillingManager (this);
+				_billingManager.Connected += HandleConnected;
+			} else
+				HandleConnected (null, EventArgs.Empty);
+		}
+
+		void HandleConnected (object sender, EventArgs e)
+		{
+			_billingManager.Connected -= HandleConnected;
+
+			_billingManager.Pay ();
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 	{
 		protected DBManager _dbManager = new DBManager ();
 		protected GeofenceManager _geofenceManager = new GeofenceManager ();
+		InAppBillingManager _billingManager;
 
 		protected abstract string TAG { get; }
 
@@ -79,6 +80,11 @@ namespace SimpleLocationAlarm.Droid.Screens
 			InitGeofenceManager ();
 		}
 
+		void HandleHasPaiedChanged (object sender, EventArgs e)
+		{
+			AdvertiseIfNesessary ();
+		}
+
 		protected override void OnStop ()
 		{
 			DeinitDBManager ();
@@ -111,6 +117,18 @@ namespace SimpleLocationAlarm.Droid.Screens
 			GoogleAnalyticsManager.ReportScreenEnter (this.GetType ().FullName);
 
 			CountForStarts ();
+
+			if (_billingManager == null) {
+				_billingManager = new InAppBillingManager (this);
+				_billingManager.Connected += HandleConnected;
+				_billingManager.HasPaiedChanged += HandleHasPaiedChanged;
+			}
+		}
+
+		void HandleConnected (object sender, EventArgs e)
+		{
+			_billingManager.Connected -= HandleConnected;
+			_billingManager.CheckIfAdsFreeWasBought ();
 		}
 
 		protected abstract string AdId { get; }
@@ -123,7 +141,7 @@ namespace SimpleLocationAlarm.Droid.Screens
 			base.SetContentView (layoutResID);
 
 			_adViewContainer = FindViewById<LinearLayout> (Resource.Id.adViewContainer);
-			_adView = AddAd (_adViewContainer, AdId);
+			AdvertiseIfNesessary ();
 		}
 
 		protected override void OnPause ()
@@ -150,6 +168,10 @@ namespace SimpleLocationAlarm.Droid.Screens
 				_adView.Destroy ();
 			}
 
+			if (_billingManager == null) {
+				_billingManager.HasPaiedChanged -= HandleHasPaiedChanged;
+			}
+
 			base.OnDestroy ();
 		}
 
@@ -157,10 +179,33 @@ namespace SimpleLocationAlarm.Droid.Screens
 		{
 			base.OnConfigurationChanged (newConfig);
 
+			AdvertiseIfNesessary ();
+		}
+
+		void AdvertiseIfNesessary ()
+		{
+			if (_billingManager != null && !_billingManager.HasPaied)
+				Advertise ();
+			else
+				Deadvertise ();
+		}
+
+		void Advertise ()
+		{
 			if (_adView != null) {
 				_adView.Destroy ();
-				_adView = AddAd (_adViewContainer, AdId);
 			}
+			_adView = AddAd (_adViewContainer, AdId);
+		}
+
+		void Deadvertise ()
+		{
+			if (_adView != null)
+				_adView.Destroy ();
+			_adView = null;
+
+			if (_adViewContainer != null)
+				_adViewContainer.RemoveAllViews ();
 		}
 
 		AdView AddAd (LinearLayout adViewContainer, string adid)
@@ -202,6 +247,13 @@ namespace SimpleLocationAlarm.Droid.Screens
 		protected virtual void ShowRatingDialog ()
 		{
 
+		}
+
+		protected override void OnActivityResult (int requestCode, Android.App.Result resultCode, Intent data)
+		{
+			base.OnActivityResult (requestCode, resultCode, data);
+
+			_billingManager.OnActivityResult (requestCode, resultCode, data);
 		}
 	}
 }

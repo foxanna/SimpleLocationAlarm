@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLocationAlarm.Droid", "LocationAlarm.Droid\SimpleLocationAlarm.Droid.csproj", "{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.Droid", "LocationAlarm.Droid\LocationAlarm.Droid.csproj", "{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.PCL", "LocationAlarm.PCL\LocationAlarm.PCL.csproj", "{FC3FAEFA-1DF8-4039-AED4-6E48DE27418C}"
 EndProject
