@@ -31,9 +31,28 @@ namespace LocationAlarm.PCL.ViewModels
         {
             base.OnStart();
 
-            Alarms = new ObservableCollection<AlarmItemViewModel>(AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) { Alarm = alarm }));
+            AlarmsManager.AlarmsSetChanged += AlarmsManager_AlarmsSetChanged;
 
+            UpdateAlarms();
             OnMapZoomChanged();
+        }
+
+        public override void OnStop()
+        {
+            AlarmsManager.AlarmsSetChanged -= AlarmsManager_AlarmsSetChanged;
+
+            base.OnStop();
+        }
+
+        void AlarmsManager_AlarmsSetChanged(object sender, EventArgs e)
+        {
+            UpdateAlarms();
+            OnMapZoomChanged();
+        }
+
+        void UpdateAlarms()
+        {
+            Alarms = new ObservableCollection<AlarmItemViewModel>(AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) { Alarm = alarm }));
         }
         
         public event EventHandler<MapZoomChangedEventArgs> MapZoomChanged;
@@ -60,10 +79,9 @@ namespace LocationAlarm.PCL.ViewModels
             set
             {
                 var oldValue = myCurrentLocation;
-
                 myCurrentLocation = value;
 
-                if (oldValue == null && myCurrentLocation != null && Alarms.Count == 0)
+                if (oldValue == null && myCurrentLocation != null)
                 {
                     OnMapZoomChanged();
                 }

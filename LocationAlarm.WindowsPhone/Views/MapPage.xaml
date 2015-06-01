@@ -8,7 +8,7 @@
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:valueconverter="using:LocationAlarm.WindowsPhone.ValueConverters"
     mc:Ignorable="d"
-    DataContext="{Binding MapPageViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
@@ -21,7 +21,8 @@
             <MenuFlyoutItem Text="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMenuEnabledItem}}"
                             Command="{Binding SwitchEnabledCommand}" />
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Delete" Click="DeteleMarker_Click"/>
+            <MenuFlyoutItem Text="Delete"
+                            Command="{Binding DeleteCommand}"/>
         </MenuFlyout>
     </Page.Resources>
 
@@ -46,21 +47,18 @@
         <Maps:MapControl x:Name="Map"
                          Grid.Row="1"
                          DataContext="{Binding Alarms}" 
-                         Loaded="Map_Loaded" 
-                         Unloaded="Map_Unloaded" 
-                         >
+                         Loaded="Map_Loaded">
             <!--MapServiceToken="Place your token here."-->
 
             <Maps:MapItemsControl ItemsSource="{Binding}">
                 
                 <Maps:MapItemsControl.ItemTemplate>
                     <DataTemplate>
-                        
                         <StackPanel Orientation="Vertical"
-                                    Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"                                    
-                                    Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}">
-                                    <!--Tapped="StackPanel_Tapped"
-                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}">-->
+                                    Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
+                                    Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}"
+                                    Tapped="StackPanel_Tapped"
+                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}">
                             
                             <TextBlock Text="{Binding Alarm.Title}"
                                        Foreground="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerTitleColor}}" 

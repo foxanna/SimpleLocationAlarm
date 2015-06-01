@@ -38,11 +38,16 @@ namespace LocationAlarm.PCL.ViewModels
         {
             get
             {
-                return switchEnableCommand ?? (switchEnableCommand = new RelayCommand(() =>
-                    {
-                        AlarmsManager.SwitchEnabled(Alarm);
-                        RaisePropertyChanged(() => Alarm);
-                    }));
+                return switchEnableCommand ?? (switchEnableCommand = new RelayCommand(() => AlarmsManager.SwitchEnabled(Alarm)));
+            }
+        }
+
+        RelayCommand deleteCommand;
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return deleteCommand ?? (deleteCommand = new RelayCommand(() => AlarmsManager.Remove(Alarm)));
             }
         }
     }

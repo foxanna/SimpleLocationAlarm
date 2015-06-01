@@ -22,11 +22,11 @@ namespace LocationAlarm.WindowsPhone.Views
     {
         private readonly NavigationHelper navigationHelper;
 
-        public MapPageViewModel MapPageViewModel { get; private set; }
+        public MapPageViewModel ViewModel { get; private set; }
 
         public MapPage()
         {
-            MapPageViewModel = IoC.Get<MapPageViewModel>();
+            ViewModel = IoC.Get<MapPageViewModel>();
 
             this.InitializeComponent();
 
@@ -49,9 +49,8 @@ namespace LocationAlarm.WindowsPhone.Views
             locator.MovementThreshold = 5;
             locator.PositionChanged += LocatorPositionChanged;
 
-            MapPageViewModel.MapZoomChanged += MapPageViewModel_MapZoomChanged;
-
-            MapPageViewModel.OnStart();
+            ViewModel.MapZoomChanged += MapPageViewModel_MapZoomChanged;
+            ViewModel.OnStart();
         }
 
         GeoboundingBox boxToDisplay;
@@ -74,14 +73,15 @@ namespace LocationAlarm.WindowsPhone.Views
 
         void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            MapPageViewModel.MyCurrentLocation = Tuple.Create<double, double>(args.Position.Coordinate.Latitude, args.Position.Coordinate.Longitude);
+            ViewModel.MyCurrentLocation = Tuple.Create<double, double>(args.Position.Coordinate.Latitude, args.Position.Coordinate.Longitude);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            MapPageViewModel.MapZoomChanged -= MapPageViewModel_MapZoomChanged;
-
             locator.PositionChanged -= LocatorPositionChanged;
+
+            ViewModel.MapZoomChanged -= MapPageViewModel_MapZoomChanged;
+            ViewModel.OnStop();
         }
 
         #region NavigationHelper registration
@@ -119,19 +119,10 @@ namespace LocationAlarm.WindowsPhone.Views
         {
             ZoomMap(boxToDisplay);
         }
-
-        void Map_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-        }
-
+        
         private void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
-
-        private void DeteleMarker_Click(object sender, RoutedEventArgs e)
-        {
-            //   GeoboundingBox.TryCompute(locations);
         }
     }
 }

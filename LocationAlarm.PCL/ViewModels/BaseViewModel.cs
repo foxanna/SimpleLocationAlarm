@@ -6,5 +6,8 @@ namespace LocationAlarm.PCL.ViewModels
     {
         public virtual void OnStart()
         { }
+
+        public virtual void OnStop()
+        { }
     }
 }

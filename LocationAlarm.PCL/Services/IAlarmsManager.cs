@@ -11,6 +11,8 @@ namespace LocationAlarm.PCL.Services
     {
         IReadOnlyCollection<AlarmItem> Alarms { get; }
 
+        event EventHandler AlarmsSetChanged;
+
         void Remove(AlarmItem alarm);
         void AddAlarm(AlarmItem alarm);
         void SwitchEnabled(AlarmItem alarm);
