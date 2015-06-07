@@ -73,7 +73,8 @@ namespace LocationAlarm.WindowsPhone.Views
         {
             boxToDisplay = GeoboundingBox.TryCompute(e.Data.Select(location => 
                 new BasicGeoposition() { Latitude = location.Item1, Longitude = location.Item2 }));
-
+            
+            isSomeAlarmSelected = false;
             ZoomMap(boxToDisplay);
         }
 
@@ -124,9 +125,13 @@ namespace LocationAlarm.WindowsPhone.Views
             DrawAlarmsOnMap();
             ZoomMap(boxToDisplay);
         }
-        
+
+        bool isSomeAlarmSelected;
         void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            isSomeAlarmSelected = true;
+            e.Handled = true;
+            ZoomMap(GeoboundingBox.TryCompute(((sender as FrameworkElement).DataContext as AlarmItemViewModel).Alarm.GetPointsForCirle()));
         }
 
         void StackPanel_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
@@ -155,6 +160,12 @@ namespace LocationAlarm.WindowsPhone.Views
                 };
                 Map.MapElements.Add(mapCircle);
             }
+        }
+        
+        void Map_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            if (isSomeAlarmSelected)
+                ZoomMap(boxToDisplay);
         }
     }
 }
