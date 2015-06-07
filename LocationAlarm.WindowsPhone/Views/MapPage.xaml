@@ -46,8 +46,8 @@
 
         <Maps:MapControl x:Name="Map"
                          Grid.Row="1"
-                         DataContext="{Binding Alarms}" 
-                         Loaded="Map_Loaded">
+                         Loaded="Map_Loaded"
+                         DataContext="{Binding Alarms}">
             <!--MapServiceToken="Place your token here."-->
 
             <Maps:MapItemsControl ItemsSource="{Binding}">
@@ -58,7 +58,7 @@
                                     Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
                                     Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}"
                                     Tapped="StackPanel_Tapped"
-                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}">
+                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}" RightTapped="StackPanel_RightTapped">
                             
                             <TextBlock Text="{Binding Alarm.Title}"
                                        Foreground="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerTitleColor}}" 

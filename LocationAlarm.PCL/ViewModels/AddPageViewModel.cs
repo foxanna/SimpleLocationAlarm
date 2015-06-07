@@ -19,7 +19,7 @@ namespace LocationAlarm.PCL.ViewModels
 
             SelectedRadius = 200;
         }
-        
+
         Tuple<double, double> location;
         public Tuple<double, double> Location
         {
@@ -51,10 +51,19 @@ namespace LocationAlarm.PCL.ViewModels
 
         public List<int> Radiuses { get { return Constants.Radiuses; } }
 
-        public int SelectedRadius { get; set; }
-                
+        int selectedRadius;
+        public int SelectedRadius
+        {
+            get { return selectedRadius; }
+            set
+            {
+                selectedRadius = value;
+                OnPropertyChanged();
+            }
+        }
+
         RelayCommand saveCommand;
-        public RelayCommand SaveCommand 
+        public RelayCommand SaveCommand
         {
             get { return saveCommand ?? (saveCommand = new RelayCommand(Save, CanSave)); }
         }
@@ -64,16 +73,24 @@ namespace LocationAlarm.PCL.ViewModels
             return Location != null && !string.IsNullOrEmpty(Title);
         }
 
+        public AlarmItem Alarm
+        {
+            get
+            {
+                return new AlarmItem
+                {
+                    Enabled = true,
+                    Latitude = Location.Item1,
+                    Longitude = Location.Item2,
+                    Radius = SelectedRadius,
+                    Title = Title,
+                };
+            }
+        }
+
         void Save()
         {
-            AlarmsManager.AddAlarm(new AlarmItem()
-            {
-                Enabled = true,
-                Latitude = Location.Item1,
-                Longitude = Location.Item2,
-                Radius = SelectedRadius,
-                Title = Title,
-            });
+            AlarmsManager.AddAlarm(Alarm);
 
             OnSaved();
         }

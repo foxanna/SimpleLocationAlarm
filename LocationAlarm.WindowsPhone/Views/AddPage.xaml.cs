@@ -5,6 +5,8 @@ using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using LocationAlarm.PCL;
+using Windows.UI.Xaml.Controls.Maps;
+using LocationAlarm.PCL.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -15,13 +17,17 @@ namespace LocationAlarm.WindowsPhone.Views
     /// </summary>
     public sealed partial class AddPage : Page
     {
-        private NavigationHelper navigationHelper;
+        NavigationHelper navigationHelper;
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
+        }
         
-        public AddPageViewModel AddPageViewModel {get; private set; }
+        public AddPageViewModel ViewModel { get; private set; }
 
         public AddPage()
         {
-            AddPageViewModel = IoC.Get<AddPageViewModel>();
+            ViewModel = IoC.Get<AddPageViewModel>();
 
             this.InitializeComponent();
 
@@ -30,27 +36,30 @@ namespace LocationAlarm.WindowsPhone.Views
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
-        public NavigationHelper NavigationHelper
+        async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            get { return this.navigationHelper; }
+            ViewModel.Saved += OnSaved;
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+
+            if (e.NavigationParameter != null)
+            {
+                var currentPosition = e.NavigationParameter as Tuple<double, double>;
+                await Map.TrySetViewAsync(new Geopoint(new BasicGeoposition { Latitude = currentPosition.Item1, Longitude = currentPosition.Item2 }), 16D);
+            }
+            else
+            {
+                var locator = new Geolocator();
+                locator.DesiredAccuracyInMeters = 50;
+
+                var position = await locator.GetGeopositionAsync();
+                await Map.TrySetViewAsync(position.Coordinate.Point, 16D);
+            }
         }
-
-        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+                
+        void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            var locator = new Geolocator();
-            locator.DesiredAccuracyInMeters = 50;
-
-            var position = await locator.GetGeopositionAsync();
-            var myPoint = position.Coordinate.Point;
-            
-            await Map.TrySetViewAsync(myPoint, 16D);
-
-            AddPageViewModel.Saved += OnSaved;
-        }
-
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
-            AddPageViewModel.Saved -= OnSaved;
+            ViewModel.Saved -= OnSaved;
+            ViewModel.PropertyChanged -= ViewModel_PropertyChanged;
         }
 
         #region NavigationHelper registration
@@ -80,14 +89,32 @@ namespace LocationAlarm.WindowsPhone.Views
 
         #endregion
 
-        private void Map_MapTapped(Windows.UI.Xaml.Controls.Maps.MapControl sender, Windows.UI.Xaml.Controls.Maps.MapInputEventArgs args)
+        void Map_MapTapped(Windows.UI.Xaml.Controls.Maps.MapControl sender, Windows.UI.Xaml.Controls.Maps.MapInputEventArgs args)
         {
-            AddPageViewModel.Location = Tuple.Create<double, double>(args.Location.Position.Latitude, args.Location.Position.Longitude);
+            ViewModel.Location = Tuple.Create<double, double>(args.Location.Position.Latitude, args.Location.Position.Longitude);
         }
 
         void OnSaved(object sender, EventArgs e)
         {
             Frame.GoBack();      
+        }
+
+        void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if ("Location".Equals (e.PropertyName) || "SelectedRadius".Equals(e.PropertyName))
+            {
+                Map.MapElements.Clear();
+
+                var mapCircle = new MapPolygon
+                {
+                    StrokeThickness = 1,
+                    StrokeColor = AlarmColors.ActiveAlarmDarkColor,
+                    FillColor = AlarmColors.ActiveAlarmLightColor,
+                    StrokeDashed = false,
+                    Path = new Geopath(ViewModel.Alarm.GetPointsForCirle()),
+                };
+                Map.MapElements.Add(mapCircle);
+            }
         }
     }
 }

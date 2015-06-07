@@ -8,7 +8,7 @@
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" 
     mc:Ignorable="d"
     xmlns:valueconverter="using:LocationAlarm.WindowsPhone.ValueConverters"
-    DataContext="{Binding AddPageViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>

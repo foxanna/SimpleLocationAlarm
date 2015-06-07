@@ -10,6 +10,9 @@ using Windows.UI.Xaml.Navigation;
 using System.Linq;
 using LocationAlarm.PCL;
 using LocationAlarm.PCL.Utils;
+using Windows.UI;
+using Windows.Storage.Streams;
+using Windows.Foundation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -20,8 +23,14 @@ namespace LocationAlarm.WindowsPhone.Views
     /// </summary>
     public sealed partial class MapPage : Page
     {
-        private readonly NavigationHelper navigationHelper;
+        readonly NavigationHelper navigationHelper;
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
+        }
 
+        readonly Geolocator locator = new Geolocator();
+        
         public MapPageViewModel ViewModel { get; private set; }
 
         public MapPage()
@@ -37,25 +46,30 @@ namespace LocationAlarm.WindowsPhone.Views
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
-
-        Geolocator locator = new Geolocator();
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             locator.MovementThreshold = 5;
             locator.PositionChanged += LocatorPositionChanged;
 
-            ViewModel.MapZoomChanged += MapPageViewModel_MapZoomChanged;
+            ViewModel.MapZoomChanged += ViewModel_MapZoomChanged;
+            ViewModel.AlarmsChanged += ViewModel_AlarmsChanged;
+
             ViewModel.OnStart();
+        }
+
+        void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+            ViewModel.OnStop();
+
+            locator.PositionChanged -= LocatorPositionChanged;
+
+            ViewModel.AlarmsChanged -= ViewModel_AlarmsChanged;
+            ViewModel.MapZoomChanged -= ViewModel_MapZoomChanged;
         }
 
         GeoboundingBox boxToDisplay;
 
-        void MapPageViewModel_MapZoomChanged(object sender, MapZoomChangedEventArgs e)
+        void ViewModel_MapZoomChanged(object sender, MapZoomChangedEventArgs e)
         {
             boxToDisplay = GeoboundingBox.TryCompute(e.Data.Select(location => 
                 new BasicGeoposition() { Latitude = location.Item1, Longitude = location.Item2 }));
@@ -66,22 +80,12 @@ namespace LocationAlarm.WindowsPhone.Views
         async void ZoomMap(GeoboundingBox box)
         {
             if (box != null)
-            {
                 await Map.TrySetViewBoundsAsync(box, null, MapAnimationKind.Default);
-            }
         }
 
         void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            ViewModel.MyCurrentLocation = Tuple.Create<double, double>(args.Position.Coordinate.Latitude, args.Position.Coordinate.Longitude);
-        }
-
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
-            locator.PositionChanged -= LocatorPositionChanged;
-
-            ViewModel.MapZoomChanged -= MapPageViewModel_MapZoomChanged;
-            ViewModel.OnStop();
+            ViewModel.MyCurrentLocation = Tuple.Create<double, double>(args.Position.Coordinate.Point.Position.Latitude, args.Position.Coordinate.Longitude);
         }
 
         #region NavigationHelper registration
@@ -112,17 +116,45 @@ namespace LocationAlarm.WindowsPhone.Views
 
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(AddPage));
+            Frame.Navigate(typeof(AddPage), ViewModel.MyCurrentLocation);
         }
 
         void Map_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            DrawAlarmsOnMap();
             ZoomMap(boxToDisplay);
         }
         
-        private void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+        }
+
+        void StackPanel_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        void ViewModel_AlarmsChanged(object sender, EventArgs e)
+        {
+            DrawAlarmsOnMap();
+        }
+
+        void DrawAlarmsOnMap()
+        {
+            Map.MapElements.Clear();
+
+            foreach(var alarm in ViewModel.Alarms.Select(alarmViewModel => alarmViewModel.Alarm))
+            {
+                var mapCircle = new MapPolygon
+                {
+                    StrokeThickness = 1,
+                    StrokeColor = alarm.Enabled ? AlarmColors.ActiveAlarmDarkColor : AlarmColors.InactiveAlarmDarkColor,
+                    FillColor = alarm.Enabled ? AlarmColors.ActiveAlarmLightColor : AlarmColors.InactiveAlarmLightColor,
+                    StrokeDashed = false,
+                    Path = new Geopath(alarm.GetPointsForCirle()),
+                };
+                Map.MapElements.Add(mapCircle);
+            }
         }
     }
 }

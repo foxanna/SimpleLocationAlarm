@@ -16,15 +16,26 @@ namespace LocationAlarm.PCL.ViewModels
             AlarmsManager = alarmsManager;
         }
 
-        ObservableCollection<AlarmItemViewModel> alarms = new ObservableCollection<AlarmItemViewModel>();
-        public ObservableCollection<AlarmItemViewModel> Alarms
+        public event EventHandler AlarmsChanged;
+
+        List<AlarmItemViewModel> alarms = new List<AlarmItemViewModel>();
+        public List<AlarmItemViewModel> Alarms
         {
             get { return alarms; }
             set
             {
                 alarms = value;
                 OnPropertyChanged();
+
+                OnAlarmsChanged();
             }
+        }
+
+        void OnAlarmsChanged()
+        {
+            var handler = AlarmsChanged;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
         public override void OnStart()
@@ -52,7 +63,7 @@ namespace LocationAlarm.PCL.ViewModels
 
         void UpdateAlarms()
         {
-            Alarms = new ObservableCollection<AlarmItemViewModel>(AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) { Alarm = alarm }));
+            Alarms = AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) { Alarm = alarm }).ToList();
         }
         
         public event EventHandler<MapZoomChangedEventArgs> MapZoomChanged;
