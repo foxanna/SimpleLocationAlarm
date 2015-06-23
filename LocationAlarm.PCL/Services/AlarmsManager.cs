@@ -8,11 +8,14 @@ namespace LocationAlarm.PCL.Services
     public class AlarmsManager : IAlarmsManager
     {
         readonly IDatabaseManager DatabaseManager;
+        readonly IGeofenceManager GeofenceManager;
 
-        public AlarmsManager(IDatabaseManager databaseManager)
+        public AlarmsManager(IDatabaseManager databaseManager,
+            IGeofenceManager geofenceManager)
         {
             DatabaseManager = databaseManager;
             DatabaseManager.CreateTable<AlarmItem>();
+            GeofenceManager = geofenceManager;
         }
         
         public IReadOnlyCollection<AlarmItem> Alarms
@@ -31,21 +34,44 @@ namespace LocationAlarm.PCL.Services
 
         public void Remove(AlarmItem alarm)
         {
-            DatabaseManager.Delete(alarm);
-            OnAlarmsSetChanged();
+            try
+            {
+                GeofenceManager.RemoveGeofence(alarm.GeofenceId);
+                DatabaseManager.Delete(alarm);
+                OnAlarmsSetChanged();
+            }
+            catch { }
         }
 
         public void AddAlarm(AlarmItem alarm)
         {
-            DatabaseManager.Add(alarm);
-            OnAlarmsSetChanged();
+            try
+            {
+                alarm.GeofenceId = Guid.NewGuid().ToString();
+
+                GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
+                DatabaseManager.Add(alarm);
+                OnAlarmsSetChanged();
+            }
+            catch { }
         }
 
         public void SwitchEnabled(AlarmItem alarm)
         {
-            alarm.Enabled = !alarm.Enabled;
-            DatabaseManager.Update(alarm);
-            OnAlarmsSetChanged();
+            try
+            {
+                var newEnabledValue = !alarm.Enabled;
+
+                if (newEnabledValue)
+                    GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
+                else
+                    GeofenceManager.RemoveGeofence(alarm.GeofenceId);
+                
+                alarm.Enabled = newEnabledValue;
+                DatabaseManager.Update(alarm);
+                OnAlarmsSetChanged();
+            }
+            catch { }
         }
     }
 }

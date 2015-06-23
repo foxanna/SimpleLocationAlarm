@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.PCL", "Locati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhone", "LocationAlarm.WindowsPhone\LocationAlarm.WindowsPhone.csproj", "{9CC3677F-67BF-4668-A3B3-91BCD9C21967}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WRC", "LocationAlarm.WRC\LocationAlarm.WRC.csproj", "{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhoneLib", "LocationAlarm.WindowsPhoneLib\LocationAlarm.WindowsPhoneLib.csproj", "{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsPhone", "WindowsPhone", "{E7C133BF-172E-425F-920A-9C301693CB4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,9 +64,38 @@ Global
 		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.ActiveCfg = Release|x86
 		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.Build.0 = Release|x86
 		{9CC3677F-67BF-4668-A3B3-91BCD9C21967}.Release|x86.Deploy.0 = Release|x86
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|ARM.ActiveCfg = Debug|ARM
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|ARM.Build.0 = Debug|ARM
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|x86.ActiveCfg = Debug|x86
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Debug|x86.Build.0 = Debug|x86
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|ARM.ActiveCfg = Release|ARM
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|ARM.Build.0 = Release|ARM
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|x86.ActiveCfg = Release|x86
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}.Release|x86.Build.0 = Release|x86
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|ARM.Build.0 = Debug|ARM
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|x86.ActiveCfg = Debug|x86
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Debug|x86.Build.0 = Debug|x86
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|ARM.ActiveCfg = Release|ARM
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|ARM.Build.0 = Release|ARM
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|x86.ActiveCfg = Release|x86
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9CC3677F-67BF-4668-A3B3-91BCD9C21967} = {E7C133BF-172E-425F-920A-9C301693CB4E}
+		{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00} = {E7C133BF-172E-425F-920A-9C301693CB4E}
+		{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3} = {E7C133BF-172E-425F-920A-9C301693CB4E}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SimpleLocationAlarm.Droid\SimpleLocationAlarm.Droid.csproj

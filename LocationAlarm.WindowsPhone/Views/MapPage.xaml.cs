@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using LocationAlarm.PCL;
+using LocationAlarm.PCL.Utils;
 using LocationAlarm.PCL.ViewModels;
 using LocationAlarm.WindowsPhone.Common;
 using Windows.Devices.Geolocation;
@@ -7,20 +11,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
-using System.Linq;
-using LocationAlarm.PCL;
-using LocationAlarm.PCL.Utils;
-using Windows.UI;
-using Windows.Storage.Streams;
-using Windows.Foundation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace LocationAlarm.WindowsPhone.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MapPage : Page
     {
         readonly NavigationHelper navigationHelper;
@@ -86,6 +79,9 @@ namespace LocationAlarm.WindowsPhone.Views
 
         void LocatorPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
+            Debug.WriteLine("LocatorPositionChanged to {0};{1}", 
+                args.Position.Coordinate.Latitude,
+                args.Position.Coordinate.Longitude);
             ViewModel.MyCurrentLocation = Tuple.Create<double, double>(args.Position.Coordinate.Point.Position.Latitude, args.Position.Coordinate.Longitude);
         }
 
