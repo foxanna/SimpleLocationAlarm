@@ -108,6 +108,9 @@
     <Compile Include="ValueConverters\AlarmEnabledToMenuEnabledItemConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\UniversalLocationToGeopointConverter.cs" />
+    <Compile Include="Views\ActiveAlarmPage.xaml.cs">
+      <DependentUpon>ActiveAlarmPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddPage.xaml.cs">
       <DependentUpon>AddPage.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ActiveAlarmPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

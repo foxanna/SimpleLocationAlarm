@@ -88,11 +88,15 @@ namespace LocationAlarm.PCL.ViewModels
             }
         }
 
-        void Save()
+        async void Save()
         {
-            AlarmsManager.AddAlarm(Alarm);
+			try
+			{
+				await AlarmsManager.AddAlarm(Alarm);
 
-            OnSaved();
+				OnSaved();
+			}
+			catch { }
         }
 
         public EventHandler Saved;

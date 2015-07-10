@@ -8,20 +8,11 @@ using LocationAlarm.PCL;
 using Windows.UI.Xaml.Controls.Maps;
 using LocationAlarm.PCL.Models;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
-
 namespace LocationAlarm.WindowsPhone.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class AddPage : Page
-    {
-        NavigationHelper navigationHelper;
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
+	{
+		public NavigationHelper NavigationHelper { get; private set; }
         
         public AddPageViewModel ViewModel { get; private set; }
 
@@ -31,9 +22,9 @@ namespace LocationAlarm.WindowsPhone.Views
 
             this.InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            NavigationHelper = new NavigationHelper(this);
+            NavigationHelper.LoadState += this.NavigationHelper_LoadState;
+            NavigationHelper.SaveState += this.NavigationHelper_SaveState;
         }
 
         async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -79,12 +70,12 @@ namespace LocationAlarm.WindowsPhone.Views
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            NavigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+			NavigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion

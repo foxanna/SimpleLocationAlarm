@@ -12,7 +12,8 @@ namespace LocationAlarm.WindowsPhoneLib
                 new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(),
                 System.IO.Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "alarms.db")));
 
-            IoC.NinjectKernel.Bind<IGeofenceManager>().To<GeofenceManager>().InSingletonScope();
+			IoC.NinjectKernel.Bind<IGeofenceManager>().To<GeofenceManager>().InSingletonScope();
+			IoC.NinjectKernel.Bind<IUIThreadProvider>().To<UIThreadProvider>().InSingletonScope();
         }
     }
 }

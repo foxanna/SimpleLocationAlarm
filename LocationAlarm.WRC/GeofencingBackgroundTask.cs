@@ -67,16 +67,21 @@ namespace LocationAlarm.WRC
                 return;
             }
 
-            alarmsManager.SwitchEnabled(triggeredAlarm);
+			if (triggeredAlarm.Enabled)
+			{
+				Debug.WriteLine("Alarm is active");
 
-            Debug.WriteLine("{0} : showing toast", typeof(GeofencingBackgroundTask).FullName);
+				Debug.WriteLine("{0} : showing toast", typeof(GeofencingBackgroundTask).FullName);
 
-            var toastContent = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-            var textNodes = toastContent.GetElementsByTagName("text");
-            textNodes[0].AppendChild(toastContent.CreateTextNode("You are pretty close to "));
-            textNodes[1].AppendChild(toastContent.CreateTextNode(triggeredAlarm.Title));
+				var toastContent = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+				var textNodes = toastContent.GetElementsByTagName("text");
+				textNodes[0].AppendChild(toastContent.CreateTextNode("You are pretty close to "));
+				textNodes[1].AppendChild(toastContent.CreateTextNode(triggeredAlarm.Title));
 
-            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(toastContent));
+				ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(toastContent));
+			}
+			else
+				Debug.WriteLine("Alarm is not active");
         }
     }
 }

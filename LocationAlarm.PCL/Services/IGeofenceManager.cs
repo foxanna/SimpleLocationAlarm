@@ -1,8 +1,10 @@
-﻿namespace LocationAlarm.PCL.Services
+﻿using System.Threading.Tasks;
+
+namespace LocationAlarm.PCL.Services
 {
     public interface IGeofenceManager
     {
-        void AddGeofence(string id, double latitude, double longitude, int radius);
-        void RemoveGeofence(string id);
+        Task AddGeofence(string id, double latitude, double longitude, int radius);
+		Task RemoveGeofence(string id);
     }
 }

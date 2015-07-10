@@ -13,8 +13,8 @@ namespace LocationAlarm.PCL.Services
 
         event EventHandler AlarmsSetChanged;
 
-        void Remove(AlarmItem alarm);
-        void AddAlarm(AlarmItem alarm);
-        void SwitchEnabled(AlarmItem alarm);
+        Task Remove(AlarmItem alarm);
+        Task AddAlarm(AlarmItem alarm);
+        Task SwitchEnabled(AlarmItem alarm);
     }
 }

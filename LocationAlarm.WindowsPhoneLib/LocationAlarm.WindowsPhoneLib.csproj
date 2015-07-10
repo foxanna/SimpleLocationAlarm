@@ -91,6 +91,7 @@
     <Compile Include="IoCHelper.cs" />
     <Compile Include="GeofenceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIThreadProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocationAlarm.PCL\LocationAlarm.PCL.csproj">

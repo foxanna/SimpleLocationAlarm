@@ -1,77 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using LocationAlarm.PCL.Models;
 
 namespace LocationAlarm.PCL.Services
 {
-    public class AlarmsManager : IAlarmsManager
-    {
-        readonly IDatabaseManager DatabaseManager;
-        readonly IGeofenceManager GeofenceManager;
+	public class AlarmsManager : IAlarmsManager
+	{
+		const string Tag = "AlarmsManager";
 
-        public AlarmsManager(IDatabaseManager databaseManager,
-            IGeofenceManager geofenceManager)
-        {
-            DatabaseManager = databaseManager;
-            DatabaseManager.CreateTable<AlarmItem>();
-            GeofenceManager = geofenceManager;
-        }
-        
-        public IReadOnlyCollection<AlarmItem> Alarms
-        {
-            get { return DatabaseManager.GetAll<AlarmItem>().ToArray(); }
-        }
+		readonly IDatabaseManager DatabaseManager;
+		readonly IGeofenceManager GeofenceManager;
+		readonly ILogService LogService;
 
-        public event EventHandler AlarmsSetChanged;
+		public AlarmsManager(IDatabaseManager databaseManager,
+			IGeofenceManager geofenceManager,
+			ILogService logService)
+		{
+			LogService = logService;
+			DatabaseManager = databaseManager;
+			DatabaseManager.CreateTable<AlarmItem>();
+			GeofenceManager = geofenceManager;
+		}
 
-        void OnAlarmsSetChanged()
-        {
-            var handler = AlarmsSetChanged;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
+		public IReadOnlyCollection<AlarmItem> Alarms
+		{
+			get { return DatabaseManager.GetAll<AlarmItem>().ToArray(); }
+		}
 
-        public void Remove(AlarmItem alarm)
-        {
-            try
-            {
-                GeofenceManager.RemoveGeofence(alarm.GeofenceId);
-                DatabaseManager.Delete(alarm);
-                OnAlarmsSetChanged();
-            }
-            catch { }
-        }
+		public event EventHandler AlarmsSetChanged;
 
-        public void AddAlarm(AlarmItem alarm)
-        {
-            try
-            {
-                alarm.GeofenceId = Guid.NewGuid().ToString();
+		void OnAlarmsSetChanged()
+		{
+			var handler = AlarmsSetChanged;
+			if (handler != null)
+				handler(this, EventArgs.Empty);
+		}
 
-                GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
-                DatabaseManager.Add(alarm);
-                OnAlarmsSetChanged();
-            }
-            catch { }
-        }
+		public async Task Remove(AlarmItem alarm)
+		{
+			try
+			{
+				await GeofenceManager.RemoveGeofence(alarm.GeofenceId);
+				DatabaseManager.Delete(alarm);
+				OnAlarmsSetChanged();
+			}
+			catch (Exception e)
+			{
+				LogService.Log(Tag, e);
+				throw;
+			}
+		}
 
-        public void SwitchEnabled(AlarmItem alarm)
-        {
-            try
-            {
-                var newEnabledValue = !alarm.Enabled;
+		public async Task AddAlarm(AlarmItem alarm)
+		{
+			try
+			{
+				alarm.GeofenceId = Guid.NewGuid().ToString();
 
-                if (newEnabledValue)
-                    GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
-                else
-                    GeofenceManager.RemoveGeofence(alarm.GeofenceId);
-                
-                alarm.Enabled = newEnabledValue;
-                DatabaseManager.Update(alarm);
-                OnAlarmsSetChanged();
-            }
-            catch { }
-        }
-    }
+				await GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
+				DatabaseManager.Add(alarm);
+				OnAlarmsSetChanged();
+			}
+			catch (Exception e)
+			{
+				LogService.Log(Tag, e);
+				throw;
+			}
+		}
+
+		public async Task SwitchEnabled(AlarmItem alarm)
+		{
+			try
+			{
+				var newEnabledValue = !alarm.Enabled;
+
+				if (newEnabledValue)
+					await GeofenceManager.AddGeofence(alarm.GeofenceId, alarm.Latitude, alarm.Longitude, alarm.Radius);
+				else
+					await GeofenceManager.RemoveGeofence(alarm.GeofenceId);
+
+				alarm.Enabled = newEnabledValue;
+				DatabaseManager.Update(alarm);
+				OnAlarmsSetChanged();
+			}
+			catch (Exception e)
+			{ 
+				LogService.Log(Tag, e);
+				throw;
+			}
+		}
+	}
 }

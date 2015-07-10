@@ -39,8 +39,9 @@ namespace LocationAlarm.PCL
     {
         public override void Load()
         {
+			Bind<ILogService>().To<LogService>().InSingletonScope();
             Bind<IDatabaseManager>().To<DatabaseManager>().InSingletonScope();
-            Bind<IAlarmsManager>().To<AlarmsManager>().InSingletonScope();
+			Bind<IAlarmsManager>().To<AlarmsManager>().InSingletonScope();
         }
     }
 }

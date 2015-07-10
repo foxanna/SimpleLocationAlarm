@@ -41,11 +41,15 @@
     <Compile Include="Services\AlarmsManager.cs" />
     <Compile Include="Services\DatabaseManager.cs" />
     <Compile Include="Services\IAlarmsManager.cs" />
+    <Compile Include="Services\IUIThreadProvider.cs" />
     <Compile Include="Services\IDatabaseManager.cs" />
     <Compile Include="Services\IGeofenceManager.cs" />
+    <Compile Include="Services\ILogService.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Utils\MapZoomChangedEventArgs.cs" />
     <Compile Include="Utils\NotifiableViewModel.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
+    <Compile Include="ViewModels\ActiveAlarmViewModel.cs" />
     <Compile Include="ViewModels\AddPageViewModel.cs" />
     <Compile Include="ViewModels\AlarmItemViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

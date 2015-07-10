@@ -30,7 +30,7 @@
         <CommandBar>
             <AppBarButton Icon="Add" 
                           x:Uid="AddLocationMark" 
-                          Click="AppBarButton_Click"/>
+                          Command="{Binding AddCommand}"/>
         </CommandBar>
     </Page.BottomAppBar>
 
