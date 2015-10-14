@@ -51,6 +51,9 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SQLite">
+      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -67,15 +70,12 @@
     <Reference Include="Xamarin.Android.Support.v7.MediaRouter">
       <HintPath>..\Components\googleplayserviceskitkat-19.0.0\lib\android\Xamarin.Android.Support.v7.MediaRouter.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite">
-      <HintPath>..\Components\sqlite-net-1.0.8\lib\android\SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android.Export" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.InAppBilling">
-      <HintPath>..\Components\xamarin.inappbilling-2.1\lib\android\Xamarin.InAppBilling.dll</HintPath>
+      <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
