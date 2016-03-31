@@ -36,7 +36,7 @@
   <ItemGroup>
     <Compile Include="IoC.cs" />
     <Compile Include="Models\AlarmItem.cs" />
-    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Alarms\AlarmsManager.cs" />
     <Compile Include="Services\Database\DatabaseManager.cs" />
