@@ -1,63 +1,65 @@
 ﻿using System;
-using System.Windows.Input;
 using LocationAlarm.PCL.Models;
-using LocationAlarm.PCL.Services;
 using LocationAlarm.PCL.Services.Alarms;
 using LocationAlarm.PCL.Utils;
 
 namespace LocationAlarm.PCL.ViewModels
 {
-	public class AlarmItemViewModel : NotifiableViewModel
-	{
-		readonly IAlarmsManager AlarmsManager;
+    public class AlarmItemViewModel : NotifiableViewModel
+    {
+        private readonly IAlarmsManager _alarmsManager;
 
-		public AlarmItemViewModel(IAlarmsManager alarmsManager)
-		{
-			AlarmsManager = alarmsManager;
-		}
+        private AlarmItem _alarm;
 
-		public string Anchor { get { return "0.5,1"; } }
+        private RelayCommand _deleteCommand, _switchEnableCommand;
 
-		AlarmItem alarm;
-		public AlarmItem Alarm
-		{
-			get { return alarm; }
-			set
-			{
-				alarm = value;
-				OnPropertyChanged();
+        public AlarmItemViewModel(IAlarmsManager alarmsManager)
+        {
+            _alarmsManager = alarmsManager;
+        }
 
-				Location = Tuple.Create<double, double>(alarm.Latitude, alarm.Longitude);
-				RaisePropertyChanged(() => Location);
-			}
-		}
+        public string Anchor => "0.5,1";
 
-		public Tuple<double, double> Location { get; private set; }
+        public AlarmItem Alarm
+        {
+            get { return _alarm; }
+            set
+            {
+                _alarm = value;
+                OnPropertyChanged();
 
-		RelayCommand switchEnableCommand;
-		public RelayCommand SwitchEnabledCommand
-		{
-			get
-			{
-				return switchEnableCommand ?? (switchEnableCommand = new RelayCommand(async () =>
-				{
-					try { await AlarmsManager.SwitchEnabled(Alarm); }
-					catch { }
-				}));
-			}
-		}
+                Location = Tuple.Create(_alarm.Latitude, _alarm.Longitude);
+                RaisePropertyChanged(() => Location);
+            }
+        }
 
-		RelayCommand deleteCommand;
-		public RelayCommand DeleteCommand
-		{
-			get
-			{
-				return deleteCommand ?? (deleteCommand = new RelayCommand(async () =>
-					{
-						try { await AlarmsManager.Remove(Alarm); }
-						catch { }
-					}));
-			}
-		}
-	}
+        public Tuple<double, double> Location { get; private set; }
+
+        public RelayCommand SwitchEnabledCommand => _switchEnableCommand ??
+                                                    (_switchEnableCommand = new RelayCommand(OnSwitchEnabled));
+
+        public RelayCommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(Delete));
+
+        private async void Delete()
+        {
+            try
+            {
+                await _alarmsManager.Remove(Alarm);
+            }
+            catch
+            {
+            }
+        }
+
+        private async void OnSwitchEnabled()
+        {
+            try
+            {
+                await _alarmsManager.SwitchEnabled(Alarm);
+            }
+            catch
+            {
+            }
+        }
+    }
 }

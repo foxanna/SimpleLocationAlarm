@@ -8,31 +8,31 @@ namespace LocationAlarm.PCL.ViewModels
 {
     public class AddPageViewModel : BaseViewModel
     {
-        private readonly IAlarmsManager AlarmsManager;
+        private readonly IAlarmsManager _alarmsManager;
 
-        private Tuple<double, double> location;
+        private Tuple<double, double> _location;
 
-        private RelayCommand saveCommand;
+        private RelayCommand _saveCommand;
+
+        private int _selectedRadius;
+
+        private string _title;
 
         public EventHandler Saved;
 
-        private int selectedRadius;
-
-        private string title;
-
         public AddPageViewModel(IAlarmsManager alarmsManager)
         {
-            AlarmsManager = alarmsManager;
+            _alarmsManager = alarmsManager;
 
             SelectedRadius = 200;
         }
 
         public Tuple<double, double> Location
         {
-            get { return location; }
+            get { return _location; }
             set
             {
-                location = value;
+                _location = value;
                 OnPropertyChanged();
 
                 RaisePropertyChanged(() => IsLocationSet);
@@ -40,57 +40,42 @@ namespace LocationAlarm.PCL.ViewModels
             }
         }
 
-        public bool IsLocationSet
-        {
-            get { return Location != null; }
-        }
+        public bool IsLocationSet => Location != null;
 
         public string Title
         {
-            get { return title; }
+            get { return _title; }
             set
             {
-                title = value;
+                _title = value;
                 OnPropertyChanged();
 
                 SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public List<int> Radiuses
-        {
-            get { return Constants.Radiuses; }
-        }
+        public List<int> Radiuses => Constants.Radiuses;
 
         public int SelectedRadius
         {
-            get { return selectedRadius; }
+            get { return _selectedRadius; }
             set
             {
-                selectedRadius = value;
+                _selectedRadius = value;
                 OnPropertyChanged();
             }
         }
 
-        public RelayCommand SaveCommand
-        {
-            get { return saveCommand ?? (saveCommand = new RelayCommand(Save, CanSave)); }
-        }
+        public RelayCommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(Save, CanSave));
 
-        public AlarmItem Alarm
+        public AlarmItem Alarm => new AlarmItem
         {
-            get
-            {
-                return new AlarmItem
-                {
-                    Enabled = true,
-                    Latitude = Location.Item1,
-                    Longitude = Location.Item2,
-                    Radius = SelectedRadius,
-                    Title = Title
-                };
-            }
-        }
+            Enabled = true,
+            Latitude = Location.Item1,
+            Longitude = Location.Item2,
+            Radius = SelectedRadius,
+            Title = Title
+        };
 
         private bool CanSave()
         {
@@ -101,21 +86,12 @@ namespace LocationAlarm.PCL.ViewModels
         {
             try
             {
-                await AlarmsManager.AddAlarm(Alarm);
+                await _alarmsManager.AddAlarm(Alarm);
 
-                OnSaved();
+                Saved?.Invoke(this, EventArgs.Empty);
             }
             catch
             {
-            }
-        }
-
-        private void OnSaved()
-        {
-            var handler = Saved;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
             }
         }
     }
