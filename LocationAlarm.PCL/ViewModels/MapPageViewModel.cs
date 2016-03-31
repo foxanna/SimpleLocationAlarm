@@ -2,136 +2,140 @@
 using System.Collections.Generic;
 using System.Linq;
 using LocationAlarm.PCL.Models;
-using LocationAlarm.PCL.Services;
+using LocationAlarm.PCL.Services.Alarms;
 using LocationAlarm.PCL.Utils;
 
 namespace LocationAlarm.PCL.ViewModels
 {
-	public class MapPageViewModel : BaseViewModel
-	{
-		readonly IAlarmsManager AlarmsManager;
+    public class MapPageViewModel : BaseViewModel
+    {
+        private readonly IAlarmsManager AlarmsManager;
 
-		public MapPageViewModel(IAlarmsManager alarmsManager)
-		{
-			AlarmsManager = alarmsManager;
-		}
+        private RelayCommand addCommand;
 
-		public event EventHandler AlarmsChanged;
+        private List<AlarmItemViewModel> alarms = new List<AlarmItemViewModel>();
 
-		List<AlarmItemViewModel> alarms = new List<AlarmItemViewModel>();
-		public List<AlarmItemViewModel> Alarms
-		{
-			get { return alarms; }
-			set
-			{
-				alarms = value;
-				OnPropertyChanged();
+        private Tuple<double, double> myCurrentLocation;
 
-				OnAlarmsChanged();
-			}
-		}
+        public MapPageViewModel(IAlarmsManager alarmsManager)
+        {
+            AlarmsManager = alarmsManager;
+        }
 
-		void OnAlarmsChanged()
-		{
-			var handler = AlarmsChanged;
-			if (handler != null)
-				handler(this, EventArgs.Empty);
-		}
+        public List<AlarmItemViewModel> Alarms
+        {
+            get { return alarms; }
+            set
+            {
+                alarms = value;
+                OnPropertyChanged();
 
-		public override void OnStart()
-		{
-			base.OnStart();
+                OnAlarmsChanged();
+            }
+        }
 
-			AlarmsManager.AlarmsSetChanged += AlarmsManager_AlarmsSetChanged;
+        public Tuple<double, double> MyCurrentLocation
+        {
+            get { return myCurrentLocation; }
+            set
+            {
+                var oldValue = myCurrentLocation;
+                myCurrentLocation = value;
 
-			UpdateAlarms();
-			OnMapZoomChanged();
-		}
+                if (oldValue == null && myCurrentLocation != null)
+                {
+                    OnMapZoomChanged();
+                }
+            }
+        }
 
-		public override void OnStop()
-		{
-			AlarmsManager.AlarmsSetChanged -= AlarmsManager_AlarmsSetChanged;
+        public RelayCommand AddCommand
+        {
+            get { return addCommand ?? (addCommand = new RelayCommand(OnAddScreenRequired)); }
+        }
 
-			base.OnStop();
-		}
+        public event EventHandler AlarmsChanged;
 
-		void AlarmsManager_AlarmsSetChanged(object sender, EventArgs e)
-		{
-			UpdateAlarms();
-			OnMapZoomChanged();
-		}
+        private void OnAlarmsChanged()
+        {
+            var handler = AlarmsChanged;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
 
-		void UpdateAlarms()
-		{
-			Alarms = AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) { Alarm = alarm }).ToList();
-		}
+        public override void OnStart()
+        {
+            base.OnStart();
 
-		public event EventHandler<MapZoomChangedEventArgs> MapZoomChanged;
+            AlarmsManager.AlarmsSetChanged += AlarmsManager_AlarmsSetChanged;
 
-		void OnMapZoomChanged()
-		{
-			var handler = MapZoomChanged;
-			if (handler != null)
-			{
-				var locations = Alarms.Select(alarm => alarm.Location).ToList();
+            UpdateAlarms();
+            OnMapZoomChanged();
+        }
 
-				if (MyCurrentLocation != null)
-					locations.Add(MyCurrentLocation);
+        public override void OnStop()
+        {
+            AlarmsManager.AlarmsSetChanged -= AlarmsManager_AlarmsSetChanged;
 
-				if (locations.Any())
-					handler(this, new MapZoomChangedEventArgs(locations));
-			}
-		}
+            base.OnStop();
+        }
 
-		Tuple<double, double> myCurrentLocation;
-		public Tuple<double, double> MyCurrentLocation
-		{
-			get { return myCurrentLocation; }
-			set
-			{
-				var oldValue = myCurrentLocation;
-				myCurrentLocation = value;
+        private void AlarmsManager_AlarmsSetChanged(object sender, EventArgs e)
+        {
+            UpdateAlarms();
+            OnMapZoomChanged();
+        }
 
-				if (oldValue == null && myCurrentLocation != null)
-				{
-					OnMapZoomChanged();
-				}
-			}
-		}
+        private void UpdateAlarms()
+        {
+            Alarms =
+                AlarmsManager.Alarms.Select(alarm => new AlarmItemViewModel(AlarmsManager) {Alarm = alarm}).ToList();
+        }
 
-		public void OnGeofenceInForeground(IEnumerable<string> ids)
-		{
-			var triggeredAlarm = AlarmsManager.Alarms.FirstOrDefault(alarm => ids.Contains(alarm.GeofenceId));
+        public event EventHandler<MapZoomChangedEventArgs> MapZoomChanged;
 
-			if (triggeredAlarm == null)
-				return;
+        private void OnMapZoomChanged()
+        {
+            var handler = MapZoomChanged;
+            if (handler != null)
+            {
+                var locations = Alarms.Select(alarm => alarm.Location).ToList();
 
-			if (triggeredAlarm.Enabled)
-				OnAlarmScreenRequired(triggeredAlarm);
-		}
+                if (MyCurrentLocation != null)
+                    locations.Add(MyCurrentLocation);
 
-		public event EventHandler<AlarmItemViewModel> AlarmScreenRequired;
+                if (locations.Any())
+                    handler(this, new MapZoomChangedEventArgs(locations));
+            }
+        }
 
-		void OnAlarmScreenRequired(AlarmItem alarm)
-		{
-			var handler = AlarmScreenRequired;
-			if (handler != null)
-				handler(this, new AlarmItemViewModel(AlarmsManager) { Alarm = alarm });
-		}
+        public void OnGeofenceInForeground(IEnumerable<string> ids)
+        {
+            var triggeredAlarm = AlarmsManager.Alarms.FirstOrDefault(alarm => ids.Contains(alarm.GeofenceId));
 
-		RelayCommand addCommand;
-		public RelayCommand AddCommand
-		{
-			get { return addCommand ?? (addCommand = new RelayCommand(OnAddScreenRequired)); }
-		}
+            if (triggeredAlarm == null)
+                return;
 
-		public event EventHandler AddScreenRequired;
+            if (triggeredAlarm.Enabled)
+                OnAlarmScreenRequired(triggeredAlarm);
+        }
 
-		void OnAddScreenRequired()
-		{
-			var handler = AddScreenRequired;
-			if (handler != null)
-				handler(this, EventArgs.Empty);
-		}
-	}
+        public event EventHandler<AlarmItemViewModel> AlarmScreenRequired;
+
+        private void OnAlarmScreenRequired(AlarmItem alarm)
+        {
+            var handler = AlarmScreenRequired;
+            if (handler != null)
+                handler(this, new AlarmItemViewModel(AlarmsManager) {Alarm = alarm});
+        }
+
+        public event EventHandler AddScreenRequired;
+
+        private void OnAddScreenRequired()
+        {
+            var handler = AddScreenRequired;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+    }
 }

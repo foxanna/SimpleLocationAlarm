@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using LocationAlarm.PCL.Models;
 using LocationAlarm.PCL.Services;
+using LocationAlarm.PCL.Services.Alarms;
 using LocationAlarm.PCL.Utils;
 
 namespace LocationAlarm.PCL.ViewModels

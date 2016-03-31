@@ -85,7 +85,7 @@
       <Name>LocationAlarm.PCL</Name>
     </ProjectReference>
     <ProjectReference Include="..\LocationAlarm.WindowsPhoneLib\LocationAlarm.WindowsPhoneLib.csproj">
-      <Project>{d321d1a0-2054-4fe8-a65a-62d3b89adec3}</Project>
+      <Project>{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}</Project>
       <Name>LocationAlarm.WindowsPhoneLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\LocationAlarm.WRC\LocationAlarm.WRC.csproj">
@@ -180,8 +180,8 @@
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.8.10.2">
-      <Name>SQLite for Windows Phone 8.1</Name>
+    <SDKReference Include="SQLite.WP81, Version=3.12.0">
+      <Name>SQLite for Windows Phone 8.1 %28SQLite.WP81, Version=3.12.0%29</Name>
     </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

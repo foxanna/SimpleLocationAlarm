@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.Droid", "LocationAlarm.Droid\LocationAlarm.Droid.csproj", "{A5F81A11-A764-41EB-8A88-1EA0F09F3D94}"
 EndProject
@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhone"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WRC", "LocationAlarm.WRC\LocationAlarm.WRC.csproj", "{41B4EDB7-EF9C-4F97-8B52-AE55227BDE00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhoneLib", "LocationAlarm.WindowsPhoneLib\LocationAlarm.WindowsPhoneLib.csproj", "{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsPhone", "WindowsPhone", "{E7C133BF-172E-425F-920A-9C301693CB4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAlarm.WindowsPhoneLib", "LocationAlarm.WindowsPhoneLib\LocationAlarm.WindowsPhoneLib.csproj", "{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

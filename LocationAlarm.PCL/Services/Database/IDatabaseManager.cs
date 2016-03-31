@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LocationAlarm.PCL.Services
+namespace LocationAlarm.PCL.Services.Database
 {
     public interface IDatabaseManager
     {

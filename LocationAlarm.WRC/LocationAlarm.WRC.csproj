@@ -85,7 +85,7 @@
       <Name>LocationAlarm.PCL</Name>
     </ProjectReference>
     <ProjectReference Include="..\LocationAlarm.WindowsPhoneLib\LocationAlarm.WindowsPhoneLib.csproj">
-      <Project>{d321d1a0-2054-4fe8-a65a-62d3b89adec3}</Project>
+      <Project>{D321D1A0-2054-4FE8-A65A-62D3B89ADEC3}</Project>
       <Name>LocationAlarm.WindowsPhoneLib</Name>
     </ProjectReference>
   </ItemGroup>

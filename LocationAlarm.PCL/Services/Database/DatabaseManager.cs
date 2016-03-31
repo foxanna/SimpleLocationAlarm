@@ -1,50 +1,50 @@
 ﻿using System.Collections.Generic;
 using SQLite.Net;
 
-namespace LocationAlarm.PCL.Services
+namespace LocationAlarm.PCL.Services.Database
 {
-    class DatabaseManager : IDatabaseManager
+    internal class DatabaseManager : IDatabaseManager
     {
-        readonly SQLiteConnection DatabaseConnection;
+        private readonly SQLiteConnection _databaseConnection;
 
         public DatabaseManager(SQLiteConnection sqLiteConnection)
         {
-            DatabaseConnection = sqLiteConnection;
+            _databaseConnection = sqLiteConnection;
         }
-        
+
         public void CreateTable<T>() where T : class, new()
         {
-            DatabaseConnection.CreateTable<T>();
+            _databaseConnection.CreateTable<T>();
         }
 
         public IEnumerable<T> GetAll<T>() where T : class, new()
         {
-            return DatabaseConnection.Table<T>();
+            return _databaseConnection.Table<T>();
         }
 
         public T GetById<T>(int id) where T : class, new()
         {
-            return DatabaseConnection.Get<T>(id);
+            return _databaseConnection.Get<T>(id);
         }
 
         public void Add<T>(T data) where T : class, new()
         {
-            DatabaseConnection.Insert(data);
+            _databaseConnection.Insert(data);
         }
 
         public void Update<T>(T data) where T : class, new()
         {
-            DatabaseConnection.Update(data);
+            _databaseConnection.Update(data);
         }
 
         public void Delete<T>(T data) where T : class, new()
         {
-            DatabaseConnection.Delete(data);
+            _databaseConnection.Delete(data);
         }
 
         public void Delete<T>(int id) where T : class, new()
         {
-            DatabaseConnection.Delete<T>(id);
+            _databaseConnection.Delete<T>(id);
         }
     }
 }
