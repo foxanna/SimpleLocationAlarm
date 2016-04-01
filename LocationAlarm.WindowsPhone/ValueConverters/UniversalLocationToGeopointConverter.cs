@@ -8,8 +8,10 @@ namespace LocationAlarm.WindowsPhone.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var tuple = (Tuple<double, double>)value;
-            return new Geopoint(new BasicGeoposition { Latitude = tuple.Item1, Longitude = tuple.Item2 });
+            var tuple = value as Tuple<double, double>;
+            return tuple == null
+                ? null
+                : new Geopoint(new BasicGeoposition {Latitude = tuple.Item1, Longitude = tuple.Item2});
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
