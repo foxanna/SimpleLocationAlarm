@@ -1,12 +1,18 @@
 ﻿using System;
-using LocationAlarm.WindowsPhone.Views;
-using LocationAlarm.WindowsPhoneLib;
+using System.Diagnostics;
+using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using LocationAlarm.PCL;
+using LocationAlarm.PCL.Services.Alarms;
+using LocationAlarm.PCL.ViewModels;
+using LocationAlarm.WindowsPhone.Views;
+using LocationAlarm.WindowsPhoneLib;
+using LocationAlarm.WRC;
 
 namespace LocationAlarm.WindowsPhone
 {
@@ -16,20 +22,20 @@ namespace LocationAlarm.WindowsPhone
 
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += this.OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
+            if (Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -55,24 +61,31 @@ namespace LocationAlarm.WindowsPhone
                 // Removes the turnstile navigation for startup.
                 if (rootFrame.ContentTransitions != null)
                 {
-                    this.transitions = new TransitionCollection();
+                    transitions = new TransitionCollection();
                     foreach (var c in rootFrame.ContentTransitions)
                     {
-                        this.transitions.Add(c);
+                        transitions.Add(c);
                     }
                 }
 
                 rootFrame.ContentTransitions = null;
-                rootFrame.Navigated += this.RootFrame_FirstNavigated;
-                
+                rootFrame.Navigated += RootFrame_FirstNavigated;
+
                 IoCHelper.Init();
-                
-                LocationAlarm.WRC.GeofencingBackgroundTask.Register();
+
+                GeofencingBackgroundTask.Register();
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(MapPage), e.Arguments))
+                var alarmsManager = IoC.Get<IAlarmsManager>();
+
+                //  if (!rootFrame.Navigate(typeof (MapPage), e.Arguments))
+                if (!rootFrame.Navigate(typeof (ActiveAlarmPage),
+                    new AlarmItemViewModel(alarmsManager)
+                    {
+                        Alarm = alarmsManager.Alarms.FirstOrDefault()
+                    }))
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -82,14 +95,14 @@ namespace LocationAlarm.WindowsPhone
             Window.Current.Activate();
         }
 
-        void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
+        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
         {
             var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
+            rootFrame.ContentTransitions = transitions ?? new TransitionCollection {new NavigationThemeTransition()};
+            rootFrame.Navigated -= RootFrame_FirstNavigated;
         }
 
-        void OnSuspending(object sender, SuspendingEventArgs e)
+        private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 

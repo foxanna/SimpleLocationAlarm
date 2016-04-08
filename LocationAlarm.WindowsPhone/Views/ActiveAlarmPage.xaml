@@ -9,12 +9,15 @@
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="{Binding ActiveAlarm.Alarm.Title}"
-                       Style="{ThemeResource HeaderTextBlockStyle}"/>
+    <Border Style="{StaticResource PageStyle}">
 
-            <Button Command="{Binding ActiveAlarm.SwitchEnabledCommand}"/>
-        </StackPanel>
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <local:PageTitleBar Title="{Binding ActiveAlarm.Alarm.Title}" />
+        </Grid>
+    </Border>
 </Page>
