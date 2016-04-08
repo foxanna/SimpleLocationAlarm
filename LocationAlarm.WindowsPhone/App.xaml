@@ -2,11 +2,11 @@
     x:Class="LocationAlarm.WindowsPhone.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LocationAlarm.WindowsPhone"
-    xmlns:foundation="using:Windows.Foundation">
+    xmlns:localization="using:LocationAlarm.PCL.Localization">
 
     <Application.Resources>
         <ResourceDictionary>
+            <localization:LocalizationManager x:Key="LocalizationProvider" />
 
             <Color x:Key="DarkViolet">#5C5161</Color>
             <Color x:Key="BrightViolet">#9933CC</Color>

@@ -32,7 +32,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <local:PageTitleBar Title="GEO Alarm" />
+            <local:PageTitleBar Title="{Binding Strings.AppName, Source={StaticResource LocalizationProvider}}" />
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>

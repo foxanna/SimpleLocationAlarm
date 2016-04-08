@@ -26,7 +26,7 @@
         </MenuFlyout>
     </Page.Resources>
 
-    <Page.BottomAppBar >
+    <Page.BottomAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}">
             <AppBarButton Icon="Add"
                           x:Uid="AddLocationMark"
@@ -42,7 +42,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <local:PageTitleBar Title="GEO Alarm" />
+            <local:PageTitleBar Title="{Binding Strings.AppName, Source={StaticResource LocalizationProvider}}" />
 
             <Maps:MapControl x:Name="Map"
                              Grid.Row="1"

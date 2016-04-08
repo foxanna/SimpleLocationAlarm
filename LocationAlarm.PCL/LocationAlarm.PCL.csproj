@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IoC.cs" />
+    <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Models\AlarmItem.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -46,6 +47,11 @@
     <Compile Include="Services\IGeofenceManager.cs" />
     <Compile Include="Services\Logs\ILogService.cs" />
     <Compile Include="Services\Logs\LogService.cs" />
+    <Compile Include="Localization\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\MapZoomChangedEventArgs.cs" />
     <Compile Include="Utils\NotifiableViewModel.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
@@ -66,6 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
