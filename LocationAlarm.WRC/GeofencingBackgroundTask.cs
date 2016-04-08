@@ -17,9 +17,8 @@ namespace LocationAlarm.WRC
             get
             {
                 var taskRegistered = false;
-                var entry =
-                    BackgroundTaskRegistration.AllTasks.FirstOrDefault(
-                        kvp => kvp.Value.Name == typeof (GeofencingBackgroundTask).Name);
+                var entry = BackgroundTaskRegistration.AllTasks.FirstOrDefault(kvp =>
+                    kvp.Value.Name == typeof (GeofencingBackgroundTask).Name);
 
                 if (entry.Value != null)
                     taskRegistered = true;
@@ -65,27 +64,27 @@ namespace LocationAlarm.WRC
 
         public static async void Register()
         {
-            if (!IsTaskRegistered)
+            if (IsTaskRegistered)
+                return;
+
+            var result = await BackgroundExecutionManager.RequestAccessAsync();
+            var builder = new BackgroundTaskBuilder
             {
-                var result = await BackgroundExecutionManager.RequestAccessAsync();
-                var builder = new BackgroundTaskBuilder();
+                Name = typeof (GeofencingBackgroundTask).Name,
+                TaskEntryPoint = typeof (GeofencingBackgroundTask).FullName
+            };
 
-                builder.Name = typeof (GeofencingBackgroundTask).Name;
-                builder.TaskEntryPoint = typeof (GeofencingBackgroundTask).FullName;
-                builder.SetTrigger(new LocationTrigger(LocationTriggerType.Geofence));
+            builder.SetTrigger(new LocationTrigger(LocationTriggerType.Geofence));
 
-                builder.Register();
-            }
+            builder.Register();
         }
 
         public static void Unregister()
         {
-            var entry =
-                BackgroundTaskRegistration.AllTasks.FirstOrDefault(
-                    kvp => kvp.Value.Name == typeof (GeofencingBackgroundTask).Name);
+            var entry = BackgroundTaskRegistration.AllTasks.FirstOrDefault(kvp =>
+                kvp.Value.Name == typeof (GeofencingBackgroundTask).Name);
 
-            if (entry.Value != null)
-                entry.Value.Unregister(true);
+            entry.Value?.Unregister(true);
         }
     }
 }

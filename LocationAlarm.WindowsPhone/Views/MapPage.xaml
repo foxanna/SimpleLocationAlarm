@@ -47,7 +47,8 @@
             <Maps:MapControl x:Name="Map"
                              Grid.Row="1"
                              Loaded="Map_Loaded"
-                             DataContext="{Binding Alarms}" MapTapped="Map_MapTapped">
+                             DataContext="{Binding Alarms}"
+                             MapTapped="Map_MapTapped">
                 <!--MapServiceToken="Place your token here."-->
 
                 <Maps:MapItemsControl ItemsSource="{Binding}">

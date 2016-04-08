@@ -12,10 +12,6 @@
             <Color x:Key="BrightViolet">#9933CC</Color>
 
             <x:String x:Key="PinAnchor">.5,1</x:String>
-            <!--<foundation:Point x:Key="PinAnchor">
-                <foundation:Point.X>0.5</foundation:Point.X>
-                <foundation:Point.Y>1.0</foundation:Point.Y>
-            </foundation:Point>-->
 
             <SolidColorBrush x:Key="PageTitleBarBackground" Color="{StaticResource BrightViolet}" />
             <SolidColorBrush x:Key="PageBackground" Color="{StaticResource DarkViolet}" />
@@ -30,7 +26,6 @@
                    TargetType="CommandBar">
                 <Setter Property="Background" Value="{StaticResource PageTitleBarBackground}" />
             </Style>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>
