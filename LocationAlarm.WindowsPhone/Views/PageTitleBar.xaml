@@ -1,0 +1,19 @@
+﻿<UserControl
+    x:Class="LocationAlarm.WindowsPhone.Views.PageTitleBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Padding="20"
+            Background="{StaticResource PageTitleBarBackground}">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="/Assets/map_white.png"
+                   MaxHeight="30"
+                   VerticalAlignment="Center" />
+            <TextBlock x:Name="TitleLabel"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Margin="20,0,0,0" />
+        </StackPanel>
+    </Border>
+</UserControl>

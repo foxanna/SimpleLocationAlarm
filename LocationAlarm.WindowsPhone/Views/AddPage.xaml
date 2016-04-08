@@ -5,7 +5,7 @@
     xmlns:local="using:LocationAlarm.WindowsPhone.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" 
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     xmlns:valueconverter="using:LocationAlarm.WindowsPhone.ValueConverters"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
@@ -17,62 +17,62 @@
     </Page.Resources>
 
     <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="Save" 
-                          x:Uid="SaveLocationMark" 
-                          Command="{Binding SaveCommand}"/>
+        <CommandBar Style="{StaticResource CommandBarStyle}">
+            <AppBarButton Icon="Save"
+                          x:Uid="SaveLocationMark"
+                          Command="{Binding SaveCommand}" />
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot" Margin="20,12,20,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Style="{StaticResource PageStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <TextBlock x:Uid="AppName"
-                    Style="{ThemeResource TitleTextBlockStyle}"
-                    Margin="0,0,0,12"/>
+            <local:PageTitleBar Title="GEO Alarm" />
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <TextBox x:Uid="AlarmName"
-                     Margin="0,0,0,0" 
-                     VerticalAlignment="Center">
-                <TextBox.Text>
-                    <Binding Source="{Binding}" 
-                             Path="Title"
-                             Mode="TwoWay"
-                             UpdateSourceTrigger="PropertyChanged"/>
-                </TextBox.Text>
-            </TextBox>
+                <TextBox x:Uid="AlarmName"
+                         Margin="0,0,0,0"
+                         VerticalAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Source="{Binding}"
+                                 Path="Title"
+                                 Mode="TwoWay"
+                                 UpdateSourceTrigger="PropertyChanged" />
+                    </TextBox.Text>
+                </TextBox>
 
-            <ComboBox Grid.Column="1" 
-                      Margin="12,0,0,0"
-                      ItemsSource="{Binding Radiuses}"
-                      SelectedItem="{Binding SelectedRadius, Mode=TwoWay}" 
-                      VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1"
+                          Margin="12,0,0,0"
+                          ItemsSource="{Binding Radiuses}"
+                          SelectedItem="{Binding SelectedRadius, Mode=TwoWay}"
+                          VerticalAlignment="Center" />
+            </Grid>
+
+            <Maps:MapControl x:Name="Map"
+                             Grid.Row="2"
+                             Margin="0,12,0,0"
+                             MapTapped="Map_MapTapped">
+
+                <StackPanel Orientation="Vertical"
+                            Visibility="{Binding IsLocationSet, Converter={StaticResource BooleanToVisibility}}"
+                            Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
+                            Maps:MapControl.NormalizedAnchorPoint="{StaticResource PinAnchor}">
+
+                    <Image Source="../Assets/marker_violet.png"
+                           Height="40" />
+
+                </StackPanel>
+            </Maps:MapControl>
         </Grid>
-
-        <Maps:MapControl x:Name="Map"
-                         Grid.Row="2"                             
-                         Margin="0,12,0,0"
-                         MapTapped="Map_MapTapped" >
-            
-            <StackPanel Orientation="Vertical"
-                        Visibility="{Binding IsLocationSet, Converter={StaticResource BooleanToVisibility}}"
-                        Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
-                        Maps:MapControl.NormalizedAnchorPoint="{StaticResource PinAnchor}">
-                
-                <Image Source="../Assets/marker_violet.png" 
-                        Height="40" />
-                
-            </StackPanel>
-        </Maps:MapControl>
-    </Grid>
+    </Border>
 </Page>

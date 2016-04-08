@@ -20,56 +20,59 @@
         <MenuFlyout x:Key="MarkerMenuFlyout">
             <MenuFlyoutItem Text="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMenuEnabledItem}}"
                             Command="{Binding SwitchEnabledCommand}" />
-            <MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator />
             <MenuFlyoutItem Text="Delete"
-                            Command="{Binding DeleteCommand}"/>
+                            Command="{Binding DeleteCommand}" />
         </MenuFlyout>
     </Page.Resources>
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="Add" 
-                          x:Uid="AddLocationMark" 
-                          Command="{Binding AddCommand}"/>
+    <Page.BottomAppBar >
+        <CommandBar Style="{StaticResource CommandBarStyle}">
+            <AppBarButton Icon="Add"
+                          x:Uid="AddLocationMark"
+                          Command="{Binding AddCommand}" />
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot" Margin="20,12,20,0" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Border Style="{StaticResource PageStyle}">
 
-        <TextBlock x:Uid="AppName"
-                   Style="{ThemeResource TitleTextBlockStyle}"
-                   Margin="0,0,0,12"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Maps:MapControl x:Name="Map"
-                         Grid.Row="1"
-                         Loaded="Map_Loaded"
-                         DataContext="{Binding Alarms}" MapTapped="Map_MapTapped">
-            <!--MapServiceToken="Place your token here."-->
+            <local:PageTitleBar Title="GEO Alarm" />
 
-            <Maps:MapItemsControl ItemsSource="{Binding}">
-                
-                <Maps:MapItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical"
-                                    Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
-                                    Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}"
-                                    Tapped="StackPanel_Tapped"
-                                    FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}" RightTapped="StackPanel_RightTapped">
-                            
-                            <TextBlock Text="{Binding Alarm.Title}"
-                                       Foreground="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerTitleColor}}" 
-                                       HorizontalAlignment="Center"/>
-                            
-                            <Image Source="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerImage}}" 
-                                   Height="40" />
-                        </StackPanel>
-                    </DataTemplate>
-                </Maps:MapItemsControl.ItemTemplate>
-            </Maps:MapItemsControl>
-        </Maps:MapControl>
-    </Grid>
+            <Maps:MapControl x:Name="Map"
+                             Grid.Row="1"
+                             Loaded="Map_Loaded"
+                             DataContext="{Binding Alarms}" MapTapped="Map_MapTapped">
+                <!--MapServiceToken="Place your token here."-->
+
+                <Maps:MapItemsControl ItemsSource="{Binding}">
+
+                    <Maps:MapItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical"
+                                        Maps:MapControl.Location="{Binding Location, Converter={StaticResource UniversalLocationToGeopointConverter}}"
+                                        Maps:MapControl.NormalizedAnchorPoint="{Binding Anchor}"
+                                        Tapped="StackPanel_Tapped"
+                                        FlyoutBase.AttachedFlyout="{StaticResource MarkerMenuFlyout}"
+                                        RightTapped="StackPanel_RightTapped">
+
+                                <TextBlock Text="{Binding Alarm.Title}"
+                                           Foreground="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerTitleColor}}"
+                                           HorizontalAlignment="Center" />
+
+                                <Image
+                                    Source="{Binding Alarm.Enabled, Converter={StaticResource AlarmEnabledToMapMarkerImage}}"
+                                    Height="40" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Maps:MapItemsControl.ItemTemplate>
+                </Maps:MapItemsControl>
+            </Maps:MapControl>
+        </Grid>
+    </Border>
 </Page>
